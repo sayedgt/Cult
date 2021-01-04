@@ -214,17 +214,6 @@ namespace Cult.Extensions
             return value.ConvertTo(defaultValue, true);
         }
 
-        public static T DeepClone<T>(this T @this)
-        {
-            IFormatter formatter = new BinaryFormatter();
-            using (var stream = new MemoryStream())
-            {
-                formatter.Serialize(stream, @this);
-                stream.Seek(0, SeekOrigin.Begin);
-                return (T)formatter.Deserialize(stream);
-            }
-        }
-
         public static TypeCode GetTypeCode(this object value)
         {
             return Convert.GetTypeCode(value);
