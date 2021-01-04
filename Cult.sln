@@ -31,19 +31,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Roslyn", "Cult.Roslyn\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Figlet", "Cult.Figlet\Cult.Figlet.csproj", "{155AC27B-E1D5-4828-8624-2081229C212B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.DynamicProxy", "Cult.DynamicProxy\Cult.DynamicProxy.csproj", "{78D09E52-7CDA-4617-935A-C3C30920EE88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DynamicProxy", "Cult.DynamicProxy\Cult.DynamicProxy.csproj", "{78D09E52-7CDA-4617-935A-C3C30920EE88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.SimMetrics", "Cult.SimMetrics\Cult.SimMetrics.csproj", "{8A1BEB13-5CA8-49DE-8F65-03193E85CC7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.SimMetrics", "Cult.SimMetrics\Cult.SimMetrics.csproj", "{8A1BEB13-5CA8-49DE-8F65-03193E85CC7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.BigMath", "Cult.BigMath\Cult.BigMath.csproj", "{4E7AB342-CC39-482A-B719-3BAB50B1D5B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.BigMath", "Cult.BigMath\Cult.BigMath.csproj", "{4E7AB342-CC39-482A-B719-3BAB50B1D5B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.DataStructure", "Cult.DataStructure\Cult.DataStructure.csproj", "{B439A482-B3EF-4566-A63E-723A2E328636}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DataStructure", "Cult.DataStructure\Cult.DataStructure.csproj", "{B439A482-B3EF-4566-A63E-723A2E328636}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.MustacheSharp", "Cult.MustacheSharp\Cult.MustacheSharp.csproj", "{D92428B2-7C5F-4A89-9FD9-A533E58156E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.MustacheSharp", "Cult.MustacheSharp\Cult.MustacheSharp.csproj", "{D92428B2-7C5F-4A89-9FD9-A533E58156E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Extensions", "Cult.Extensions\Cult.Extensions.csproj", "{62824214-C04C-4446-B0B5-462CDD5568EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Extensions", "Cult.Extensions\Cult.Extensions.csproj", "{62824214-C04C-4446-B0B5-462CDD5568EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Mvc", "Cult.Mvc\Cult.Mvc.csproj", "{4016DCBA-B198-405C-8094-F95D5DA00432}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Mvc", "Cult.Mvc\Cult.Mvc.csproj", "{4016DCBA-B198-405C-8094-F95D5DA00432}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Persian", "Cult.Persian\Cult.Persian.csproj", "{354B718F-C126-414C-AAA0-EA12CEC0700A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.PersianDataset", "..\Cult.PersianDataset\Cult.PersianDataset.csproj", "{D3804595-4703-4A86-A0D2-301D9E8B56DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,6 +139,14 @@ Global
 		{4016DCBA-B198-405C-8094-F95D5DA00432}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4016DCBA-B198-405C-8094-F95D5DA00432}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4016DCBA-B198-405C-8094-F95D5DA00432}.Release|Any CPU.Build.0 = Release|Any CPU
+		{354B718F-C126-414C-AAA0-EA12CEC0700A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{354B718F-C126-414C-AAA0-EA12CEC0700A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{354B718F-C126-414C-AAA0-EA12CEC0700A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{354B718F-C126-414C-AAA0-EA12CEC0700A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

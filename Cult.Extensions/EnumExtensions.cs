@@ -17,7 +17,7 @@ namespace Cult.Extensions
             return Array.IndexOf(values, @this) == -1;
         }
 
-        public static string ToDescription(this Enum @this)
+        public static string GetDescription(this Enum @this)
         {
             return @this.GetType()
                 .GetField(@this.ToString())

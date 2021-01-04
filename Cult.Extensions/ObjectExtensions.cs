@@ -1,14 +1,37 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
 // ReSharper disable UnusedMember.Global
 
 namespace Cult.Extensions
 {
     public static class ObjectExtensions
     {
+        public static T DeepClone<T>(this T @this)
+        {
+            var formatter = new BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                formatter.Serialize(stream, @this);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (T)formatter.Deserialize(stream);
+            }
+        }
+        public static byte[] ToByteArray<T>(this T obj)
+        {
+            if (obj == null)
+                return null;
+            var bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bf.Serialize(ms, obj);
+                return ms.ToArray();
+            }
+        }
         public static T As<T>(this object @this)
         {
             return (T)@this;

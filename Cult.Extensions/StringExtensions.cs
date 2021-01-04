@@ -20,6 +20,11 @@ namespace Cult.Extensions
 {
     public static class StringExtensions
     {
+        public static MemoryStream ToMemoryStream(this string text)
+        {
+            return new MemoryStream(Encoding.UTF8.GetBytes(text ?? ""));
+        }
+
         public static string BreakLineToNewLine(this string @this)
         {
             return @this.Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("<br/>", "\r\n");
@@ -367,6 +372,11 @@ namespace Cult.Extensions
                 isDate = false;
             }
             return isDate;
+        }
+
+        public static bool IsDigit(this string str)
+        {
+            return !string.IsNullOrEmpty(str) && str.All(char.IsDigit);
         }
 
         public static bool IsDigit(this string s, int index)
