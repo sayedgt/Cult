@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Cult.Extensions.ExpressionToString;
 // ReSharper disable UnusedMember.Global
 
 namespace Cult.Extensions

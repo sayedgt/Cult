@@ -1,4 +1,5 @@
-namespace Cult.Extensions.Pagination
+// ReSharper disable once CheckNamespace
+namespace Cult.Extensions
 {
 	public enum PagedSortDirection
 	{

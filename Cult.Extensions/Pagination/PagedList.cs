@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+// ReSharper disable once CheckNamespace
 
-namespace Cult.Extensions.Pagination
+namespace Cult.Extensions
 {
     public class PagedList<T> : IPagedList<T>
     {

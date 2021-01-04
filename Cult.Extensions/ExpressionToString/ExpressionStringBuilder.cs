@@ -3,8 +3,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
+// ReSharper disable once CheckNamespace
 
-namespace Cult.Extensions.ExpressionToString
+namespace Cult.Extensions
 {
     internal class ExpressionStringBuilder : ExpressionVisitor
     {

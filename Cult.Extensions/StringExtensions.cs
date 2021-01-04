@@ -11,7 +11,6 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
-using Cult.Extensions.Enums;
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable StringLiteralTypo
@@ -23,7 +22,7 @@ namespace Cult.Extensions
     {
         public static string BreakLineToNewLine(this string @this)
         {
-            return @this.Replace("<br />", "\r\n").Replace("<br>", "\r\n");
+            return @this.Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("<br/>", "\r\n");
         }
 
         public static int CompareOrdinal(this string strA, string strB)

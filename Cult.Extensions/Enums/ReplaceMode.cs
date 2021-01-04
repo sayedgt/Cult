@@ -1,4 +1,6 @@
-namespace Cult.Extensions.Enums
+// ReSharper disable once CheckNamespace
+
+namespace Cult.Extensions
 {
     public enum ReplaceMode
     {
