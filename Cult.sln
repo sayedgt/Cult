@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Persian", "Cult.Persia
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.PersianDataset", "..\Cult.PersianDataset\Cult.PersianDataset.csproj", "{D3804595-4703-4A86-A0D2-301D9E8B56DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Configuration", "Cult.Configuration\Cult.Configuration.csproj", "{505E3E08-0590-46B2-B663-1F342E61B0F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
