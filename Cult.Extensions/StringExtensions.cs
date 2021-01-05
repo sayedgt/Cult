@@ -970,7 +970,7 @@ namespace Cult.Extensions
             }
         }
 
-        public static string[] Split(this string @this, string separator, StringSplitOptions option)
+        public static string[] Split(this string @this, string separator, StringSplitOptions option = StringSplitOptions.None)
         {
             return @this.Split(new[] { separator }, option);
         }
