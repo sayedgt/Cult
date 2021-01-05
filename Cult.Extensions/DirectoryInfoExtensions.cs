@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class DirectoryInfoExtensions

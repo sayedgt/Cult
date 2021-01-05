@@ -5,6 +5,7 @@ using Cult.MustacheSharp.Mustache;
 // ReSharper disable StringLiteralTypo
 // ReSharper disable UnusedMember.Global
 // ReSharper disable IdentifierTypo
+// ReSharper disable All 
 namespace Cult.MustacheSharp.Tags
 {
     /// <summary>

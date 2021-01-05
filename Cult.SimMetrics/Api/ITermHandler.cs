@@ -1,5 +1,6 @@
 ﻿using System.Text;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
     public interface ITermHandler

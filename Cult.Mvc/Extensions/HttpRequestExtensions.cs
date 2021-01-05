@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+// ReSharper disable All 
 namespace Cult.Mvc.Extensions
 {
     public static class HttpRequestExtensions

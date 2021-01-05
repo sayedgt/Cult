@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+// ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
     /// <summary>

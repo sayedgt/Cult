@@ -1,4 +1,5 @@
-﻿namespace Cult.NetDiff
+﻿// ReSharper disable All 
+namespace Cult.NetDiff
 {
     public enum DiffOrderType
     {

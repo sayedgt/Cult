@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+// ReSharper disable All 
 namespace Cult.Utilities
 {
     public static class StopwatchUtility

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
     public class TokeniserQGram2Extended : TokeniserQGram2

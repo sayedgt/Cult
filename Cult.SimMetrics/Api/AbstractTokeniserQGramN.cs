@@ -2,6 +2,7 @@
 using System.Text;
 using Cult.SimMetrics.Utility;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
     public abstract class AbstractTokeniserQGramN : ITokeniser

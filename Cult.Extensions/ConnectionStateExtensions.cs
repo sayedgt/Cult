@@ -1,4 +1,5 @@
 ﻿using System.Data;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class ConnectionStateExtensions

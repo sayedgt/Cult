@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
     public interface ITokeniser

@@ -1,4 +1,5 @@
-﻿namespace Cult.ParserKit
+﻿// ReSharper disable All 
+namespace Cult.ParserKit
 {
     public struct PrecedenceTable
     {

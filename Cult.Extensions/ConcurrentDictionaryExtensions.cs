@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class ConcurrentDictionaryExtensions

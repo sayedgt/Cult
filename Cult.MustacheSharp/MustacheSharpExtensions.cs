@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+// ReSharper disable All 
 namespace Cult.MustacheSharp
 {
     public static class MustacheSharpExtensions

@@ -1,4 +1,5 @@
-﻿namespace Cult.MustacheSharp.Mustache
+﻿// ReSharper disable All 
+namespace Cult.MustacheSharp.Mustache
 {
     /// <summary>
     /// Defines a tag that renders its content depending on the truthyness

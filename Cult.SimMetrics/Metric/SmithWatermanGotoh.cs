@@ -1,6 +1,7 @@
 ﻿using Cult.SimMetrics.Api;
 using Cult.SimMetrics.Utility;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
     public sealed class SmithWatermanGotoh : SmithWatermanGotohWindowedAffine

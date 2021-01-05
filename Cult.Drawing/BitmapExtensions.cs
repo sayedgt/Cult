@@ -2,6 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+// ReSharper disable All 
 namespace Cult.Drawing
 {
     public static class BitmapExtensions

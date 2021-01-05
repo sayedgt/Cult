@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using Cult.SimMetrics.Api;
 using Cult.SimMetrics.Utility;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
     public sealed class BlockDistance : AbstractStringMetric

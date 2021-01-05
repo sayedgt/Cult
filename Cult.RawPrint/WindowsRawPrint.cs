@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+// ReSharper disable All 
 namespace Cult.RawPrint
 {
     public static class WindowsRawPrint

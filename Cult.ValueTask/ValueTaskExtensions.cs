@@ -1,4 +1,5 @@
 ﻿using System;
+// ReSharper disable All 
 namespace Cult.ValueTask
 {
     public static class ValueTaskExtensions

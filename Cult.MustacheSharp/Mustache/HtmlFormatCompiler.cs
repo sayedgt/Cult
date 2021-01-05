@@ -2,6 +2,7 @@
 using System.Security;
 // ReSharper disable UnusedMember.Global
 
+// ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
     public sealed class HtmlFormatCompiler

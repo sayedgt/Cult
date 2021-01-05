@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
 using RoslynQuoter;
+// ReSharper disable All 
 namespace Cult.Roslyn
 {
     public static class RoslynExtensions

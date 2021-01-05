@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 
 // ReSharper disable All
 
+// ReSharper disable All 
 namespace Cult.Figlet
 {
     public class Figlet

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+// ReSharper disable All 
 namespace Cult.Persian
 {
     public static class NationalLegalCodeUtils

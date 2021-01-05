@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
+// ReSharper disable All 
 namespace Cult.Utilities
 {
     public static class ExpressionUtility<T>

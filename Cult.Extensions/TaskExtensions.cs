@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class TaskExtensions

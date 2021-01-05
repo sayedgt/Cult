@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Cult.BigMath.Utils;
 
+// ReSharper disable All 
 namespace System
 {
     /// <summary>

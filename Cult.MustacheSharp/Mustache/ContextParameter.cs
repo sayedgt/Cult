@@ -1,4 +1,5 @@
-﻿namespace Cult.MustacheSharp.Mustache
+﻿// ReSharper disable All 
+namespace Cult.MustacheSharp.Mustache
 {
     /// <summary>
     /// Holds information describing a parameter that creates a new context.

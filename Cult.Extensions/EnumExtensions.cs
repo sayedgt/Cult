@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class EnumExtensions

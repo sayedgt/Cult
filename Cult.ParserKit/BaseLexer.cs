@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+// ReSharper disable All 
 namespace Cult.ParserKit
 {
     public abstract class BaseLexer<TToken> where TToken : Enum

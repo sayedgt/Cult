@@ -5,6 +5,7 @@ using System.Linq;
 // ReSharper disable CheckNamespace
 // ReSharper disable UnusedMember.Global
 
+// ReSharper disable All 
 namespace Cult.DataStructure
 {
     public static class TreeExtensions

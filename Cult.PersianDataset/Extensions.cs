@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+// ReSharper disable All 
 namespace Cult.PersianDataset
 {
     internal static class Extensions

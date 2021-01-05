@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
+// ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
     /// <summary>

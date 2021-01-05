@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 // ReSharper disable IdentifierTypo
 
+// ReSharper disable All 
 namespace Cult.Figlet
 {
     internal class FigletFont

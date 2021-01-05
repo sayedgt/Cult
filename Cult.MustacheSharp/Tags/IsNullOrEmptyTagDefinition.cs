@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Cult.MustacheSharp.Mustache;
 
+// ReSharper disable All 
 namespace Cult.MustacheSharp.Tags
 {
     public class IsNullOrEmptyTagDefinition : ContentTagDefinition

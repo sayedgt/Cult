@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class PredicateBuilder

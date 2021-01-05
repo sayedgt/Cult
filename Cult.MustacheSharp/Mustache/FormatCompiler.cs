@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
+// ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
     /// <summary>

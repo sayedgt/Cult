@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Caching;
+// ReSharper disable All 
 namespace Cult.MemoryCache
 {
     public static class MemoryCacheExtensions

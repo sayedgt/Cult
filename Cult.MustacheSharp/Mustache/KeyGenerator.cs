@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 
+// ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
     /// <summary>

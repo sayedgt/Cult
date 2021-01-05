@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+// ReSharper disable All 
 namespace Cult.ParserKit
 {
     public static class MagicWand

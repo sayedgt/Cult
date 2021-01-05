@@ -2,6 +2,7 @@
 // ReSharper disable UnusedMember.Global
 // ReSharper disable CheckNamespace
 
+// ReSharper disable All 
 namespace Cult.DataStructure
 {
     public class Leaf<T> where T : class

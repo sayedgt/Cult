@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 // ReSharper disable once CheckNamespace
 
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     internal class ExpressionStringBuilder : ExpressionVisitor

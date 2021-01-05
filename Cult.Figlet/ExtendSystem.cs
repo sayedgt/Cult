@@ -4,6 +4,7 @@ using System.IO;
 
 // ReSharper disable All
 
+// ReSharper disable All 
 namespace Cult.Figlet
 {
     internal static class ExtendSystem

@@ -1,5 +1,6 @@
 using Cult.SimMetrics.Metric;
 using System.Collections.Generic;
+// ReSharper disable All 
 namespace Cult.SimMetrics
 {
     public static class SimMetricsExtensions

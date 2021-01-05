@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Reflection;
+// ReSharper disable All 
 namespace Castle.DynamicProxy
 {
     public static class New

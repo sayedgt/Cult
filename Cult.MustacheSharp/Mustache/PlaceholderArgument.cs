@@ -1,4 +1,5 @@
-﻿namespace Cult.MustacheSharp.Mustache
+﻿// ReSharper disable All 
+namespace Cult.MustacheSharp.Mustache
 {
     public class PlaceholderArgument : IArgument
     {

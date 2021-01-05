@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Timers;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class TimerExtensions

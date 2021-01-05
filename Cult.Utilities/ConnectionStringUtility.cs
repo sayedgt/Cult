@@ -1,4 +1,5 @@
-﻿namespace Cult.Utilities
+﻿// ReSharper disable All 
+namespace Cult.Utilities
 {
     public static class ConnectionStringUtility
     {

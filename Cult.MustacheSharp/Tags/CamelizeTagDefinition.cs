@@ -5,6 +5,7 @@ using Cult.MustacheSharp.Mustache;
 // ReSharper disable IdentifierTypo
 // ReSharper disable StringLiteralTypo
 
+// ReSharper disable All 
 namespace Cult.MustacheSharp.Tags
 {
     public class CamelizeTagDefinition : InlineTagDefinition

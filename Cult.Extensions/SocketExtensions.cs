@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class SocketExtensions

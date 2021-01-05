@@ -1,5 +1,6 @@
 ﻿using Cult.SimMetrics.Api;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
     public sealed class AffineGapRange1To0Multiplier1Over3 : AbstractAffineGapCost

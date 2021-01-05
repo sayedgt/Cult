@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+// ReSharper disable All 
 namespace Cult.Drawing
 {
     public static class ColorExtensions

@@ -2,6 +2,7 @@
 using DotLiquid.FileSystems;
 using System;
 using System.Collections.Generic;
+// ReSharper disable All 
 namespace Cult.DotLiquid
 {
     public class InMemoryFileSystem : IFileSystem

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class EventHandlerExtensions

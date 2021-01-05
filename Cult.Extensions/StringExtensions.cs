@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class StringExtensions

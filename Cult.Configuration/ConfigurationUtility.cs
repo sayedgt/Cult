@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
+// ReSharper disable All 
 namespace Cult.Configuration
 {
     public static class ConfigurationUtility

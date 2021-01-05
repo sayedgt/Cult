@@ -1,4 +1,5 @@
-﻿namespace Cult.SimMetrics.Api
+﻿// ReSharper disable All 
+namespace Cult.SimMetrics.Api
 {
     public interface ISubstitutionCost
     {

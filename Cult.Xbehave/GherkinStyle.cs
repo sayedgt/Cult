@@ -1,4 +1,5 @@
-﻿namespace Xbehave
+﻿// ReSharper disable All 
+namespace Xbehave
 {
     /// <summary>
     /// A simple class to follow Gherkin style.

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+// ReSharper disable All 
 namespace Cult.ParserKit
 {
     public class Token<TToken> where TToken : Enum

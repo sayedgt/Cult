@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+// ReSharper disable All 
 namespace Cult.PersianDateTime
 {
     public static class PersianDateTimeExtensions

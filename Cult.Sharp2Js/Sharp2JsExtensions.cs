@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+// ReSharper disable All 
 namespace Cult.Sharp2Js
 {
     public static class Sharp2JsExtensions

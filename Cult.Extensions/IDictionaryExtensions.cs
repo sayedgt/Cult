@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Dynamic;
 using System.Linq;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class IDictionaryExtensions

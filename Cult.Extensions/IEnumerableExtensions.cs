@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class IEnumerableExtensions

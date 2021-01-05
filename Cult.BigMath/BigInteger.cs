@@ -32,6 +32,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 
+// ReSharper disable All 
 namespace System
 {
     /// <summary>

@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class LongExtensions

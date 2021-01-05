@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 // ReSharper disable once CheckNamespace
 
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public class PagedList<T> : IPagedList<T>

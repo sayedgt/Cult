@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+// ReSharper disable All 
 namespace Cult.Utilities
 {
     public static class ReflectionUtility

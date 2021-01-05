@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
+// ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
     internal static class UpcastDictionary

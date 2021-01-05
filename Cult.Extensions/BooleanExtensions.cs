@@ -1,4 +1,5 @@
 using System;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class BooleanExtensions

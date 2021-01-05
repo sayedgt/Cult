@@ -2,6 +2,7 @@
 using System.Text;
 using Cult.SimMetrics.Api;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
     public sealed class Jaro : AbstractStringMetric

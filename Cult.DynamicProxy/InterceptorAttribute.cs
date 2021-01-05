@@ -1,4 +1,5 @@
 ﻿using System;
+// ReSharper disable All 
 namespace Castle.DynamicProxy
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]

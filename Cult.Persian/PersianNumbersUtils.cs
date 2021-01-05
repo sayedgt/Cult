@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+// ReSharper disable All 
 namespace Cult.Persian
 {
     public static class PersianNumbersUtils

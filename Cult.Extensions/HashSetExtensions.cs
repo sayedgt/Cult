@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class HashSetExtensions

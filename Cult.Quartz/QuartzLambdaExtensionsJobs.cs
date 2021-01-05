@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+// ReSharper disable All 
 namespace Quartz
 {
     public static partial class QuartzLambdaExtensions

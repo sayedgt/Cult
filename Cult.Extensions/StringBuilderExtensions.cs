@@ -2,6 +2,7 @@ using static System.String;
 using System;
 using System.Collections.Generic;
 using System.Text;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class StringBuilderExtensions

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class IListExtensions

@@ -8,6 +8,7 @@ using System;
 using System.Text;
 // ReSharper disable All
 
+// ReSharper disable All 
 namespace Cult.BigMath.Utils
 {
     /// <summary>

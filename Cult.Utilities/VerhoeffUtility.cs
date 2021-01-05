@@ -1,4 +1,5 @@
 ﻿using System;
+// ReSharper disable All 
 namespace Cult.Utilities
 {
     public static class VerhoeffUtility

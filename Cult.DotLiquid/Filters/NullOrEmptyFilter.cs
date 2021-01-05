@@ -1,6 +1,7 @@
 ﻿// ReSharper disable PartialTypeWithSinglePart
 
 // ReSharper disable UnusedMember.Global
+// ReSharper disable All 
 namespace Cult.DotLiquid.Filters
 {
     public static class DotLiquidCustomFilters

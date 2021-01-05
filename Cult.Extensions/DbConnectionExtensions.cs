@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class DbConnectionExtensions

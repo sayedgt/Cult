@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+// ReSharper disable All 
 namespace Cult.Utilities
 {
     public static class DirectoryUtility

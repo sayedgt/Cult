@@ -1,6 +1,7 @@
 using System.Collections;
 // ReSharper disable once CheckNamespace
 
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public interface IPagedList

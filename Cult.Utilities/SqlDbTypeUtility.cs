@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+// ReSharper disable All 
 namespace Cult.Utilities
 {
     public static class SqlDbTypeUtility

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using System.Text.Json;
+// ReSharper disable All 
 namespace Cult.Mvc.Extensions
 {
     public static class TempDataDictionaryExtensions

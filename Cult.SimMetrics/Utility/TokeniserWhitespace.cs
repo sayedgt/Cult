@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Cult.SimMetrics.Api;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
     public sealed class TokeniserWhitespace : ITokeniser

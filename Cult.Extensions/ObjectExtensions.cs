@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class ObjectExtensions

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+// ReSharper disable All 
 namespace Cult.ParserKit
 {
     public sealed class LexerResult<TToken> where TToken : Enum

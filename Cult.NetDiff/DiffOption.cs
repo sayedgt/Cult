@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+// ReSharper disable All 
 namespace Cult.NetDiff
 {
     public class DiffOption<T>

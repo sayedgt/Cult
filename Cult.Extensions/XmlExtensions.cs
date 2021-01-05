@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+// ReSharper disable All 
 namespace Cult.Extensions
 {
     public static class XmlExtensions

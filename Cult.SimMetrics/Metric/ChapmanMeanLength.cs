@@ -1,6 +1,7 @@
 ﻿using System;
 using Cult.SimMetrics.Api;
 
+// ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
     public sealed class ChapmanMeanLength : AbstractStringMetric

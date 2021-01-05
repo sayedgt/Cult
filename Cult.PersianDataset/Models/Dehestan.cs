@@ -1,4 +1,5 @@
-﻿namespace Cult.PersianDataset.Models
+﻿// ReSharper disable All 
+namespace Cult.PersianDataset.Models
 {
 
 	public class Dehestan

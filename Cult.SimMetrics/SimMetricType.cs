@@ -1,3 +1,4 @@
+// ReSharper disable All 
 namespace Cult.SimMetrics
 {
     public enum SimMetricType
