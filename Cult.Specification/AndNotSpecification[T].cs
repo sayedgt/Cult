@@ -3,8 +3,8 @@
 
     public class AndNotSpecification<T> : CompositeSpecification<T>
     {
-        ISpecification<T> left;
-        ISpecification<T> right;
+        readonly ISpecification<T> left;
+        readonly ISpecification<T> right;
 
         public AndNotSpecification(ISpecification<T> left, ISpecification<T> right)
         {

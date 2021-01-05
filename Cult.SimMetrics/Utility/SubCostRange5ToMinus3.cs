@@ -6,7 +6,7 @@ namespace Cult.SimMetrics.Utility
 {
     public sealed class SubCostRange5ToMinus3 : AbstractSubstitutionCost
     {
-        private Collection<string>[] _approx = new Collection<string>[7];
+        private readonly Collection<string>[] _approx = new Collection<string>[7];
         private const int CharApproximateMatchScore = 3;
         private const int CharExactMatchScore = 5;
         private const int CharMismatchMatchScore = -3;

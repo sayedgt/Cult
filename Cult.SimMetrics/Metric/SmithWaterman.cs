@@ -7,7 +7,7 @@ namespace Cult.SimMetrics.Metric
 {
     public sealed class SmithWaterman : AbstractStringMetric
     {
-        private AbstractSubstitutionCost _dCostFunction;
+        private readonly AbstractSubstitutionCost _dCostFunction;
         private const double DefaultGapCost = 0.5;
         private const double DefaultMismatchScore = 0.0;
         private const double DefaultPerfectMatchScore = 1.0;

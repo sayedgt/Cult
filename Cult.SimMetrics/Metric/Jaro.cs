@@ -8,7 +8,7 @@ namespace Cult.SimMetrics.Metric
     public sealed class Jaro : AbstractStringMetric
     {
         private const double DefaultMismatchScore = 0.0;
-        private double _estimatedTimingConstant = 4.1200000850949436E-05;
+        private readonly double _estimatedTimingConstant = 4.1200000850949436E-05;
 
         private static StringBuilder GetCommonCharacters(string firstWord, string secondWord, int distanceSep)
         {

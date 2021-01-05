@@ -9,9 +9,9 @@ namespace Cult.SimMetrics.Metric
     public sealed class JaccardSimilarity : AbstractStringMetric
     {
         private const double DefaultMismatchScore = 0.0;
-        private double _estimatedTimingConstant;
-        private ITokeniser _tokeniser;
-        private TokeniserUtilities<string> _tokenUtilities;
+        private readonly double _estimatedTimingConstant;
+        private readonly ITokeniser _tokeniser;
+        private readonly TokeniserUtilities<string> _tokenUtilities;
 
         public JaccardSimilarity() : this(new TokeniserWhitespace())
         {

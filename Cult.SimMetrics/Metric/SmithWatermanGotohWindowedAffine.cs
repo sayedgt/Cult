@@ -11,9 +11,9 @@ namespace Cult.SimMetrics.Metric
         private const double DefaultMismatchScore = 0.0;
         private const double DefaultPerfectScore = 1.0;
         private const int DefaultWindowSize = 100;
-        private double _estimatedTimingConstant;
+        private readonly double _estimatedTimingConstant;
         private AbstractAffineGapCost _gGapFunction;
-        private int _windowSize;
+        private readonly int _windowSize;
 
         public SmithWatermanGotohWindowedAffine() : this(new AffineGapRange5To0Multiplier1(), new SubCostRange5ToMinus3(), 100)
         {

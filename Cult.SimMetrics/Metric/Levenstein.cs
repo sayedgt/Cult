@@ -7,10 +7,10 @@ namespace Cult.SimMetrics.Metric
 {
     public sealed class Levenstein : AbstractStringMetric
     {
-        private AbstractSubstitutionCost _dCostFunction = new SubCostRange0To1();
+        private readonly AbstractSubstitutionCost _dCostFunction = new SubCostRange0To1();
         private const double DefaultMismatchScore = 0.0;
         private const double DefaultPerfectMatchScore = 1.0;
-        private double _estimatedTimingConstant = 0.00018000000272877514;
+        private readonly double _estimatedTimingConstant = 0.00018000000272877514;
 
         public override double GetSimilarity(string firstWord, string secondWord)
         {

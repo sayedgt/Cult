@@ -9,8 +9,8 @@ namespace Cult.SimMetrics.Metric
     public class MongeElkan : AbstractStringMetric
     {
         private const double DefaultMismatchScore = 0.0;
-        private double _estimatedTimingConstant;
-        private AbstractStringMetric _internalStringMetric;
+        private readonly double _estimatedTimingConstant;
+        private readonly AbstractStringMetric _internalStringMetric;
         internal ITokeniser Tokeniser;
 
         public MongeElkan() : this(new TokeniserWhitespace())

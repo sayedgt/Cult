@@ -6,9 +6,9 @@ namespace Cult.SimMetrics.Utility
 {
     public sealed class TokeniserWhitespace : ITokeniser
     {
-        private string _delimiters = "\r\n\t \x00a0";
+        private readonly string _delimiters = "\r\n\t \x00a0";
         private ITermHandler _stopWordHandler = new DummyStopTermHandler();
-        private TokeniserUtilities<string> _tokenUtilities = new TokeniserUtilities<string>();
+        private readonly TokeniserUtilities<string> _tokenUtilities = new TokeniserUtilities<string>();
 
         public Collection<string> Tokenize(string word)
         {

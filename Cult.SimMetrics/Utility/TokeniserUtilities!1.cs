@@ -5,12 +5,12 @@ namespace Cult.SimMetrics.Utility
 {
     public class TokeniserUtilities<T>
     {
-        private Collection<T> _allTokens;
+        private readonly Collection<T> _allTokens;
         private int _firstSetTokenCount;
         private int _firstTokenCount;
         private int _secondSetTokenCount;
         private int _secondTokenCount;
-        private Collection<T> _tokenSet;
+        private readonly Collection<T> _tokenSet;
 
         public TokeniserUtilities()
         {

@@ -7,8 +7,8 @@ namespace Cult.SimMetrics.Metric
 {
     public sealed class JaroWinkler : AbstractStringMetric
     {
-        private double _estimatedTimingConstant = 4.3420001020422205E-05;
-        private AbstractStringMetric _jaroStringMetric = new Jaro();
+        private readonly double _estimatedTimingConstant = 4.3420001020422205E-05;
+        private readonly AbstractStringMetric _jaroStringMetric = new Jaro();
         private const int MinPrefixTestLength = 4;
         private const double PrefixAdustmentScale = 0.10000000149011612;
 

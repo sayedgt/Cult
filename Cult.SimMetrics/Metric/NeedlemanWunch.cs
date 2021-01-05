@@ -11,7 +11,7 @@ namespace Cult.SimMetrics.Metric
         private const double DefaultGapCost = 2.0;
         private const double DefaultMismatchScore = 0.0;
         private const double DefaultPerfectMatchScore = 1.0;
-        private double _estimatedTimingConstant;
+        private readonly double _estimatedTimingConstant;
         private double _gapCost;
 
         public NeedlemanWunch() : this(2.0, new SubCostRange0To1())

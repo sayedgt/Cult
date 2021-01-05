@@ -8,9 +8,9 @@ namespace Cult.SimMetrics.Metric
 {
     public sealed class BlockDistance : AbstractStringMetric
     {
-        private double _estimatedTimingConstant;
-        private ITokeniser _tokeniser;
-        private TokeniserUtilities<string> _tokenUtilities;
+        private readonly double _estimatedTimingConstant;
+        private readonly ITokeniser _tokeniser;
+        private readonly TokeniserUtilities<string> _tokenUtilities;
 
         public BlockDistance() : this(new TokeniserWhitespace())
         {
