@@ -10,15 +10,15 @@ namespace Cult.PersianDataset
 	{
 		public static IEnumerable<string> GetBoyNames()
 		{
-			return Assembly.GetExecutingAssembly().GetManifestResourceText("Boys.csv").Split(',');
+			return Assembly.GetExecutingAssembly().GetManifestResourceText("Boys.csv").Split(',').Select(x => x.Trim()).ToArray();
 		}
 		public static IEnumerable<string> GetGirlNames()
 		{
-			return Assembly.GetExecutingAssembly().GetManifestResourceText("Girls.csv").Split(',');
+			return Assembly.GetExecutingAssembly().GetManifestResourceText("Girls.csv").Split(',').Select(x => x.Trim()).ToArray();
 		}
 		public static IEnumerable<string> GetFamilyNames()
 		{
-			return Assembly.GetExecutingAssembly().GetManifestResourceText("Family.csv").Split(',');
+			return Assembly.GetExecutingAssembly().GetManifestResourceText("Family.csv").Split(',').Select(x => x.Trim()).ToArray();
 		}
 
 		public static IEnumerable<Abadi> GetAbadi()

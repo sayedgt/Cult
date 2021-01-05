@@ -1,8 +1,28 @@
-﻿namespace Cult.Persian
+﻿using System.Text.RegularExpressions;
+
+namespace Cult.Persian
 {
     public static class PersianExtensions
     {
-        public static string ToPersianNumbers(this string data)
+        private const char ArabicKeChar = (char)1603;
+        private const char ArabicYeChar1 = (char)1609;
+        private const char ArabicYeChar2 = (char)1610;
+        private const char ArabicYeWithOneDotBelow = (char)1568;
+        private const char ArabicYeWithInvertedV = (char)1597;
+        private const char ArabicYeWithTwoDotsAbove = (char)1598;
+        private const char ArabicYeWithThreeDotsAbove = (char)1599;
+        private const char ArabicYeWithHighHamzeYeh = (char)1656;
+        private const char ArabicYeWithFinalForm = (char)1744;
+        private const char ArabicYeWithThreeDotsBelow = (char)1745;
+        private const char ArabicYeWithTail = (char)1741;
+        private const char ArabicYeSmallV = (char)1742;
+        private const char PersianKeChar = (char)1705;
+        private const char PersianYeChar = (char)1740;
+        private static readonly Regex _matchArabicHebrew = new Regex(@"[\u0600-\u06FF,\u0590-\u05FF,«,»]", options: RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex _matchOnlyPersianNumbersRange = new Regex(@"^[\u06F0-\u06F9]+$", options: RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex _matchOnlyPersianLetters = new Regex(@"^[\\s,\u06A9\u06AF\u06C0\u06CC\u060C,\u062A\u062B\u062C\u062D\u062E\u062F,\u063A\u064A\u064B\u064C\u064D\u064E,\u064F\u067E\u0670\u0686\u0698\u200C,\u0621-\u0629\u0630-\u0639\u0641-\u0654]+$", options: RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static readonly Regex _hasHalfSpaces = new Regex(@"\u200B|\u200C|\u200E|\u200F", options: RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static string ApplyCorrectYeKe(this string data)
         {
             if (string.IsNullOrWhiteSpace(data)) return string.Empty;
 
@@ -11,54 +31,22 @@
             {
                 switch (dataChars[i])
                 {
-                    case '0':
-                    case '\u0660':
-                        dataChars[i] = '\u06F0';
+                    case ArabicYeChar1:
+                    case ArabicYeChar2:
+                    case ArabicYeWithOneDotBelow:
+                    case ArabicYeWithInvertedV:
+                    case ArabicYeWithTwoDotsAbove:
+                    case ArabicYeWithThreeDotsAbove:
+                    case ArabicYeWithHighHamzeYeh:
+                    case ArabicYeWithFinalForm:
+                    case ArabicYeWithThreeDotsBelow:
+                    case ArabicYeWithTail:
+                    case ArabicYeSmallV:
+                        dataChars[i] = PersianYeChar;
                         break;
 
-                    case '1':
-                    case '\u0661':
-                        dataChars[i] = '\u06F1';
-                        break;
-
-                    case '2':
-                    case '\u0662':
-                        dataChars[i] = '\u06F2';
-                        break;
-
-                    case '3':
-                    case '\u0663':
-                        dataChars[i] = '\u06F3';
-                        break;
-
-                    case '4':
-                    case '\u0664':
-                        dataChars[i] = '\u06F4';
-                        break;
-
-                    case '5':
-                    case '\u0665':
-                        dataChars[i] = '\u06F5';
-                        break;
-
-                    case '6':
-                    case '\u0666':
-                        dataChars[i] = '\u06F6';
-                        break;
-
-                    case '7':
-                    case '\u0667':
-                        dataChars[i] = '\u06F7';
-                        break;
-
-                    case '8':
-                    case '\u0668':
-                        dataChars[i] = '\u06F8';
-                        break;
-
-                    case '9':
-                    case '\u0669':
-                        dataChars[i] = '\u06F9';
+                    case ArabicKeChar:
+                        dataChars[i] = PersianKeChar;
                         break;
 
                     default:
@@ -69,73 +57,35 @@
 
             return new string(dataChars);
         }
-
-        public static string ToEnglishNumbers(this string data)
+        public static string CorrectArabicLetters(this string text)
         {
-            if (string.IsNullOrWhiteSpace(data)) return string.Empty;
-
-            var dataChars = data.ToCharArray();
-            for (var i = 0; i < dataChars.Length; i++)
-            {
-                switch (dataChars[i])
-                {
-                    case '\u06F0':
-                    case '\u0660':
-                        dataChars[i] = '0';
-                        break;
-
-                    case '\u06F1':
-                    case '\u0661':
-                        dataChars[i] = '1';
-                        break;
-
-                    case '\u06F2':
-                    case '\u0662':
-                        dataChars[i] = '2';
-                        break;
-
-                    case '\u06F3':
-                    case '\u0663':
-                        dataChars[i] = '3';
-                        break;
-
-                    case '\u06F4':
-                    case '\u0664':
-                        dataChars[i] = '4';
-                        break;
-
-                    case '\u06F5':
-                    case '\u0665':
-                        dataChars[i] = '5';
-                        break;
-
-                    case '\u06F6':
-                    case '\u0666':
-                        dataChars[i] = '6';
-                        break;
-
-                    case '\u06F7':
-                    case '\u0667':
-                        dataChars[i] = '7';
-                        break;
-
-                    case '\u06F8':
-                    case '\u0668':
-                        dataChars[i] = '8';
-                        break;
-
-                    case '\u06F9':
-                    case '\u0669':
-                        dataChars[i] = '9';
-                        break;
-
-                    default:
-                        dataChars[i] = dataChars[i];
-                        break;
-                }
-            }
-
-            return new string(dataChars);
+            text
+                .Replace("ي", "ی")
+                .Replace("ك", "ک")
+                .Replace("دِ", "د")
+                .Replace("بِ", "ب")
+                .Replace("زِ", "ز")
+                .Replace("ذِ", "ذ")
+                .Replace("ِشِ", "ش")
+                .Replace("ِسِ", "س")
+                .Replace("ى", "ی")
+                .Replace("ة", "ه")
+                .Replace("‍", "")
+                .ApplyCorrectYeKe();
+            return text;
         }
+        public static bool ContainsFarsi(this string txt)
+        {
+            return !string.IsNullOrEmpty(txt) && _matchArabicHebrew.IsMatch(txt);
+        }
+        public static bool ContainsOnlyFarsiLetters(this string txt)
+        {
+            return !string.IsNullOrEmpty(txt) && _matchOnlyPersianLetters.IsMatch(txt);
+        }
+        public static bool ContainsOnlyPersianNumbers(this string text, bool ignoreCommaSeparator = false)
+        {
+            return !string.IsNullOrEmpty(text) && _matchOnlyPersianNumbersRange.IsMatch(ignoreCommaSeparator ? text.Replace(",", "") : text);
+        }
+        public static bool ContainsHalfSpace(this string text) => _hasHalfSpaces.IsMatch(text);
     }
 }
