@@ -105,8 +105,7 @@ namespace Cult.Extensions
         public static IEnumerable<T> GetDuplicateItems<T>(this IEnumerable<T> @this)
         {
             HashSet<T> hashset = new HashSet<T>();
-            IEnumerable<T> duplicates = @this.Where(e => !hashset.Add(e));
-            return duplicates;
+            return @this.Where(e => !hashset.Add(e));
         }
         public static IEnumerable<IEnumerable<T>> GetKCombinations<T>(this IEnumerable<T> list, int length) where T : IComparable
         {
@@ -251,6 +250,10 @@ namespace Cult.Extensions
         public static string StringJoin<T>(this IEnumerable<T> @this, char separator)
         {
             return string.Join(separator.ToString(), @this);
+        }
+        public static IEnumerable<T> TakeLast<T>(this IEnumerable<T> list, int n)
+        {
+            return list.ToList().TakeLast(n);
         }
         public static Collection<T> ToCollection<T>(this IEnumerable<T> enumerable)
         {

@@ -5,19 +5,11 @@ using System.IO;
 // ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
-    /// <summary>
-    /// Generates the text for a tag that is replaced with its generated text.
-    /// </summary>
     internal sealed class InlineGenerator : IGenerator
     {
         private readonly TagDefinition _definition;
         private readonly ArgumentCollection _arguments;
 
-        /// <summary>
-        /// Initializes a new instance of an InlineGenerator.
-        /// </summary>
-        /// <param name="definition">The tag to render the text for.</param>
-        /// <param name="arguments">The arguments passed to the tag.</param>
         public InlineGenerator(TagDefinition definition, ArgumentCollection arguments)
         {
             _definition = definition;

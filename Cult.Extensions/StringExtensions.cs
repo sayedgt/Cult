@@ -1018,12 +1018,20 @@ namespace Cult.Extensions
         {
             return new CultureInfo("en-US").TextInfo.ToTitleCase(@this);
         }
-        public static string ToUnicodeString(this string str)
+        public static string ToUnicodeString(this string text, bool ignoreWhiteSpaces = false)
         {
-            var builder = new StringBuilder();
-            foreach (var ch in str)
+            StringBuilder builder = new StringBuilder();
+            foreach (char ch in text)
             {
-                builder.Append(ToUnicodeString(ch.ToString()));
+                if (ignoreWhiteSpaces && char.IsWhiteSpace(ch))
+                {
+                    builder.Append(" ");
+                }
+                else
+                {
+                    builder.Append(@"\u");
+                    builder.AppendFormat("{0:x4}", (int)ch);
+                }
             }
             return builder.ToString();
         }

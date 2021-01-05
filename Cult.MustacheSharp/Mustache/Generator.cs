@@ -6,9 +6,6 @@ using System.IO;
 // ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
-    /// <summary>
-    /// Generates text by substituting an object's values for placeholders.
-    /// </summary>
     public sealed class Generator
     {
         private readonly IGenerator _generator;
@@ -16,63 +13,36 @@ namespace Cult.MustacheSharp.Mustache
         private readonly List<EventHandler<KeyNotFoundEventArgs>> _notFoundHandlers = new List<EventHandler<KeyNotFoundEventArgs>>();
         private readonly List<EventHandler<ValueRequestEventArgs>> _valueRequestedHandlers = new List<EventHandler<ValueRequestEventArgs>>();
 
-        /// <summary>
-        /// Initializes a new instance of a Generator.
-        /// </summary>
-        /// <param name="generator">The text generator to wrap.</param>
         internal Generator(IGenerator generator)
         {
             _generator = generator;
         }
 
-        /// <summary>
-        /// Occurs when a key/property is found.
-        /// </summary>
         public event EventHandler<KeyFoundEventArgs> KeyFound
         {
             add { _foundHandlers.Add(value); }
             remove { _foundHandlers.Remove(value); }
         }
 
-        /// <summary>
-        /// Occurs when a key/property is not found in the object graph.
-        /// </summary>
         public event EventHandler<KeyNotFoundEventArgs> KeyNotFound
         {
             add { _notFoundHandlers.Add(value); }
             remove { _notFoundHandlers.Remove(value); }
         }
 
-        /// <summary>
-        /// Occurs when a setter is encountered and requires a value to be provided.
-        /// </summary>
         public event EventHandler<ValueRequestEventArgs> ValueRequested
         {
             add { _valueRequestedHandlers.Add(value); }
             remove { _valueRequestedHandlers.Remove(value); }
         }
 
-        /// <summary>
-        /// Occurs when a tag is replaced by its text.
-        /// </summary>
         public event EventHandler<TagFormattedEventArgs> TagFormatted;
 
-        /// <summary>
-        /// Gets the text that is generated for the given object.
-        /// </summary>
-        /// <param name="source">The object to generate the text with.</param>
-        /// <returns>The text generated for the given object.</returns>
         public string Render(object source)
         {
             return render(CultureInfo.CurrentCulture, source);
         }
 
-        /// <summary>
-        /// Gets the text that is generated for the given object.
-        /// </summary>
-        /// <param name="provider">The format provider to use.</param>
-        /// <param name="source">The object to generate the text with.</param>
-        /// <returns>The text generated for the given object.</returns>
         public string Render(IFormatProvider provider, object source)
         {
             if (provider == null)

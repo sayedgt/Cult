@@ -28,6 +28,20 @@ namespace Cult.Utilities
                 Directory.Delete(tempDirectory, true);
             }
         }
+        public static void DeleteReadOnlyDirectory(string directoryPath)
+        {
+            foreach (var subdirectory in Directory.EnumerateDirectories(directoryPath))
+            {
+                DeleteReadOnlyDirectory(subdirectory);
+            }
+            foreach (var fileName in Directory.EnumerateFiles(directoryPath))
+            {
+                var fileInfo = new FileInfo(fileName);
+                fileInfo.Attributes = FileAttributes.Normal;
+                fileInfo.Delete();
+            }
+            Directory.Delete(directoryPath);
+        }
         public static string GetTempDirectory()
         {
             return Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());

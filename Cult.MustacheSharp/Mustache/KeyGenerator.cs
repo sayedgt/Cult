@@ -5,9 +5,6 @@ using System.Text;
 // ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
-    /// <summary>
-    /// Substitutes a key placeholder with the textual representation of the associated object.
-    /// </summary>
     internal sealed class KeyGenerator : IGenerator
     {
         private readonly string _key;
@@ -15,13 +12,6 @@ namespace Cult.MustacheSharp.Mustache
         private readonly bool _isVariable;
         private readonly bool _isExtension;
 
-        /// <summary>
-        /// Initializes a new instance of a KeyGenerator.
-        /// </summary>
-        /// <param name="key">The key to substitute with its value.</param>
-        /// <param name="alignment">The alignment specifier.</param>
-        /// <param name="formatting">The format specifier.</param>
-        /// <param name="isExtension">Specifies whether the key was found within triple curly braces.</param>
         public KeyGenerator(string key, string alignment, string formatting, bool isExtension)
         {
             if (key.StartsWith("@"))

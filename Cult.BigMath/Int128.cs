@@ -15,9 +15,6 @@ using Cult.BigMath.Utils;
 // ReSharper disable All 
 namespace System
 {
-    /// <summary>
-    ///     Represents a 128-bit signed integer.
-    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 16)]
     public struct Int128 : IComparable<Int128>, IComparable, IEquatable<Int128>, IFormattable
@@ -35,19 +32,10 @@ namespace System
 
         private const ulong NegativeSignMask = 0x1UL << 63;
 
-        /// <summary>
-        ///     Gets a value that represents the number 0 (zero).
-        /// </summary>
         public static Int128 Zero = GetZero();
 
-        /// <summary>
-        ///     Represents the largest possible value of an Int128.
-        /// </summary>
         public static Int128 MaxValue = GetMaxValue();
 
-        /// <summary>
-        ///     Represents the smallest possible value of an Int128.
-        /// </summary>
         public static Int128 MinValue = GetMinValue();
 
         private static Int128 GetMaxValue()
@@ -65,40 +53,24 @@ namespace System
             return new Int128();
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(byte value)
         {
             _hi = 0;
             _lo = value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">if set to <c>true</c> [value].</param>
         public Int128(bool value)
         {
             _hi = 0;
             _lo = (ulong) (value ? 1 : 0);
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(char value)
         {
             _hi = 0;
             _lo = value;
         }
         
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(decimal value)
         {
             bool isNegative = value < 0;
@@ -122,90 +94,50 @@ namespace System
             }
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(double value) : this((decimal) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(float value) : this((decimal) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(short value) : this((int) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(int value) : this((long) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(long value)
         {
             _hi = unchecked((ulong) (value < 0 ? ~0 : 0));
             _lo = (ulong) value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(sbyte value) : this((long) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(ushort value)
         {
             _hi = 0;
             _lo = value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(uint value)
         {
             _hi = 0;
             _lo = value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(ulong value)
         {
             _hi = 0;
             _lo = value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(Guid value)
         {
             var int128 = value.ToByteArray().ToInt128(0);
@@ -213,10 +145,6 @@ namespace System
             _lo = int128.Low;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int128(Int256 value)
         {
             ulong[] values = value.ToUIn64Array();
@@ -230,11 +158,6 @@ namespace System
             _lo = lo;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int128" /> struct.
-        /// </summary>
-        /// <param name="sign">The sign.</param>
-        /// <param name="ints">The ints.</param>
         public Int128(int sign, uint[] ints)
         {
             if (ints == null)
@@ -260,26 +183,16 @@ namespace System
             }
         }
 
-        /// <summary>
-        ///     Higher 64 bits.
-        /// </summary>
         public ulong High
         {
             get { return _hi; }
         }
 
-        /// <summary>
-        ///     Lower 64 bits.
-        /// </summary>
         public ulong Low
         {
             get { return _lo; }
         }
 
-        /// <summary>
-        ///     Gets a number that indicates the sign (negative, positive, or zero) of the current Int128 object.
-        /// </summary>
-        /// <value>A number that indicates the sign of the Int128 object</value>
         public int Sign
         {
             get
@@ -293,60 +206,26 @@ namespace System
             }
         }
 
-        /// <summary>
-        ///     Returns a hash code for this instance.
-        /// </summary>
-        /// <returns>
-        ///     A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
-        /// </returns>
         public override int GetHashCode()
         {
             return _hi.GetHashCode() ^ _lo.GetHashCode();
         }
 
-        /// <summary>
-        ///     Returns a value indicating whether this instance is equal to a specified object.
-        /// </summary>
-        /// <param name="obj">An object to compare with this instance.</param>
-        /// <returns>
-        ///     true if obj has the same value as this instance; otherwise, false.
-        /// </returns>
         public override bool Equals(object obj)
         {
             return base.Equals(obj);
         }
 
-        /// <summary>
-        ///     Returns a value indicating whether this instance is equal to a specified Int64 value.
-        /// </summary>
-        /// <param name="obj">The obj.</param>
-        /// <returns>
-        ///     true if obj has the same value as this instance; otherwise, false.
-        /// </returns>
         public bool Equals(Int128 obj)
         {
             return _hi == obj._hi && _lo == obj._lo;
         }
 
-        /// <summary>
-        ///     Returns a <see cref="string" /> that represents this instance.
-        /// </summary>
-        /// <returns>
-        ///     A <see cref="string" /> that represents this instance.
-        /// </returns>
         public override string ToString()
         {
             return ToString(null, null);
         }
 
-        /// <summary>
-        ///     Returns a <see cref="string" /> that represents this instance.
-        /// </summary>
-        /// <param name="format">The format. Only x, X, g, G, d, D are supported.</param>
-        /// <param name="formatProvider">An object that supplies culture-specific formatting information about this instance.</param>
-        /// <returns>
-        ///     A <see cref="string" /> that represents this instance.
-        /// </returns>
         public string ToString(string format, IFormatProvider formatProvider = null)
         {
             if (formatProvider == null)
@@ -406,17 +285,6 @@ namespace System
             return s;
         }
 
-        /// <summary>
-        ///     Converts the numeric value to an equivalent object. The return value indicates whether the conversion succeeded.
-        /// </summary>
-        /// <param name="conversionType">The target conversion type.</param>
-        /// <param name="provider">An object that supplies culture-specific information about the conversion.</param>
-        /// <param name="asLittleEndian">As little endian.</param>
-        /// <param name="value">
-        ///     When this method returns, contains the value that is equivalent to the numeric value, if the
-        ///     conversion succeeded, or is null if the conversion failed. This parameter is passed uninitialized.
-        /// </param>
-        /// <returns>true if this value was converted successfully; otherwise, false.</returns>
         public bool TryConvert(Type conversionType, IFormatProvider provider, bool asLittleEndian, out object value)
         {
             if (conversionType == typeof (bool))
@@ -525,52 +393,21 @@ namespace System
             return false;
         }
 
-        /// <summary>
-        ///     Converts the string representation of a number to its Int128 equivalent.
-        /// </summary>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <returns>
-        ///     A value that is equivalent to the number specified in the value parameter.
-        /// </returns>
         public static Int128 Parse(string value)
         {
             return Parse(value, NumberStyles.Integer, NumberFormatInfo.CurrentInfo);
         }
 
-        /// <summary>
-        ///     Converts the string representation of a number in a specified style format to its Int128 equivalent.
-        /// </summary>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <param name="style">A bitwise combination of the enumeration values that specify the permitted format of value.</param>
-        /// <returns>
-        ///     A value that is equivalent to the number specified in the value parameter.
-        /// </returns>
         public static Int128 Parse(string value, NumberStyles style)
         {
             return Parse(value, style, NumberFormatInfo.CurrentInfo);
         }
 
-        /// <summary>
-        ///     Converts the string representation of a number in a culture-specific format to its Int128 equivalent.
-        /// </summary>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <param name="provider">An object that provides culture-specific formatting information about value.</param>
-        /// <returns>
-        ///     A value that is equivalent to the number specified in the value parameter.
-        /// </returns>
         public static Int128 Parse(string value, IFormatProvider provider)
         {
             return Parse(value, NumberStyles.Integer, NumberFormatInfo.GetInstance(provider));
         }
 
-        /// <summary>
-        ///     Converts the string representation of a number in a specified style and culture-specific format to its Int128
-        ///     equivalent.
-        /// </summary>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <param name="style">A bitwise combination of the enumeration values that specify the permitted format of value.</param>
-        /// <param name="provider">An object that provides culture-specific formatting information about value.</param>
-        /// <returns>A value that is equivalent to the number specified in the value parameter.</returns>
         public static Int128 Parse(string value, NumberStyles style, IFormatProvider provider)
         {
             Int128 result;
@@ -582,41 +419,11 @@ namespace System
             return result;
         }
 
-        /// <summary>
-        ///     Tries to convert the string representation of a number to its Int128 equivalent, and returns a value that indicates
-        ///     whether the conversion succeeded..
-        /// </summary>
-        /// <param name="value">The string representation of a number.</param>
-        /// <param name="result">
-        ///     When this method returns, contains the Int128 equivalent to the number that is contained in value,
-        ///     or Int128.Zero if the conversion failed. This parameter is passed uninitialized.
-        /// </param>
-        /// <returns>
-        ///     true if the value parameter was converted successfully; otherwise, false.
-        /// </returns>
         public static bool TryParse(string value, out Int128 result)
         {
             return TryParse(value, NumberStyles.Integer, NumberFormatInfo.CurrentInfo, out result);
         }
 
-        /// <summary>
-        ///     Tries to convert the string representation of a number in a specified style and culture-specific format to its
-        ///     Int128 equivalent, and returns a value that indicates whether the conversion succeeded..
-        /// </summary>
-        /// <param name="value">
-        ///     The string representation of a number. The string is interpreted using the style specified by
-        ///     style.
-        /// </param>
-        /// <param name="style">
-        ///     A bitwise combination of enumeration values that indicates the style elements that can be present
-        ///     in value. A typical value to specify is NumberStyles.Integer.
-        /// </param>
-        /// <param name="provider">An object that supplies culture-specific formatting information about value.</param>
-        /// <param name="result">
-        ///     When this method returns, contains the Int128 equivalent to the number that is contained in value,
-        ///     or Int128.Zero if the conversion failed. This parameter is passed uninitialized.
-        /// </param>
-        /// <returns>true if the value parameter was converted successfully; otherwise, false.</returns>
         public static bool TryParse(string value, NumberStyles style, IFormatProvider provider, out Int128 result)
         {
             result = Zero;
@@ -715,21 +522,6 @@ namespace System
             return true;
         }
 
-        /// <summary>
-        ///     Converts the value of this instance to an <see cref="T:System.Object" /> of the specified
-        ///     <see cref="T:System.Type" /> that has an equivalent value, using the specified culture-specific formatting
-        ///     information.
-        /// </summary>
-        /// <param name="conversionType">The <see cref="T:System.Type" /> to which the value of this instance is converted.</param>
-        /// <param name="provider">
-        ///     An <see cref="T:System.IFormatProvider" /> interface implementation that supplies
-        ///     culture-specific formatting information.
-        /// </param>
-        /// <param name="asLittleEndian">As little endian.</param>
-        /// <returns>
-        ///     An <see cref="T:System.Object" /> instance of type <paramref name="conversionType" /> whose value is equivalent to
-        ///     the value of this instance.
-        /// </returns>
         public object ToType(Type conversionType, IFormatProvider provider, bool asLittleEndian)
         {
             object value;
@@ -741,31 +533,11 @@ namespace System
             throw new InvalidCastException();
         }
 
-        /// <summary>
-        ///     Compares the current instance with another object of the same type and returns an integer that indicates whether
-        ///     the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
-        /// </summary>
-        /// <param name="obj">An object to compare with this instance.</param>
-        /// <returns>
-        ///     A value that indicates the relative order of the objects being compared. The return value has these meanings: Value
-        ///     Meaning Less than zero This instance is less than <paramref name="obj" />. Zero This instance is equal to
-        ///     <paramref name="obj" />. Greater than zero This instance is greater than <paramref name="obj" />.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">
-        ///     <paramref name="obj" /> is not the same type as this instance.
-        /// </exception>
         int IComparable.CompareTo(object obj)
         {
             return Compare(this, obj);
         }
 
-        /// <summary>
-        ///     Compares two Int128 values and returns an integer that indicates whether the first value is less than, equal to, or
-        ///     greater than the second value.
-        /// </summary>
-        /// <param name="left">The first value to compare.</param>
-        /// <param name="right">The second value to compare.</param>
-        /// <returns>A signed integer that indicates the relative values of left and right, as shown in the following table.</returns>
         public static int Compare(Int128 left, object right)
         {
             if (right is Int128)
@@ -854,15 +626,6 @@ namespace System
             throw new ArgumentException();
         }
 
-        /// <summary>
-        ///     Compares two 128-bit signed integer values and returns an integer that indicates whether the first value is less
-        ///     than, equal to, or greater than the second value.
-        /// </summary>
-        /// <param name="left">The first value to compare.</param>
-        /// <param name="right">The second value to compare.</param>
-        /// <returns>
-        ///     A signed number indicating the relative values of this instance and value.
-        /// </returns>
         public static int Compare(Int128 left, Int128 right)
         {
             int leftSign = left.Sign;
@@ -891,11 +654,6 @@ namespace System
             return left._lo.CompareTo(right._lo);
         }
 
-        /// <summary>
-        ///     Compares this instance to a specified 128-bit signed integer and returns an indication of their relative values.
-        /// </summary>
-        /// <param name="value">An integer to compare.</param>
-        /// <returns>A signed number indicating the relative values of this instance and value.</returns>
         public int CompareTo(Int128 value)
         {
             return Compare(this, value);
@@ -915,33 +673,17 @@ namespace System
             this++;
         }
 
-        /// <summary>
-        ///     Negates a specified Int128 value.
-        /// </summary>
-        /// <param name="value">The value to negate.</param>
-        /// <returns>The result of the value parameter multiplied by negative one (-1).</returns>
         public static Int128 Negate(Int128 value)
         {
             value.Negate();
             return value;
         }
 
-        /// <summary>
-        ///     Gets the absolute value this object.
-        /// </summary>
-        /// <returns>The absolute value.</returns>
         public Int128 ToAbs()
         {
             return Abs(this);
         }
 
-        /// <summary>
-        ///     Gets the absolute value of an Int128 object.
-        /// </summary>
-        /// <param name="value">A number.</param>
-        /// <returns>
-        ///     The absolute value.
-        /// </returns>
         public static Int128 Abs(Int128 value)
         {
             if (value.Sign < 0)
@@ -952,52 +694,22 @@ namespace System
             return value;
         }
 
-        /// <summary>
-        ///     Adds two Int128 values and returns the result.
-        /// </summary>
-        /// <param name="left">The first value to add.</param>
-        /// <param name="right">The second value to add.</param>
-        /// <returns>The sum of left and right.</returns>
         public static Int128 Add(Int128 left, Int128 right)
         {
             return left + right;
         }
 
-        /// <summary>
-        ///     Subtracts one Int128 value from another and returns the result.
-        /// </summary>
-        /// <param name="left">The value to subtract from (the minuend).</param>
-        /// <param name="right">The value to subtract (the subtrahend).</param>
-        /// <returns>The result of subtracting right from left.</returns>
         public static Int128 Subtract(Int128 left, Int128 right)
         {
             return left - right;
         }
 
-        /// <summary>
-        ///     Divides one Int128 value by another and returns the result.
-        /// </summary>
-        /// <param name="dividend">The value to be divided.</param>
-        /// <param name="divisor">The value to divide by.</param>
-        /// <returns>The quotient of the division.</returns>
         public static Int128 Divide(Int128 dividend, Int128 divisor)
         {
             Int128 integer;
             return DivRem(dividend, divisor, out integer);
         }
 
-        /// <summary>
-        ///     Divides one Int128 value by another, returns the result, and returns the remainder in an output parameter.
-        /// </summary>
-        /// <param name="dividend">The value to be divided.</param>
-        /// <param name="divisor">The value to divide by.</param>
-        /// <param name="remainder">
-        ///     When this method returns, contains an Int128 value that represents the remainder from the
-        ///     division. This parameter is passed uninitialized.
-        /// </param>
-        /// <returns>
-        ///     The quotient of the division.
-        /// </returns>
         public static Int128 DivRem(Int128 dividend, Int128 divisor, out Int128 remainder)
         {
             if (divisor == 0)
@@ -1016,12 +728,6 @@ namespace System
             return new Int128(dividendSign*divisorSign, quotient);
         }
 
-        /// <summary>
-        ///     Performs integer division on two Int128 values and returns the remainder.
-        /// </summary>
-        /// <param name="dividend">The value to be divided.</param>
-        /// <param name="divisor">The value to divide by.</param>
-        /// <returns>The remainder after dividing dividend by divisor.</returns>
         public static Int128 Remainder(Int128 dividend, Int128 divisor)
         {
             Int128 remainder;
@@ -1029,21 +735,11 @@ namespace System
             return remainder;
         }
 
-        /// <summary>
-        ///     Converts an Int128 value to an unsigned long array.
-        /// </summary>
-        /// <returns>
-        ///     The value of the current Int128 object converted to an array of unsigned integers.
-        /// </returns>
         public ulong[] ToUIn64Array()
         {
             return new[] {_lo, _hi};
         }
 
-        /// <summary>
-        ///     Converts an Int128 value to an unsigned integer array.
-        /// </summary>
-        /// <returns>The value of the current Int128 object converted to an array of unsigned integers.</returns>
         public uint[] ToUIn32Array()
         {
             var ints = new uint[4];
@@ -1052,12 +748,6 @@ namespace System
             return ints;
         }
 
-        /// <summary>
-        ///     Returns the product of two Int128 values.
-        /// </summary>
-        /// <param name="left">The first number to multiply.</param>
-        /// <param name="right">The second number to multiply.</param>
-        /// <returns>The product of the left and right parameters.</returns>
         public static Int128 Multiply(Int128 left, Int128 right)
         {
             int leftSign = left.Sign;
@@ -1090,205 +780,86 @@ namespace System
             return new Int128(leftSign*rightSign, mulInts);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="bool" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">if set to <c>true</c> [value].</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(bool value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="byte" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(byte value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="char" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(char value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="decimal" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int128(decimal value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="double" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int128(double value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="short" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(short value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="int" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(int value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="long" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(long value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="sbyte" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(sbyte value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="float" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int128(float value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="ushort" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(ushort value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="uint" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(uint value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="ulong" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int128(ulong value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="Int256" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int128(Int256 value)
         {
             return new Int128(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="Int128" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int256(Int128 value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="bool" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator bool(Int128 value)
         {
             return value.Sign != 0;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="byte" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator byte(Int128 value)
         {
             if (value.Sign == 0)
@@ -1304,13 +875,6 @@ namespace System
             return (byte) value._lo;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="char" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator char(Int128 value)
         {
             if (value.Sign == 0)
@@ -1326,13 +890,6 @@ namespace System
             return (char) (ushort) value._lo;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="decimal" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator decimal(Int128 value)
         {
             if (value.Sign == 0)
@@ -1343,13 +900,6 @@ namespace System
             return new decimal((int) (value._lo & 0xFFFFFFFF), (int) (value._lo >> 32), (int) (value._hi & 0xFFFFFFFF), value.Sign < 0, 0);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="double" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator double(Int128 value)
         {
             if (value.Sign == 0)
@@ -1367,13 +917,6 @@ namespace System
             return d;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="float" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator float(Int128 value)
         {
             if (value.Sign == 0)
@@ -1391,13 +934,6 @@ namespace System
             return f;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="short" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator short(Int128 value)
         {
             if (value.Sign == 0)
@@ -1413,13 +949,6 @@ namespace System
             return (short) value._lo;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="int" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator int(Int128 value)
         {
             if (value.Sign == 0)
@@ -1435,13 +964,6 @@ namespace System
             return (int) value._lo;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="long" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator long(Int128 value)
         {
             if (value.Sign == 0)
@@ -1457,13 +979,6 @@ namespace System
             return (long) value._lo;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="uint" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator uint(Int128 value)
         {
             if (value.Sign == 0)
@@ -1479,13 +994,6 @@ namespace System
             return (uint) value._lo;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="ushort" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator ushort(Int128 value)
         {
             if (value.Sign == 0)
@@ -1501,13 +1009,6 @@ namespace System
             return (ushort) value._lo;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int128" /> to <see cref="ulong" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator ulong(Int128 value)
         {
             if (value.Sign == 0)
@@ -1523,116 +1024,46 @@ namespace System
             return value._lo;
         }
 
-        /// <summary>
-        ///     Implements the operator &gt;.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator >(Int128 left, Int128 right)
         {
             return Compare(left, right) > 0;
         }
 
-        /// <summary>
-        ///     Implements the operator &lt;.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator <(Int128 left, Int128 right)
         {
             return Compare(left, right) < 0;
         }
 
-        /// <summary>
-        ///     Implements the operator &gt;=.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator >=(Int128 left, Int128 right)
         {
             return Compare(left, right) >= 0;
         }
 
-        /// <summary>
-        ///     Implements the operator &lt;=.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator <=(Int128 left, Int128 right)
         {
             return Compare(left, right) <= 0;
         }
 
-        /// <summary>
-        ///     Implements the operator !=.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator !=(Int128 left, Int128 right)
         {
             return Compare(left, right) != 0;
         }
 
-        /// <summary>
-        ///     Implements the operator ==.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator ==(Int128 left, Int128 right)
         {
             return Compare(left, right) == 0;
         }
 
-        /// <summary>
-        ///     Implements the operator +.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int128 operator +(Int128 value)
         {
             return value;
         }
 
-        /// <summary>
-        ///     Implements the operator -.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int128 operator -(Int128 value)
         {
             return Negate(value);
         }
 
-        /// <summary>
-        ///     Implements the operator +.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int128 operator +(Int128 left, Int128 right)
         {
             left._hi += right._hi;
@@ -1646,65 +1077,27 @@ namespace System
             return left;
         }
 
-        /// <summary>
-        ///     Implements the operator -.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int128 operator -(Int128 left, Int128 right)
         {
             return left + -right;
         }
 
 
-        /// <summary>
-        ///     Implements the operator %.
-        /// </summary>
-        /// <param name="dividend">The dividend.</param>
-        /// <param name="divisor">The divisor.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int128 operator %(Int128 dividend, Int128 divisor)
         {
             return Remainder(dividend, divisor);
         }
 
-        /// <summary>
-        ///     Implements the operator /.
-        /// </summary>
-        /// <param name="dividend">The dividend.</param>
-        /// <param name="divisor">The divisor.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int128 operator /(Int128 dividend, Int128 divisor)
         {
             return Divide(dividend, divisor);
         }
 
-        /// <summary>
-        ///     Implements the operator *.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int128 operator *(Int128 left, Int128 right)
         {
             return Multiply(left, right);
         }
 
-        /// <summary>
-        ///     Implements the operator &gt;&gt;.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="shift">The shift.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int128 operator >>(Int128 value, int shift)
         {
             if (shift == 0)
@@ -1719,12 +1112,6 @@ namespace System
             return value;
         }
 
-        /// <summary>
-        ///     Implements the operator &lt;&lt;.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="shift">The shift.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int128 operator <<(Int128 value, int shift)
         {
             if (shift == 0)
@@ -1739,12 +1126,6 @@ namespace System
             return value;
         }
 
-        /// <summary>
-        ///     Implements the operator |.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int128 operator |(Int128 left, Int128 right)
         {
             if (left == 0)
@@ -1763,12 +1144,6 @@ namespace System
             return result;
         }
 
-        /// <summary>
-        ///     Implements the operator &amp;.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int128 operator &(Int128 left, Int128 right)
         {
             if (left == 0 || right == 0)
@@ -1782,31 +1157,16 @@ namespace System
             return result;
         }
 
-        /// <summary>
-        ///     Implements the operator ~.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int128 operator ~(Int128 value)
         {
             return new Int128(~value._hi, ~value._lo);
         }
 
-        /// <summary>
-        ///     Implements the operator ++.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int128 operator ++(Int128 value)
         {
             return value + 1;
         }
 
-        /// <summary>
-        ///     Implements the operator --.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int128 operator --(Int128 value)
         {
             return value - 1;

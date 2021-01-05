@@ -16,9 +16,6 @@ using Cult.BigMath.Utils;
 // ReSharper disable All 
 namespace System
 {
-    /// <summary>
-    ///     Represents a 256-bit signed integer.
-    /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [StructLayout(LayoutKind.Explicit, Pack = 1, Size = 32)]
     public struct Int256 : IComparable<Int256>, IComparable, IEquatable<Int256>, IFormattable
@@ -40,19 +37,10 @@ namespace System
 
         private const ulong NegativeSignMask = 0x1UL << 63;
 
-        /// <summary>
-        ///     Gets a value that represents the number 0 (zero).
-        /// </summary>
         public static Int256 Zero = GetZero();
 
-        /// <summary>
-        ///     Represents the largest possible value of an Int256.
-        /// </summary>
         public static Int256 MaxValue = GetMaxValue();
 
-        /// <summary>
-        ///     Represents the smallest possible value of an Int256.
-        /// </summary>
         public static Int256 MinValue = GetMinValue();
 
         private static Int256 GetMaxValue()
@@ -70,10 +58,6 @@ namespace System
             return new Int256();
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(byte value)
         {
             _a = 0;
@@ -82,10 +66,6 @@ namespace System
             _d = value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">if set to <c>true</c> [value].</param>
         public Int256(bool value)
         {
             _a = 0;
@@ -94,10 +74,6 @@ namespace System
             _d = (ulong) (value ? 1 : 0);
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(char value)
         {
             _a = 0;
@@ -106,10 +82,6 @@ namespace System
             _d = value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(decimal value)
         {
             bool isNegative = value < 0;
@@ -135,60 +107,32 @@ namespace System
             }
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(double value) : this((decimal) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(float value) : this((decimal) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(short value) : this((int) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(int value) : this((long) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(long value)
         {
             _a = _b = _c = unchecked((ulong) (value < 0 ? ~0 : 0));
             _d = (ulong) value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(sbyte value) : this((long) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(ushort value)
         {
             _a = 0;
@@ -197,10 +141,6 @@ namespace System
             _d = value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(uint value)
         {
             _a = 0;
@@ -209,10 +149,6 @@ namespace System
             _d = value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(ulong value)
         {
             _a = 0;
@@ -221,10 +157,6 @@ namespace System
             _d = value;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(Guid value)
         {
             var int256 = value.ToByteArray().ToInt256(0);
@@ -234,10 +166,6 @@ namespace System
             _d = int256.D;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public Int256(Int128 value)
         {
             ulong[] values = value.ToUIn64Array();
@@ -254,11 +182,6 @@ namespace System
             _d = d;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Int256" /> struct.
-        /// </summary>
-        /// <param name="sign">The sign.</param>
-        /// <param name="ints">The ints.</param>
         public Int256(int sign, uint[] ints)
         {
             if (ints == null)
@@ -286,42 +209,26 @@ namespace System
             }
         }
 
-        /// <summary>
-        ///     Higher 64 bits of the higher 128 bits.
-        /// </summary>
         public ulong A
         {
             get { return _a; }
         }
 
-        /// <summary>
-        ///     Lower 64 bits of the higher 128 bits.
-        /// </summary>
         public ulong B
         {
             get { return _b; }
         }
 
-        /// <summary>
-        ///     Higher 64 bits of the lower 128 bits.
-        /// </summary>
         public ulong C
         {
             get { return _c; }
         }
 
-        /// <summary>
-        ///     Lower 64 bits of the lower 128 bits.
-        /// </summary>
         public ulong D
         {
             get { return _d; }
         }
 
-        /// <summary>
-        ///     Gets a number that indicates the sign (negative, positive, or zero) of the current Int256 object.
-        /// </summary>
-        /// <value>A number that indicates the sign of the Int256 object</value>
         public int Sign
         {
             get
@@ -335,60 +242,26 @@ namespace System
             }
         }
 
-        /// <summary>
-        ///     Returns a hash code for this instance.
-        /// </summary>
-        /// <returns>
-        ///     A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
-        /// </returns>
         public override int GetHashCode()
         {
             return _a.GetHashCode() ^ _b.GetHashCode() ^ _c.GetHashCode() ^ _d.GetHashCode();
         }
 
-        /// <summary>
-        ///     Returns a value indicating whether this instance is equal to a specified object.
-        /// </summary>
-        /// <param name="obj">An object to compare with this instance.</param>
-        /// <returns>
-        ///     true if obj has the same value as this instance; otherwise, false.
-        /// </returns>
         public override bool Equals(object obj)
         {
             return base.Equals(obj);
         }
 
-        /// <summary>
-        ///     Returns a value indicating whether this instance is equal to a specified Int64 value.
-        /// </summary>
-        /// <param name="obj">The obj.</param>
-        /// <returns>
-        ///     true if obj has the same value as this instance; otherwise, false.
-        /// </returns>
         public bool Equals(Int256 obj)
         {
             return _a == obj._a && _b == obj._b && _c == obj._c && _d == obj._d;
         }
 
-        /// <summary>
-        ///     Returns a <see cref="string" /> that represents this instance.
-        /// </summary>
-        /// <returns>
-        ///     A <see cref="string" /> that represents this instance.
-        /// </returns>
         public override string ToString()
         {
             return ToString(null, null);
         }
 
-        /// <summary>
-        ///     Returns a <see cref="string" /> that represents this instance.
-        /// </summary>
-        /// <param name="format">The format. Only x, X, g, G, d, D are supported.</param>
-        /// <param name="formatProvider">An object that supplies culture-specific formatting information about this instance.</param>
-        /// <returns>
-        ///     A <see cref="string" /> that represents this instance.
-        /// </returns>
         public string ToString(string format, IFormatProvider formatProvider = null)
         {
             if (formatProvider == null)
@@ -448,17 +321,6 @@ namespace System
             return s;
         }
 
-        /// <summary>
-        ///     Converts the numeric value to an equivalent object. The return value indicates whether the conversion succeeded.
-        /// </summary>
-        /// <param name="conversionType">The target conversion type.</param>
-        /// <param name="provider">An object that supplies culture-specific information about the conversion.</param>
-        /// <param name="asLittleEndian">As little endian.</param>
-        /// <param name="value">
-        ///     When this method returns, contains the value that is equivalent to the numeric value, if the
-        ///     conversion succeeded, or is null if the conversion failed. This parameter is passed uninitialized.
-        /// </param>
-        /// <returns>true if this value was converted successfully; otherwise, false.</returns>
         public bool TryConvert(Type conversionType, IFormatProvider provider, bool asLittleEndian, out object value)
         {
             if (conversionType == typeof (bool))
@@ -567,52 +429,21 @@ namespace System
             return false;
         }
 
-        /// <summary>
-        ///     Converts the string representation of a number to its Int256 equivalent.
-        /// </summary>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <returns>
-        ///     A value that is equivalent to the number specified in the value parameter.
-        /// </returns>
         public static Int256 Parse(string value)
         {
             return Parse(value, NumberStyles.Integer, NumberFormatInfo.CurrentInfo);
         }
 
-        /// <summary>
-        ///     Converts the string representation of a number in a specified style format to its Int256 equivalent.
-        /// </summary>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <param name="style">A bitwise combination of the enumeration values that specify the permitted format of value.</param>
-        /// <returns>
-        ///     A value that is equivalent to the number specified in the value parameter.
-        /// </returns>
         public static Int256 Parse(string value, NumberStyles style)
         {
             return Parse(value, style, NumberFormatInfo.CurrentInfo);
         }
 
-        /// <summary>
-        ///     Converts the string representation of a number in a culture-specific format to its Int256 equivalent.
-        /// </summary>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <param name="provider">An object that provides culture-specific formatting information about value.</param>
-        /// <returns>
-        ///     A value that is equivalent to the number specified in the value parameter.
-        /// </returns>
         public static Int256 Parse(string value, IFormatProvider provider)
         {
             return Parse(value, NumberStyles.Integer, NumberFormatInfo.GetInstance(provider));
         }
 
-        /// <summary>
-        ///     Converts the string representation of a number in a specified style and culture-specific format to its Int256
-        ///     equivalent.
-        /// </summary>
-        /// <param name="value">A string that contains a number to convert.</param>
-        /// <param name="style">A bitwise combination of the enumeration values that specify the permitted format of value.</param>
-        /// <param name="provider">An object that provides culture-specific formatting information about value.</param>
-        /// <returns>A value that is equivalent to the number specified in the value parameter.</returns>
         public static Int256 Parse(string value, NumberStyles style, IFormatProvider provider)
         {
             Int256 result;
@@ -624,41 +455,11 @@ namespace System
             return result;
         }
 
-        /// <summary>
-        ///     Tries to convert the string representation of a number to its Int256 equivalent, and returns a value that indicates
-        ///     whether the conversion succeeded..
-        /// </summary>
-        /// <param name="value">The string representation of a number.</param>
-        /// <param name="result">
-        ///     When this method returns, contains the Int256 equivalent to the number that is contained in value,
-        ///     or Int256.Zero if the conversion failed. This parameter is passed uninitialized.
-        /// </param>
-        /// <returns>
-        ///     true if the value parameter was converted successfully; otherwise, false.
-        /// </returns>
         public static bool TryParse(string value, out Int256 result)
         {
             return TryParse(value, NumberStyles.Integer, NumberFormatInfo.CurrentInfo, out result);
         }
 
-        /// <summary>
-        ///     Tries to convert the string representation of a number in a specified style and culture-specific format to its
-        ///     Int256 equivalent, and returns a value that indicates whether the conversion succeeded..
-        /// </summary>
-        /// <param name="value">
-        ///     The string representation of a number. The string is interpreted using the style specified by
-        ///     style.
-        /// </param>
-        /// <param name="style">
-        ///     A bitwise combination of enumeration values that indicates the style elements that can be present
-        ///     in value. A typical value to specify is NumberStyles.Integer.
-        /// </param>
-        /// <param name="provider">An object that supplies culture-specific formatting information about value.</param>
-        /// <param name="result">
-        ///     When this method returns, contains the Int256 equivalent to the number that is contained in value,
-        ///     or Int256.Zero if the conversion failed. This parameter is passed uninitialized.
-        /// </param>
-        /// <returns>true if the value parameter was converted successfully; otherwise, false.</returns>
         public static bool TryParse(string value, NumberStyles style, IFormatProvider provider, out Int256 result)
         {
             result = Zero;
@@ -758,21 +559,6 @@ namespace System
             return true;
         }
 
-        /// <summary>
-        ///     Converts the value of this instance to an <see cref="T:System.Object" /> of the specified
-        ///     <see cref="T:System.Type" /> that has an equivalent value, using the specified culture-specific formatting
-        ///     information.
-        /// </summary>
-        /// <param name="conversionType">The <see cref="T:System.Type" /> to which the value of this instance is converted.</param>
-        /// <param name="provider">
-        ///     An <see cref="T:System.IFormatProvider" /> interface implementation that supplies
-        ///     culture-specific formatting information.
-        /// </param>
-        /// <param name="asLittleEndian">As little endian.</param>
-        /// <returns>
-        ///     An <see cref="T:System.Object" /> instance of type <paramref name="conversionType" /> whose value is equivalent to
-        ///     the value of this instance.
-        /// </returns>
         public object ToType(Type conversionType, IFormatProvider provider, bool asLittleEndian)
         {
             object value;
@@ -784,31 +570,11 @@ namespace System
             throw new InvalidCastException();
         }
 
-        /// <summary>
-        ///     Compares the current instance with another object of the same type and returns an integer that indicates whether
-        ///     the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
-        /// </summary>
-        /// <param name="obj">An object to compare with this instance.</param>
-        /// <returns>
-        ///     A value that indicates the relative order of the objects being compared. The return value has these meanings: Value
-        ///     Meaning Less than zero This instance is less than <paramref name="obj" />. Zero This instance is equal to
-        ///     <paramref name="obj" />. Greater than zero This instance is greater than <paramref name="obj" />.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">
-        ///     <paramref name="obj" /> is not the same type as this instance.
-        /// </exception>
         int IComparable.CompareTo(object obj)
         {
             return Compare(this, obj);
         }
 
-        /// <summary>
-        ///     Compares two Int256 values and returns an integer that indicates whether the first value is less than, equal to, or
-        ///     greater than the second value.
-        /// </summary>
-        /// <param name="left">The first value to compare.</param>
-        /// <param name="right">The second value to compare.</param>
-        /// <returns>A signed integer that indicates the relative values of left and right, as shown in the following table.</returns>
         public static int Compare(Int256 left, object right)
         {
             if (right is Int256)
@@ -897,15 +663,6 @@ namespace System
             throw new ArgumentException();
         }
 
-        /// <summary>
-        ///     Compares two 256-bit signed integer values and returns an integer that indicates whether the first value is less
-        ///     than, equal to, or greater than the second value.
-        /// </summary>
-        /// <param name="left">The first value to compare.</param>
-        /// <param name="right">The second value to compare.</param>
-        /// <returns>
-        ///     A signed number indicating the relative values of this instance and value.
-        /// </returns>
         public static int Compare(Int256 left, Int256 right)
         {
             int leftSign = left.Sign;
@@ -942,11 +699,6 @@ namespace System
             return left._d.CompareTo(right._d);
         }
 
-        /// <summary>
-        ///     Compares this instance to a specified 256-bit signed integer and returns an indication of their relative values.
-        /// </summary>
-        /// <param name="value">An integer to compare.</param>
-        /// <returns>A signed number indicating the relative values of this instance and value.</returns>
         public int CompareTo(Int256 value)
         {
             return Compare(this, value);
@@ -968,33 +720,17 @@ namespace System
             this++;
         }
 
-        /// <summary>
-        ///     Negates a specified Int256 value.
-        /// </summary>
-        /// <param name="value">The value to negate.</param>
-        /// <returns>The result of the value parameter multiplied by negative one (-1).</returns>
         public static Int256 Negate(Int256 value)
         {
             value.Negate();
             return value;
         }
 
-        /// <summary>
-        ///     Gets the absolute value this object.
-        /// </summary>
-        /// <returns>The absolute value.</returns>
         public Int256 ToAbs()
         {
             return Abs(this);
         }
 
-        /// <summary>
-        ///     Gets the absolute value of an Int256 object.
-        /// </summary>
-        /// <param name="value">A number.</param>
-        /// <returns>
-        ///     The absolute value.
-        /// </returns>
         public static Int256 Abs(Int256 value)
         {
             if (value.Sign < 0)
@@ -1005,46 +741,22 @@ namespace System
             return value;
         }
 
-        /// <summary>
-        ///     Adds two Int256 values and returns the result.
-        /// </summary>
-        /// <param name="left">The first value to add.</param>
-        /// <param name="right">The second value to add.</param>
-        /// <returns>The sum of left and right.</returns>
         public static Int256 Add(Int256 left, Int256 right)
         {
             return left + right;
         }
 
-        /// <summary>
-        ///     Subtracts one Int256 value from another and returns the result.
-        /// </summary>
-        /// <param name="left">The value to subtract from (the minuend).</param>
-        /// <param name="right">The value to subtract (the subtrahend).</param>
-        /// <returns>The result of subtracting right from left.</returns>
         public static Int256 Subtract(Int256 left, Int256 right)
         {
             return left - right;
         }
 
-        /// <summary>
-        ///     Divides one Int256 value by another and returns the result.
-        /// </summary>
-        /// <param name="dividend">The value to be divided.</param>
-        /// <param name="divisor">The value to divide by.</param>
-        /// <returns>The quotient of the division.</returns>
         public static Int256 Divide(Int256 dividend, Int256 divisor)
         {
             Int256 integer;
             return DivRem(dividend, divisor, out integer);
         }
 
-        /// <summary>
-        ///     Performs integer division on two Int256 values and returns the remainder.
-        /// </summary>
-        /// <param name="dividend">The value to be divided.</param>
-        /// <param name="divisor">The value to divide by.</param>
-        /// <returns>The remainder after dividing dividend by divisor.</returns>
         public static Int256 Remainder(Int256 dividend, Int256 divisor)
         {
             Int256 remainder;
@@ -1052,18 +764,6 @@ namespace System
             return remainder;
         }
 
-        /// <summary>
-        ///     Divides one Int256 value by another, returns the result, and returns the remainder in an output parameter.
-        /// </summary>
-        /// <param name="dividend">The value to be divided.</param>
-        /// <param name="divisor">The value to divide by.</param>
-        /// <param name="remainder">
-        ///     When this method returns, contains an Int256 value that represents the remainder from the
-        ///     division. This parameter is passed uninitialized.
-        /// </param>
-        /// <returns>
-        ///     The quotient of the division.
-        /// </returns>
         public static Int256 DivRem(Int256 dividend, Int256 divisor, out Int256 remainder)
         {
             if (divisor == 0)
@@ -1082,21 +782,11 @@ namespace System
             return new Int256(dividendSign*divisorSign, quotient);
         }
 
-        /// <summary>
-        ///     Converts an Int256 value to an unsigned long array.
-        /// </summary>
-        /// <returns>
-        ///     The value of the current Int256 object converted to an array of unsigned integers.
-        /// </returns>
         public ulong[] ToUIn64Array()
         {
             return new[] {_d, _c, _b, _a};
         }
 
-        /// <summary>
-        ///     Converts an Int256 value to an unsigned integer array.
-        /// </summary>
-        /// <returns>The value of the current Int256 object converted to an array of unsigned integers.</returns>
         public uint[] ToUIn32Array()
         {
             var ints = new uint[8];
@@ -1105,12 +795,6 @@ namespace System
             return ints;
         }
 
-        /// <summary>
-        ///     Returns the product of two Int256 values.
-        /// </summary>
-        /// <param name="left">The first number to multiply.</param>
-        /// <param name="right">The second number to multiply.</param>
-        /// <returns>The product of the left and right parameters.</returns>
         public static Int256 Multiply(Int256 left, Int256 right)
         {
             int leftSign = left.Sign;
@@ -1143,181 +827,76 @@ namespace System
             return new Int256(leftSign*rightSign, mulInts);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="bool" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">if set to <c>true</c> [value].</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(bool value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="byte" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(byte value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="char" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(char value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="decimal" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int256(decimal value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="double" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int256(double value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="short" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(short value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="int" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(int value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="long" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(long value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="sbyte" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(sbyte value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="float" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int256(float value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="ushort" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(ushort value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="uint" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(uint value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="ulong" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator Int256(ulong value)
         {
             return new Int256(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="bool" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator bool(Int256 value)
         {
             return value.Sign != 0;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="byte" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator byte(Int256 value)
         {
             if (value.Sign == 0)
@@ -1333,13 +912,6 @@ namespace System
             return (byte) value._d;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="char" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator char(Int256 value)
         {
             if (value.Sign == 0)
@@ -1355,13 +927,6 @@ namespace System
             return (char) (ushort) value._d;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="decimal" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator decimal(Int256 value)
         {
             if (value.Sign == 0)
@@ -1377,13 +942,6 @@ namespace System
             return new decimal((int) (value._d & 0xFFFFFFFF), (int) (value._d >> 32), (int) (value._c & 0xFFFFFFFF), value.Sign < 0, 0);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="double" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator double(Int256 value)
         {
             if (value.Sign == 0)
@@ -1401,13 +959,6 @@ namespace System
             return d;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="float" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator float(Int256 value)
         {
             if (value.Sign == 0)
@@ -1425,13 +976,6 @@ namespace System
             return f;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="short" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator short(Int256 value)
         {
             if (value.Sign == 0)
@@ -1447,13 +991,6 @@ namespace System
             return (short) value._d;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="int" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator int(Int256 value)
         {
             if (value.Sign == 0)
@@ -1469,13 +1006,6 @@ namespace System
             return ((int) value._d);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="long" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator long(Int256 value)
         {
             if (value.Sign == 0)
@@ -1491,13 +1021,6 @@ namespace System
             return (long) value._d;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="uint" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator uint(Int256 value)
         {
             if (value.Sign == 0)
@@ -1513,13 +1036,6 @@ namespace System
             return (uint) value._d;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="ushort" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator ushort(Int256 value)
         {
             if (value.Sign == 0)
@@ -1535,13 +1051,6 @@ namespace System
             return (ushort) value._d;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="Int256" /> to <see cref="ulong" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator ulong(Int256 value)
         {
             if ((value < ushort.MinValue) || (value > ushort.MaxValue))
@@ -1552,116 +1061,46 @@ namespace System
             return value._d;
         }
 
-        /// <summary>
-        ///     Implements the operator &gt;.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator >(Int256 left, Int256 right)
         {
             return Compare(left, right) > 0;
         }
 
-        /// <summary>
-        ///     Implements the operator &lt;.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator <(Int256 left, Int256 right)
         {
             return Compare(left, right) < 0;
         }
 
-        /// <summary>
-        ///     Implements the operator &gt;=.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator >=(Int256 left, Int256 right)
         {
             return Compare(left, right) >= 0;
         }
 
-        /// <summary>
-        ///     Implements the operator &lt;=.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator <=(Int256 left, Int256 right)
         {
             return Compare(left, right) <= 0;
         }
 
-        /// <summary>
-        ///     Implements the operator !=.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator !=(Int256 left, Int256 right)
         {
             return Compare(left, right) != 0;
         }
 
-        /// <summary>
-        ///     Implements the operator ==.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator ==(Int256 left, Int256 right)
         {
             return Compare(left, right) == 0;
         }
 
-        /// <summary>
-        ///     Implements the operator +.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int256 operator +(Int256 value)
         {
             return value;
         }
 
-        /// <summary>
-        ///     Implements the operator -.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int256 operator -(Int256 value)
         {
             return Negate(value);
         }
 
-        /// <summary>
-        ///     Implements the operator +.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int256 operator +(Int256 left, Int256 right)
         {
             left._a += right._a;
@@ -1696,64 +1135,26 @@ namespace System
             return left;
         }
 
-        /// <summary>
-        ///     Implements the operator -.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int256 operator -(Int256 left, Int256 right)
         {
             return left + -right;
         }
 
-        /// <summary>
-        ///     Implements the operator %.
-        /// </summary>
-        /// <param name="dividend">The dividend.</param>
-        /// <param name="divisor">The divisor.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int256 operator %(Int256 dividend, Int256 divisor)
         {
             return Remainder(dividend, divisor);
         }
 
-        /// <summary>
-        ///     Implements the operator /.
-        /// </summary>
-        /// <param name="dividend">The dividend.</param>
-        /// <param name="divisor">The divisor.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int256 operator /(Int256 dividend, Int256 divisor)
         {
             return Divide(dividend, divisor);
         }
 
-        /// <summary>
-        ///     Implements the operator *.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static Int256 operator *(Int256 left, Int256 right)
         {
             return Multiply(left, right);
         }
 
-        /// <summary>
-        ///     Implements the operator &gt;&gt;.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="shift">The shift.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int256 operator >>(Int256 value, int shift)
         {
             if (shift == 0)
@@ -1770,12 +1171,6 @@ namespace System
             return value;
         }
 
-        /// <summary>
-        ///     Implements the operator &lt;&lt;.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="shift">The shift.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int256 operator <<(Int256 value, int shift)
         {
             if (shift == 0)
@@ -1792,12 +1187,6 @@ namespace System
             return value;
         }
 
-        /// <summary>
-        ///     Implements the operator |.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int256 operator |(Int256 left, Int256 right)
         {
             if (left == 0)
@@ -1817,12 +1206,6 @@ namespace System
             return left;
         }
 
-        /// <summary>
-        ///     Implements the operator &amp;.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int256 operator &(Int256 left, Int256 right)
         {
             if (left == 0 || right == 0)
@@ -1837,31 +1220,16 @@ namespace System
             return left;
         }
 
-        /// <summary>
-        ///     Implements the operator ~.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int256 operator ~(Int256 value)
         {
             return new Int256(~value._a, ~value._b, ~value._c, ~value._d);
         }
 
-        /// <summary>
-        ///     Implements the operator ++.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int256 operator ++(Int256 value)
         {
             return value + 1;
         }
 
-        /// <summary>
-        ///     Implements the operator --.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The result of the operator.</returns>
         public static Int256 operator --(Int256 value)
         {
             return value - 1;

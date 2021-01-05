@@ -11,9 +11,6 @@ using System.Text;
 // ReSharper disable All 
 namespace Cult.BigMath.Utils
 {
-    /// <summary>
-    ///     Crc32 calculator.
-    /// </summary>
     public class Crc32
     {
         private const uint KCrcPoly = 0xEDB88320;
@@ -56,9 +53,6 @@ namespace Cult.BigMath.Utils
             get { return ~_value; }
         }
 
-        /// <summary>
-        ///     Reset CRC.
-        /// </summary>
         public void Init()
         {
             _value = KInitial;

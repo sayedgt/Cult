@@ -26,8 +26,7 @@ namespace Cult.Extensions
         }
         public static void CopyTo(this DirectoryInfo obj, string destDirName, string searchPattern, SearchOption searchOption)
         {
-            var files = obj.GetFiles(searchPattern, searchOption);
-            foreach (var file in files)
+            foreach (var file in obj.GetFiles(searchPattern, searchOption))
             {
                 var outputFile = destDirName + file.FullName.Substring(obj.FullName.Length);
                 var directory = new FileInfo(outputFile).Directory;

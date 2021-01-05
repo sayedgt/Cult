@@ -45,11 +45,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Extensions", "Cult.Ext
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Mvc", "Cult.Mvc\Cult.Mvc.csproj", "{4016DCBA-B198-405C-8094-F95D5DA00432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Persian", "Cult.Persian\Cult.Persian.csproj", "{354B718F-C126-414C-AAA0-EA12CEC0700A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Persian", "Cult.Persian\Cult.Persian.csproj", "{354B718F-C126-414C-AAA0-EA12CEC0700A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.PersianDataset", "Cult.PersianDataset\Cult.PersianDataset.csproj", "{D3804595-4703-4A86-A0D2-301D9E8B56DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.PersianDataset", "Cult.PersianDataset\Cult.PersianDataset.csproj", "{D3804595-4703-4A86-A0D2-301D9E8B56DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Configuration", "Cult.Configuration\Cult.Configuration.csproj", "{505E3E08-0590-46B2-B663-1F342E61B0F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Configuration", "Cult.Configuration\Cult.Configuration.csproj", "{505E3E08-0590-46B2-B663-1F342E61B0F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Range", "Cult.Range\Cult.Range.csproj", "{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.DryIoc", "Cult.DryIoc\Cult.DryIoc.csproj", "{8DF5A181-AB2D-47A9-BB43-F5B4403B346A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +157,14 @@ Global
 		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DF5A181-AB2D-47A9-BB43-F5B4403B346A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF5A181-AB2D-47A9-BB43-F5B4403B346A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF5A181-AB2D-47A9-BB43-F5B4403B346A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF5A181-AB2D-47A9-BB43-F5B4403B346A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

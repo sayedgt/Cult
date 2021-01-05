@@ -14,30 +14,6 @@ using Microsoft.CodeAnalysis.Scripting;
 // ReSharper disable All 
 namespace RoslynQuoter
 {
-    /// <summary>
-    /// A tool that for a given C# program constructs Roslyn API calls to create a syntax tree that
-    /// describes this program. As opposed to SyntaxTree.ParseText() that creates the syntax tree object
-    /// graph in runtime, Quoter returns the C# source code that will construct such syntax tree object
-    /// graph when compiled and executed.
-    /// </summary>
-    /// <example>
-    /// new Quoter().Quote("class C{}") returns:
-    /// 
-    /// CompilationUnit()
-    /// .WithMembers(
-    ///     List&lt;MemberDeclarationSyntax&gt;
-    ///         ClassDeclaration(
-    ///             Identifier(
-    ///                 "C"))
-    ///         .WithKeyword(
-    ///             Token(
-    ///                 ClassKeyword,
-    ///                 TriviaList(
-    ///                     Space)))
-    /// .WithEndOfFileToken(
-    ///     Syntax.Token(
-    ///         SyntaxKind.EndOfFileToken))
-    /// </example>
     public class Quoter
     {
         public bool OpenParenthesisOnNewLine { get; set; }
@@ -64,13 +40,6 @@ namespace RoslynQuoter
             RemoveRedundantModifyingCalls = true;
         }
 
-        /// <summary>
-        /// Given the input C# program <paramref name="sourceText"/> returns the C# source code of
-        /// Roslyn API calls that recreate the syntax tree for the input program.
-        /// </summary>
-        /// <param name="sourceText">A C# program (one compilation unit)</param>
-        /// <returns>A C# expression that describes calls to the Roslyn syntax API necessary to recreate
-        /// the syntax tree for the source program.</returns>
         public ApiCall Quote(string sourceText)
         {
             return Quote(sourceText, NodeKind.CompilationUnit);
@@ -87,14 +56,6 @@ namespace RoslynQuoter
             return Print(node);
         }
 
-        /// <summary>
-        /// Given the input C# code <paramref name="sourceText"/> returns the C# source code of
-        /// Roslyn API calls that recreate the syntax tree for the input code.
-        /// </summary>
-        /// <param name="sourceText">A C# souce text</param>
-        /// <param name="nodeKind">What kind of C# syntax node should the input be parsed as</param>
-        /// <returns>A C# expression that describes calls to the Roslyn syntax API necessary to recreate
-        /// the syntax tree for the source text.</returns>
         public ApiCall Quote(string sourceText, NodeKind nodeKind)
         {
             var node = Parse(sourceText, nodeKind);
@@ -106,12 +67,6 @@ namespace RoslynQuoter
             return Quote(node);
         }
 
-        /// <summary>
-        /// Given the input C# code <paramref name="sourceText"/> returns
-        /// the syntax tree for the input code.
-        /// </summary>
-        /// <param name="sourceText">A C# souce text</param>
-        /// <param name="nodeKind">What kind of C# syntax node should the input be parsed as</param>
         private static SyntaxNode Parse(string sourceText, NodeKind nodeKind)
         {
             switch (nodeKind)
@@ -129,13 +84,6 @@ namespace RoslynQuoter
             }
         }
 
-        /// <summary>
-        /// Given the input C# syntax node <paramref name="node"/> returns the C# source code of
-        /// Roslyn API calls that recreate the syntax node.
-        /// </summary>
-        /// <param name="node">A C# syntax node</param>
-        /// <returns>A C# expression that describes calls to the Roslyn syntax API necessary to recreate
-        /// the input syntax node.</returns>
         internal ApiCall Quote(SyntaxNode node)
         {
             ApiCall rootApiCall = Quote(node, name: null);
@@ -147,10 +95,6 @@ namespace RoslynQuoter
             return rootApiCall;
         }
 
-        /// <summary>
-        /// Recursive method that "quotes" a SyntaxNode, SyntaxToken, SyntaxTrivia or other objects.
-        /// </summary>
-        /// <returns>A description of Roslyn API calls necessary to recreate the input object.</returns>
         private ApiCall Quote(object treeElement, string name = null)
         {
             if (treeElement is SyntaxTrivia)
@@ -179,9 +123,6 @@ namespace RoslynQuoter
             return QuoteNode((SyntaxNode)treeElement, name);
         }
 
-        /// <summary>
-        /// The main recursive method that given a SyntaxNode recursively quotes the entire subtree.
-        /// </summary>
         private ApiCall QuoteNode(SyntaxNode node, string name)
         {
             List<ApiCall> quotedPropertyValues = QuotePropertyValues(node);
@@ -206,11 +147,6 @@ namespace RoslynQuoter
             return codeBlock;
         }
 
-        /// <summary>
-        /// Inspects the property values of the <paramref name="node"/> object using Reflection and
-        /// creates API call descriptions for the property values recursively. Properties that are not
-        /// essential to the shape of the syntax tree (such as Span) are ignored.
-        /// </summary>
         private List<ApiCall> QuotePropertyValues(SyntaxNode node)
         {
             var result = new List<ApiCall>();
@@ -250,10 +186,6 @@ namespace RoslynQuoter
             return result;
         }
 
-        /// <summary>
-        /// Quote the value of the property <paramref name="property"/> of object <paramref
-        /// name="node"/>
-        /// </summary>
         private ApiCall QuotePropertyValue(SyntaxNode node, PropertyInfo property)
         {
             var value = property.GetValue(node, null);
@@ -382,8 +314,7 @@ namespace RoslynQuoter
             };
             }
 
-            var codeBlock = new ApiCall(name, methodName, elements);
-            return codeBlock;
+            return new ApiCall(name, methodName, elements);
         }
 
         private ApiCall QuoteToken(SyntaxToken value, string name)
@@ -750,17 +681,11 @@ namespace RoslynQuoter
             }
         }
 
-        /// <summary>
-        /// Helper to quickly create a list from one or several items
-        /// </summary>
         private static List<object> CreateArgumentList(params object[] args)
         {
             return new List<object>(args);
         }
 
-        /// <summary>
-        /// Escapes strings to be included within "" using C# escaping rules
-        /// </summary>
         public static string Escape(string text, bool escapeVerbatim = false)
         {
             var sb = new StringBuilder();
@@ -901,9 +826,6 @@ namespace RoslynQuoter
             return text;
         }
 
-        /// <summary>
-        /// Finds a value in a list using case-insensitive search
-        /// </summary>
         private ApiCall FindValue(string parameterName, IEnumerable<ApiCall> values)
         {
             return values.FirstOrDefault(
@@ -933,10 +855,6 @@ namespace RoslynQuoter
         "XmlTextAttribute(Microsoft.CodeAnalysis.CSharp.Syntax.XmlNameSyntax, Microsoft.CodeAnalysis.CSharp.SyntaxKind, Microsoft.CodeAnalysis.SyntaxTokenList)"
     };
 
-        /// <summary>
-        /// Static methods on Microsoft.CodeAnalysis.CSharp.SyntaxFactory class that construct SyntaxNodes
-        /// </summary>
-        /// <example>Syntax.ClassDeclaration()</example>
         private static readonly Dictionary<string, IEnumerable<MethodInfo>> factoryMethods = GetFactoryMethods();
 
         private static readonly Dictionary<string, IEnumerable<MethodInfo>> factoryMethodsByName = factoryMethods
@@ -945,10 +863,6 @@ namespace RoslynQuoter
             .GroupBy(m => m.Name)
             .ToDictionary(g => g.Key, g => (IEnumerable<MethodInfo>)g.ToArray());
 
-        /// <summary>
-        /// Five public properties on Microsoft.CodeAnalysis.CSharp.SyntaxFactory that return trivia: CarriageReturn,
-        /// LineFeed, CarriageReturnLineFeed, Space and Tab.
-        /// </summary>
         private static readonly Dictionary<string, PropertyInfo> triviaFactoryProperties = GetTriviaFactoryProperties();
 
         private static readonly Dictionary<string, SyntaxTrivia> triviaFactoryPropertyValues = typeof(SyntaxFactory)
@@ -957,25 +871,15 @@ namespace RoslynQuoter
             .Where(propertyInfo => !propertyInfo.Name.Contains("Elastic"))
             .ToDictionary(p => p.Name, p => ((SyntaxTrivia)p.GetValue(null)));
 
-        /// <summary>
-        /// Gets the five properties on SyntaxFactory that return ready-made trivia: CarriageReturn,
-        /// CarriageReturnLineFeed, LineFeed, Space and Tab.
-        /// </summary>
         private static Dictionary<string, PropertyInfo> GetTriviaFactoryProperties()
         {
-            var result = typeof(SyntaxFactory)
+            return typeof(SyntaxFactory)
                 .GetProperties(BindingFlags.Public | BindingFlags.Static)
                 .Where(propertyInfo => propertyInfo.PropertyType == typeof(SyntaxTrivia))
                 .Where(propertyInfo => !propertyInfo.Name.Contains("Elastic"))
                 .ToDictionary(propertyInfo => ((SyntaxTrivia)propertyInfo.GetValue(null)).ToString());
-
-            return result;
         }
 
-        /// <summary>
-        /// Returns static methods on Microsoft.CodeAnalysis.CSharp.SyntaxFactory that return types derived from
-        /// SyntaxNode and bucketizes them by overloads.
-        /// </summary>
         private static Dictionary<string, IEnumerable<MethodInfo>> GetFactoryMethods()
         {
             var result = new Dictionary<string, IEnumerable<MethodInfo>>();
@@ -1002,11 +906,6 @@ namespace RoslynQuoter
             return result;
         }
 
-        /// <summary>
-        /// Uses Reflection to inspect static factory methods on the Microsoft.CodeAnalysis.CSharp.SyntaxFactory
-        /// class and pick an overload that creates a node of the same type as the input <paramref
-        /// name="node"/>
-        /// </summary>
         private MethodInfo PickFactoryMethodToCreateNode(SyntaxNode node)
         {
             string name = node.GetType().Name;
@@ -1087,10 +986,6 @@ namespace RoslynQuoter
             return factory;
         }
 
-        /// <summary>
-        /// Adds information about subsequent modifying fluent interface style calls on an object (like
-        /// foo.With(...).With(...))
-        /// </summary>
         private void AddModifyingCalls(object treeElement, ApiCall apiCall, List<ApiCall> values)
         {
             var methods = treeElement.GetType()
@@ -1138,12 +1033,6 @@ namespace RoslynQuoter
             apiCall.Add(methodCall);
         }
 
-        /// <summary>
-        /// Calls the Roslyn syntax API to actually create the syntax tree object and return the source
-        /// code generated by the syntax tree.
-        /// </summary>
-        /// <param name="apiCallString">Code that calls Roslyn syntax APIs as a string</param>
-        /// <returns>The string that corresponds to the code of the syntax tree.</returns>
         //public SyntaxNode Evaluate(string apiCallString)
         //{
         //    var generatedNode = CSharpScript.EvaluateAsync<SyntaxNode>(apiCallString, options).Result;
@@ -1162,14 +1051,14 @@ namespace RoslynQuoter
             //var scriptingResult = EvaluateText(apiCallString, normalizeWhitespace);
 
             var node = (SyntaxNode)InterpretApiCall(apiCall);
-            var interpretedResult = GetText(normalizeWhitespace, node);
+            
 
             //if (interpretedResult != scriptingResult)
             //{
             //    throw new Exception("Interpreter is wrong");
             //}
 
-            return interpretedResult;
+            return GetText(normalizeWhitespace, node);
         }
 
         private static string GetText(bool normalizeWhitespace, SyntaxNode node)
@@ -1179,8 +1068,7 @@ namespace RoslynQuoter
                 node = node.NormalizeWhitespace();
             }
 
-            var resultText = node.ToFullString();
-            return resultText;
+            return node.ToFullString();
         }
 
         public object InterpretApiCall(ApiCall apiCall)
@@ -1288,8 +1176,7 @@ namespace RoslynQuoter
                     throw new Exception("Can't pick a method to call for " + methodCall.Name);
                 }
 
-                var node = candidate.Invoke(instance, arguments);
-                return node;
+                return candidate.Invoke(instance, arguments);
             }
             else
             {
@@ -1569,15 +1456,11 @@ namespace RoslynQuoter
             return (argument, false);
         }
 
-        /// <summary>
-        /// Flattens a tree of ApiCalls into a single string.
-        /// </summary>
         public string Print(ApiCall root)
         {
             var sb = new StringBuilder();
             Print(root, sb, 0, OpenParenthesisOnNewLine, ClosingParenthesisOnNewLine);
-            var generatedCode = sb.ToString();
-            return generatedCode;
+            return sb.ToString();
         }
 
         private static string PrintWithDefaultFormatting(ApiCall root)
@@ -1589,8 +1472,7 @@ namespace RoslynQuoter
                 0,
                 openParenthesisOnNewLine: false,
                 closingParenthesisOnNewLine: false);
-            var generatedCode = sb.ToString();
-            return generatedCode;
+            return sb.ToString();
         }
 
         private static void Print(
@@ -1770,10 +1652,6 @@ namespace RoslynQuoter
             return sb.ToString();
         }
 
-        /// <summary>
-        /// Enumerates names of properties on SyntaxNode, SyntaxToken and SyntaxTrivia classes that do
-        /// not impact the shape of the syntax tree and are not essential to reconstructing the tree.
-        /// </summary>
         private static readonly string[] nonStructuralProperties =
         {
             "AllowsAnyExpression",
@@ -1809,15 +1687,6 @@ namespace RoslynQuoter
             "SyntaxTree",
         };
 
-        /// <summary>
-        /// "Stringly typed" representation of a C# property or method invocation expression, with a
-        /// string for the property or method name and a list of similarly loosely typed argument
-        /// expressions. Simply speaking, this is a tree of strings.
-        /// </summary>
-        /// <example>
-        /// Data structure to represent code (API calls) of simple hierarchical shape such as:
-        /// A.B(C, D.E(F(G, H), I))
-        /// </example>
         public class ApiCall
         {
             public string Name { get; private set; }
@@ -1886,9 +1755,6 @@ namespace RoslynQuoter
             }
         }
 
-        /// <summary>
-        /// Simple data structure to represent a member call, primarily just the string Name.
-        /// </summary>
         public class MemberCall
         {
             public string Name { get; set; }
@@ -1901,9 +1767,6 @@ namespace RoslynQuoter
             }
         }
 
-        /// <summary>
-        /// Represents a method call that has a Name and an arbitrary list of Arguments.
-        /// </summary>
         public class MethodCall : MemberCall
         {
             public List<object> Arguments { get; set; }
@@ -1920,9 +1783,6 @@ namespace RoslynQuoter
         }
     }
 
-    /// <summary>
-    /// Represents one of basic C# syntax node kinds.
-    /// </summary>
     public enum NodeKind
     {
         CompilationUnit,

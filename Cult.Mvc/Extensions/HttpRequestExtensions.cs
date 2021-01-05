@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+
 // ReSharper disable All 
 namespace Cult.Mvc.Extensions
 {
@@ -13,6 +14,10 @@ namespace Cult.Mvc.Extensions
             if (request.Headers != null)
                 return request.Headers["X-Requested-With"] == "XMLHttpRequest";
             return false;
+        }
+        public static string GetUrl(this HttpRequest request)
+        {
+            return $"{request.Scheme}://{request.Host}{request.Path}{request.QueryString}";
         }
     }
 }

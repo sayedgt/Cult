@@ -8,17 +8,11 @@ using Cult.MustacheSharp.Mustache;
 // ReSharper disable All 
 namespace Cult.MustacheSharp.Tags
 {
-    /// <summary>
-    /// Defines a tag that outputs the current index within an each loop.
-    /// </summary>
     internal sealed class BeforeAppendTagDefinition : ContentTagDefinition
     {
         private const string beforeAppend = "beforeappendtext";
         private static readonly TagParameter beforeAppendParameter = new TagParameter(beforeAppend) { IsRequired = true };
 
-        /// <summary>
-        /// Initializes a new instance of an IndexTagDefinition.
-        /// </summary>
         public BeforeAppendTagDefinition()
                     : base("beforeappend")
         {

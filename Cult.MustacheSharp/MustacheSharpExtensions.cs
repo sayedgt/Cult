@@ -41,8 +41,7 @@ namespace Cult.MustacheSharp
             List<IFileInfo> files = new List<IFileInfo>();
             var embedded = new EmbeddedFileProvider(assembly);
             var dirContents = embedded.GetDirectoryContents(Path.DirectorySeparatorChar.ToString());
-            var resources = regex != null ? dirContents.Where(x => regex.IsMatch(x.Name)) : dirContents;
-            foreach (var resource in resources)
+            foreach (var resource in regex != null ? dirContents.Where(x => regex.IsMatch(x.Name)) : dirContents)
                 files.Add(resource);
             return files;
         }
@@ -128,8 +127,7 @@ namespace Cult.MustacheSharp
         {
             var assembly = Assembly.GetEntryAssembly();
             Dictionary<string, object> resources = new Dictionary<string, object>();
-            var files = assembly.GetResources(new Regex(@".*\.mustache", RegexOptions.IgnoreCase));
-            foreach (var file in files)
+            foreach (var file in assembly.GetResources(new Regex(@".*\.mustache", RegexOptions.IgnoreCase)))
             {
                 var fName = Path.GetFileNameWithoutExtension(file.Name).ToLowerInvariant();
                 if (fName.Contains("/"))
@@ -143,8 +141,7 @@ namespace Cult.MustacheSharp
 
             if (searchDirectory && !(assembly is null))
             {
-                var dirFiles = Directory.EnumerateFiles(assembly.Location, "*.mustache", SearchOption.AllDirectories);
-                foreach (var file in dirFiles)
+                foreach (var file in Directory.EnumerateFiles(assembly.Location, "*.mustache", SearchOption.AllDirectories))
                 {
                     var name = Path.GetFileNameWithoutExtension(file).ToLowerInvariant();
                     if (!resources.ContainsKey(name))
@@ -178,8 +175,7 @@ namespace Cult.MustacheSharp
         {
             var assembly = Assembly.GetEntryAssembly();
             Dictionary<string, object> resources = new Dictionary<string, object>();
-            var files = assembly.GetResources(new Regex(@".*\.mustache", RegexOptions.IgnoreCase));
-            foreach (var file in files)
+            foreach (var file in assembly.GetResources(new Regex(@".*\.mustache", RegexOptions.IgnoreCase)))
             {
                 var fName = Path.GetFileNameWithoutExtension(file.Name).ToLowerInvariant();
                 if (fName.Contains("/"))
@@ -193,8 +189,7 @@ namespace Cult.MustacheSharp
 
             if (searchDirectory && !(assembly is null))
             {
-                var dirFiles = Directory.EnumerateFiles(assembly.Location, "*.mustache", SearchOption.AllDirectories);
-                foreach (var file in dirFiles)
+                foreach (var file in Directory.EnumerateFiles(assembly.Location, "*.mustache", SearchOption.AllDirectories))
                 {
                     var name = Path.GetFileNameWithoutExtension(file).ToLowerInvariant();
                     if (!resources.ContainsKey(name))

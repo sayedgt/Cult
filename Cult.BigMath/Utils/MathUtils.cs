@@ -10,19 +10,10 @@ using System;
 // ReSharper disable All 
 namespace Cult.BigMath.Utils
 {
-    /// <summary>
-    ///     Math utils.
-    /// </summary>
     public static class MathUtils
     {
         private const ulong Base = 0x100000000;
 
-        /// <summary>
-        ///     Bitwise shift array of <see cref="ulong" />.
-        /// </summary>
-        /// <param name="values">Bits to shift. Lower bits have lower index in array.</param>
-        /// <param name="shift">Shift amount in bits. Negative for left shift, positive for right shift.</param>
-        /// <returns>Shifted values.</returns>
         public static ulong[] Shift(ulong[] values, int shift)
         {
             if (shift == 0)
@@ -33,12 +24,6 @@ namespace Cult.BigMath.Utils
         }
 
 
-        /// <summary>
-        ///     Bitwise right shift.
-        /// </summary>
-        /// <param name="values">Bits to shift. Lower bits have lower index in array.</param>
-        /// <param name="shift">Shift amount in bits.</param>
-        /// <returns>Shifted values.</returns>
         public static ulong[] ShiftRight(ulong[] values, int shift)
         {
             if (shift < 0)
@@ -72,14 +57,6 @@ namespace Cult.BigMath.Utils
             return shifted;
         }
 
-        /// <summary>
-        ///     Bitwise right shift.
-        ///     
-        ///     Using an array of ulong's, but when called from Int128 and Int256, value is really a signed number, so we need to preserve the sign bits
-        /// </summary>
-        /// <param name="values">Bits to shift. Lower bits have lower index in array.</param>
-        /// <param name="shift">Shift amount in bits.</param>
-        /// <returns>Shifted values.</returns>
         public static ulong[] ShiftRightSigned(ulong[] values, int shift)
         {
             if (shift < 0)
@@ -127,12 +104,6 @@ namespace Cult.BigMath.Utils
             return shifted;
         }
 
-        /// <summary>
-        ///     Bitwise right shift.
-        /// </summary>
-        /// <param name="values">Bits to shift. Lower bits have lower index in array.</param>
-        /// <param name="shift">Shift amount in bits.</param>
-        /// <returns>Shifted values.</returns>
         public static ulong[] ShiftLeft(ulong[] values, int shift)
         {
             if (shift < 0)

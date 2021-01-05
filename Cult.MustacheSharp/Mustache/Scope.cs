@@ -5,63 +5,33 @@ using System.Globalization;
 // ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
-    /// <summary>
-    /// Represents a scope of keys.
-    /// </summary>
     public sealed class Scope
     {
         private readonly object _source;
         private readonly Scope _parent;
 
-        /// <summary>
-        /// Initializes a new instance of a KeyScope.
-        /// </summary>
-        /// <param name="source">The object to search for keys in.</param>
         internal Scope(object source)
             : this(source, null)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of a KeyScope.
-        /// </summary>
-        /// <param name="source">The object to search for keys in.</param>
-        /// <param name="parent">The parent scope to search in if the value is not found.</param>
         internal Scope(object source, Scope parent)
         {
             _parent = parent;
             _source = source;
         }
 
-        /// <summary>
-        /// Occurs when a key/property is found in the object graph.
-        /// </summary>
         public event EventHandler<KeyFoundEventArgs> KeyFound;
 
-        /// <summary>
-        /// Occurs when a key/property is not found in the object graph.
-        /// </summary>
         public event EventHandler<KeyNotFoundEventArgs> KeyNotFound;
 
-        /// <summary>
-        /// Occurs when a setter is encountered and requires a value to be provided.
-        /// </summary>
         public event EventHandler<ValueRequestEventArgs> ValueRequested;
 
-        /// <summary>
-        /// Creates a child scope that searches for keys in a default dictionary of key/value pairs.
-        /// </summary>
-        /// <returns>The new child scope.</returns>
         public Scope CreateChildScope()
         {
             return CreateChildScope(new Dictionary<string, object>());
         }
 
-        /// <summary>
-        /// Creates a child scope that searches for keys in the given object.
-        /// </summary>
-        /// <param name="source">The object to search for keys in.</param>
-        /// <returns>The new child scope.</returns>
         public Scope CreateChildScope(object source)
         {
             Scope scope = new Scope(source, this);
@@ -71,13 +41,6 @@ namespace Cult.MustacheSharp.Mustache
             return scope;
         }
 
-        /// <summary>
-        /// Attempts to find the value associated with the key with given name.
-        /// </summary>
-        /// <param name="name">The name of the key.</param>
-        /// <param name="isExtension">Specifies whether the key appeared within triple curly braces.</param>
-        /// <returns>The value associated with the key with the given name.</returns>
-        /// <exception cref="System.Collections.Generic.KeyNotFoundException">A key with the given name could not be found.</exception>
         internal object Find(string name, bool isExtension)
         {
             SearchResults results = tryFind(name);

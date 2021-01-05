@@ -7,18 +7,12 @@ using System.Text.RegularExpressions;
 // ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
-    /// <summary>
-    /// Parses a format string and returns a text generator.
-    /// </summary>
     public sealed class FormatCompiler
     {
         private readonly Dictionary<string, TagDefinition> _tagLookup = new Dictionary<string, TagDefinition>();
         private readonly Dictionary<string, Regex> _regexLookup = new Dictionary<string, Regex>();
         private readonly MasterTagDefinition _masterDefinition = new MasterTagDefinition();
 
-        /// <summary>
-        /// Initializes a new instance of a FormatCompiler.
-        /// </summary>
         public FormatCompiler()
         {
             IfTagDefinition ifDefinition = new IfTagDefinition();
@@ -41,31 +35,14 @@ namespace Cult.MustacheSharp.Mustache
             RemoveNewLines = true;
         }
 
-        /// <summary>
-        /// Occurs when a placeholder is found in the template.
-        /// </summary>
         public event EventHandler<PlaceholderFoundEventArgs> PlaceholderFound;
 
-        /// <summary>
-        /// Occurs when a variable is found in the template.
-        /// </summary>
         public event EventHandler<VariableFoundEventArgs> VariableFound;
 
-        /// <summary>
-        /// Gets or sets whether newlines are removed from the template (default: true).
-        /// </summary>
         public bool RemoveNewLines { get; set; }
 
-        /// <summary>
-        /// Gets or sets whether the compiler searches for tags using triple curly braces.
-        /// </summary>
         public bool AreExtensionTagsAllowed { get; set; }
 
-        /// <summary>
-        /// Registers the given tag definition with the parser.
-        /// </summary>
-        /// <param name="definition">The tag definition to register.</param>
-        /// <param name="isTopLevel">Specifies whether the tag is immediately in scope.</param>
         public void RegisterTag(TagDefinition definition, bool isTopLevel)
         {
             if (definition == null)
@@ -80,11 +57,6 @@ namespace Cult.MustacheSharp.Mustache
             _tagLookup.Add(definition.Name, definition);
         }
 
-        /// <summary>
-        /// Builds a text generator based on the given format.
-        /// </summary>
-        /// <param name="format">The format to parse.</param>
-        /// <returns>The text generator.</returns>
         public Generator Compile(string format)
         {
             if (format == null)

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+
 // ReSharper disable All 
 namespace Cult.Extensions
 {
@@ -109,8 +111,7 @@ namespace Cult.Extensions
         }
         public static bool HasInterface(this Type type)
         {
-            var list = GetNestedInterfaces(type);
-            foreach (var l in list)
+            foreach (var l in GetNestedInterfaces(type))
             {
                 if (l.FullName == type.FullName) return true;
             }
@@ -153,6 +154,13 @@ namespace Cult.Extensions
                 if (currentAttr == attribute)
                     return true;
             }
+            return false;
+        }
+        public static bool IsRecord(this Type type)
+        {
+            var isRecord1 = ((TypeInfo)type).DeclaredProperties.Where(x => x.Name == "EqualityContract").FirstOrDefault()?.GetMethod?.GetCustomAttribute(typeof(CompilerGeneratedAttribute)) is object;
+            var isRecord2 = type.GetMethod("<Clone>$") is object;
+            if (isRecord1 || isRecord2) return true;
             return false;
         }
         public static bool None<T>(this T obj, params T[] values)

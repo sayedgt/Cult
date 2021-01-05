@@ -3,9 +3,6 @@
 // ReSharper disable All 
 namespace Cult.MustacheSharp.Mustache
 {
-    /// <summary>
-    /// Provides utility methods that require regular expressions.
-    /// </summary>
     internal static class RegexHelper
     {
         public const string Key = @"[_\w][_\w\d]*";
@@ -14,11 +11,6 @@ namespace Cult.MustacheSharp.Mustache
         public const string CompoundKey = "@?" + Key + @"(?:\." + Key + ")*";
         public const string Argument = @"(?:(?<arg_key>" + CompoundKey + @")|(?<arg_string>" + String + @")|(?<arg_number>" + Number + @"))";
 
-        /// <summary>
-        /// Determines whether the given name is a legal identifier.
-        /// </summary>
-        /// <param name="name">The name to check.</param>
-        /// <returns>True if the name is a legal identifier; otherwise, false.</returns>
         public static bool IsValidIdentifier(string name)
         {
             if (name == null)

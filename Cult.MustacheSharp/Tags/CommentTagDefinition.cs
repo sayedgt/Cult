@@ -10,9 +10,6 @@ namespace Cult.MustacheSharp.Tags
         private const string CommentText = "commenttext";
         private static readonly TagParameter CommentParameter = new TagParameter(CommentText) { IsRequired = true };
 
-        /// <summary>
-        /// Initializes a new instance of an IndexTagDefinition.
-        /// </summary>
         public CommentTagDefinition()
                     : base("comment")
         {

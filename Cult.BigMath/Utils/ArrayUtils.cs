@@ -12,9 +12,6 @@ using System.Linq;
 // ReSharper disable All 
 namespace Cult.BigMath.Utils
 {
-    /// <summary>
-    ///     Utils for the <see cref="Array" /> class.
-    /// </summary>
     public static class ArrayUtils
     {
         private static readonly byte[] CharToByteLookupTable =
@@ -46,20 +43,6 @@ namespace Cult.BigMath.Utils
             }
         }
 
-        /// <summary>
-        ///     Converts an array of one type to an array of another type.
-        /// </summary>
-        /// <returns>
-        ///     An array of the target type containing the converted elements from the source array.
-        /// </returns>
-        /// <param name="array">The one-dimensional, zero-based <see cref="T:System.Array" /> to convert to a target type.</param>
-        /// <param name="convert">A <see cref="Func{TInput, TOutput}" /> that converts each element from one type to another type.</param>
-        /// <typeparam name="TInput">The type of the elements of the source array.</typeparam>
-        /// <typeparam name="TOutput">The type of the elements of the target array.</typeparam>
-        /// <exception cref="T:System.ArgumentNullException">
-        ///     <paramref name="array" /> is null.-or-<paramref name="convert" /> is
-        ///     null.
-        /// </exception>
         public static TOutput[] ConvertAll<TInput, TOutput>(this TInput[] array, Func<TInput, TOutput> convert)
         {
             if (array == null)
@@ -78,12 +61,6 @@ namespace Cult.BigMath.Utils
             return outputArray;
         }
 
-        /// <summary>
-        ///     Get length of serial non zero items.
-        /// </summary>
-        /// <param name="bytes">Array of bytes.</param>
-        /// <param name="asLittleEndian">True - skip all zero items from high. False - skip all zero items from low.</param>
-        /// <returns>Length of serial non zero items.</returns>
         public static int GetNonZeroLength(this byte[] bytes, bool? asLittleEndian = null)
         {
             bool ale = GetIsLittleEndian(asLittleEndian);
@@ -110,12 +87,6 @@ namespace Cult.BigMath.Utils
             }
         }
 
-        /// <summary>
-        ///     Trim zero items.
-        /// </summary>
-        /// <param name="bytes">Array of bytes.</param>
-        /// <param name="asLittleEndian">True - trim from high, False - trim from low.</param>
-        /// <returns>Trimmed array of bytes.</returns>
         public static byte[] TrimZeros(this byte[] bytes, bool? asLittleEndian = null)
         {
             bool ale = GetIsLittleEndian(asLittleEndian);
@@ -181,29 +152,11 @@ namespace Cult.BigMath.Utils
             return tbytes;
         }
 
-        /// <summary>
-        ///     Converts array of bytes to hexadecimal string.
-        /// </summary>
-        /// <param name="bytes">Bytes.</param>
-        /// <param name="caps">Capitalize chars.</param>
-        /// <param name="min">Minimum string length. 0 if there is no minimum length.</param>
-        /// <param name="spaceEveryByte">Space every byte.</param>
-        /// <param name="trimZeros">Trim zeros in the result string.</param>
-        /// <returns>Hexadecimal string representation of the bytes array.</returns>
         public static string ToHexString(this byte[] bytes, bool caps = true, int min = 0, bool spaceEveryByte = false, bool trimZeros = false)
         {
             return new ArraySegment<byte>(bytes, 0, bytes.Length).ToHexString(caps, min, spaceEveryByte, trimZeros);
         }
 
-        /// <summary>
-        ///     Converts array of bytes to hexadecimal string.
-        /// </summary>
-        /// <param name="bytes">Bytes.</param>
-        /// <param name="caps">Capitalize chars.</param>
-        /// <param name="min">Minimum string length. 0 if there is no minimum length.</param>
-        /// <param name="spaceEveryByte">Space every byte.</param>
-        /// <param name="trimZeros">Trim zeros in the result string.</param>
-        /// <returns>Hexadecimal string representation of the bytes array.</returns>
         public static string ToHexString(this ArraySegment<byte> bytes, bool caps = true, int min = 0, bool spaceEveryByte = false, bool trimZeros = false)
         {
             int count = bytes.Count;
@@ -289,11 +242,6 @@ namespace Cult.BigMath.Utils
             return new string(chars, offset, strLength - offset);
         }
 
-        /// <summary>
-        ///     Converts string of hex numbers to array of bytes.
-        /// </summary>
-        /// <param name="hexString">String value.</param>
-        /// <returns>Array of bytes.</returns>
         public static byte[] HexToBytes(this string hexString)
         {
             byte[] bytes;

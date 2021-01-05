@@ -16,8 +16,7 @@ namespace Castle.DynamicProxy
             var instanceCustom = (IInterceptor)ctorCustom?.Invoke(new object[] { methods });
 
             var generator = new ProxyGenerator();
-            var tc = generator.CreateClassProxy<TClass>(instanceCustom);
-            return tc;
+            return generator.CreateClassProxy<TClass>(instanceCustom);
         }
         public static TClass Of<TClass>(ProxyGenerationOptions options, params IInterceptor[] interceptors)
                             where TClass : class, new()

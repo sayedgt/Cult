@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+
 // ReSharper disable All 
 namespace Cult.Extensions
 {
@@ -172,6 +174,24 @@ namespace Cult.Extensions
             var tempValue = source[indexA];
             source[indexA] = source[indexB];
             source[indexB] = tempValue;
+        }
+
+        public static IEnumerable<T> TakeLast<T>(this IList<T> list, int n)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+
+            if (list.Count - n < 0)
+            {
+                n = list.Count;
+            }
+
+            for (var i = list.Count - n; i < list.Count; i++)
+            {
+                yield return list[i];
+            }
         }
     }
 }

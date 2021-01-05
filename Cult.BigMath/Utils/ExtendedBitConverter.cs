@@ -12,23 +12,11 @@ using System.Runtime.CompilerServices;
 // ReSharper disable All 
 namespace Cult.BigMath.Utils
 {
-    /// <summary>
-    ///     Bit converter methods which support explicit endian.
-    /// </summary>
     public static class ExtendedBitConverter
     {
-        /// <summary>
-        ///     Indicates the byte order ("endianness") in which data is stored in this computer architecture.
-        /// </summary>
         public static readonly bool IsLittleEndian = BitConverter.IsLittleEndian;
 
         #region Int16
-        /// <summary>
-        ///     Converts <see cref="short" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte[] ToBytes(this short value, bool? asLittleEndian = null)
         {
@@ -37,14 +25,6 @@ namespace Cult.BigMath.Utils
             return buffer;
         }
 
-        /// <summary>
-        ///     Converts <see cref="short" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="buffer">Buffer at least 2 bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="buffer" />.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ToBytes(this short value, byte[] buffer, int offset = 0, bool? asLittleEndian = null)
         {
@@ -65,13 +45,6 @@ namespace Cult.BigMath.Utils
             }
         }
 
-        /// <summary>
-        ///     Converts array of bytes to <see cref="short" />.
-        /// </summary>
-        /// <param name="bytes">An array of bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="bytes" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <returns><see cref="short" /> value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static short ToInt16(this byte[] bytes, int offset = 0, bool? asLittleEndian = null)
         {
@@ -95,39 +68,18 @@ namespace Cult.BigMath.Utils
         #endregion
 
         #region UInt16
-        /// <summary>
-        ///     Converts <see cref="ushort" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte[] ToBytes(this ushort value, bool? asLittleEndian = null)
         {
             return unchecked((short) value).ToBytes(asLittleEndian);
         }
 
-        /// <summary>
-        ///     Converts <see cref="ushort" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="buffer">Buffer at least 2 bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="buffer" />.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ToBytes(this ushort value, byte[] buffer, int offset = 0, bool? asLittleEndian = null)
         {
             unchecked((short) value).ToBytes(buffer, offset, asLittleEndian);
         }
 
-        /// <summary>
-        ///     Converts array of bytes to <see cref="ushort" />.
-        /// </summary>
-        /// <param name="bytes">An array of bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="bytes" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <returns><see cref="ushort" /> value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ushort ToUInt16(this byte[] bytes, int offset = 0, bool? asLittleEndian = null)
         {
@@ -136,12 +88,6 @@ namespace Cult.BigMath.Utils
         #endregion
 
         #region Int32
-        /// <summary>
-        ///     Converts <see cref="int" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte[] ToBytes(this int value, bool? asLittleEndian = null)
         {
@@ -150,14 +96,6 @@ namespace Cult.BigMath.Utils
             return buffer;
         }
 
-        /// <summary>
-        ///     Converts <see cref="int" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="buffer">Buffer at least 4 bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="buffer" />.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ToBytes(this int value, byte[] buffer, int offset = 0, bool? asLittleEndian = null)
         {
@@ -182,13 +120,6 @@ namespace Cult.BigMath.Utils
             }
         }
 
-        /// <summary>
-        ///     Converts array of bytes to <see cref="int" />.
-        /// </summary>
-        /// <param name="bytes">An array of bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="bytes" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <returns><see cref="int" /> value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int ToInt32(this byte[] bytes, int offset = 0, bool? asLittleEndian = null)
         {
@@ -230,39 +161,18 @@ namespace Cult.BigMath.Utils
         }
 
         #region UInt32
-        /// <summary>
-        ///     Converts <see cref="uint" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte[] ToBytes(this uint value, bool? asLittleEndian = null)
         {
             return unchecked((int) value).ToBytes(asLittleEndian);
         }
 
-        /// <summary>
-        ///     Converts <see cref="uint" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="buffer">Buffer at least 4 bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="buffer" />.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ToBytes(this uint value, byte[] buffer, int offset = 0, bool? asLittleEndian = null)
         {
             unchecked((int) value).ToBytes(buffer, offset, asLittleEndian);
         }
 
-        /// <summary>
-        ///     Converts array of bytes to <see cref="uint" />.
-        /// </summary>
-        /// <param name="bytes">An array of bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="bytes" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <returns><see cref="uint" /> value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static uint ToUInt32(this byte[] bytes, int offset = 0, bool? asLittleEndian = null)
         {
@@ -271,12 +181,6 @@ namespace Cult.BigMath.Utils
         #endregion
 
         #region Int64
-        /// <summary>
-        ///     Converts <see cref="long" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte[] ToBytes(this long value, bool? asLittleEndian = null)
         {
@@ -285,13 +189,6 @@ namespace Cult.BigMath.Utils
             return buffer;
         }
 
-        /// <summary>
-        ///     Converts <see cref="long" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="buffer">Buffer at least 8 bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="buffer" />.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ToBytes(this long value, byte[] buffer, int offset = 0, bool? asLittleEndian = null)
         {
@@ -319,13 +216,6 @@ namespace Cult.BigMath.Utils
             }
         }
 
-        /// <summary>
-        ///     Converts array of bytes to <see cref="long" />.
-        /// </summary>
-        /// <param name="bytes">An array of bytes. </param>
-        /// <param name="offset">The starting position within <paramref name="bytes" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <returns><see cref="long" /> value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long ToInt64(this byte[] bytes, int offset = 0, bool? asLittleEndian = null)
         {
@@ -353,38 +243,18 @@ namespace Cult.BigMath.Utils
         #endregion
 
         #region UInt64
-        /// <summary>
-        ///     Converts <see cref="ulong" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
-        /// <returns>Array of bytes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static byte[] ToBytes(this ulong value, bool? asLittleEndian = null)
         {
             return unchecked ((long) value).ToBytes(asLittleEndian);
         }
 
-        /// <summary>
-        ///     Converts <see cref="ulong" /> to array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="buffer">Buffer at least 8 bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="buffer" />.</param>
-        /// <param name="asLittleEndian">Convert to little endian.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ToBytes(this ulong value, byte[] buffer, int offset = 0, bool? asLittleEndian = null)
         {
             unchecked((long) value).ToBytes(buffer, offset, asLittleEndian);
         }
 
-        /// <summary>
-        ///     Converts array of bytes to <see cref="ulong" />.
-        /// </summary>
-        /// <param name="bytes">An array of bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="bytes" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <returns><see cref="ulong" /> value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ulong ToUInt64(this byte[] bytes, int offset = 0, bool? asLittleEndian = null)
         {
@@ -393,13 +263,6 @@ namespace Cult.BigMath.Utils
         #endregion
 
         #region Int128
-        /// <summary>
-        ///     Converts an <see cref="Int128" /> value to an array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="buffer">An array of bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="buffer" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
         public static void ToBytes(this Int128 value, byte[] buffer, int offset = 0, bool? asLittleEndian = null)
         {
             bool ale = GetIsLittleEndian(asLittleEndian);
@@ -407,13 +270,6 @@ namespace Cult.BigMath.Utils
             value.High.ToBytes(buffer, ale ? offset + 8 : offset, ale);
         }
 
-        /// <summary>
-        ///     Converts an <see cref="Int128" /> value to a byte array.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <param name="trimZeros">Trim zero bytes from left or right, depending on endian.</param>
-        /// <returns>Array of bytes.</returns>
         public static byte[] ToBytes(this Int128 value, bool? asLittleEndian = null, bool trimZeros = false)
         {
             var buffer = new byte[16];
@@ -427,13 +283,6 @@ namespace Cult.BigMath.Utils
             return buffer;
         }
 
-        /// <summary>
-        ///     Converts array of bytes to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="bytes">An array of bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="bytes" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <returns><see cref="Int128" /> value.</returns>
         public static Int128 ToInt128(this byte[] bytes, int offset = 0, bool? asLittleEndian = null)
         {
             if (bytes == null)
@@ -456,13 +305,6 @@ namespace Cult.BigMath.Utils
         #endregion
 
         #region Int256
-        /// <summary>
-        ///     Converts an <see cref="Int256" /> value to an array of bytes.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="buffer">An array of bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="buffer" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
         public static void ToBytes(this Int256 value, byte[] buffer, int offset = 0, bool? asLittleEndian = null)
         {
             bool ale = GetIsLittleEndian(asLittleEndian);
@@ -473,13 +315,6 @@ namespace Cult.BigMath.Utils
             value.A.ToBytes(buffer, ale ? offset + 24 : offset, ale);
         }
 
-        /// <summary>
-        ///     Converts an <see cref="Int256" /> value to a byte array.
-        /// </summary>
-        /// <param name="value">Value.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <param name="trimZeros">Trim zero bytes from left or right, depending on endian.</param>
-        /// <returns>Array of bytes.</returns>
         public static byte[] ToBytes(this Int256 value, bool? asLittleEndian = null, bool trimZeros = false)
         {
             var buffer = new byte[32];
@@ -493,13 +328,6 @@ namespace Cult.BigMath.Utils
             return buffer;
         }
 
-        /// <summary>
-        ///     Converts array of bytes to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="bytes">An array of bytes.</param>
-        /// <param name="offset">The starting position within <paramref name="bytes" />.</param>
-        /// <param name="asLittleEndian">Convert from little endian.</param>
-        /// <returns><see cref="Int256" /> value.</returns>
         public static Int256 ToInt256(this byte[] bytes, int offset = 0, bool? asLittleEndian = null)
         {
             if (bytes == null)

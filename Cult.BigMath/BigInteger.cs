@@ -5,7 +5,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 #region [The Bouncy Castle License] Base license of partial code used in this file.
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) 2000-2011 The Legion Of The Bouncy Castle (http://www.bouncycastle.org)
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
@@ -35,9 +34,6 @@ using System.Text;
 // ReSharper disable All 
 namespace System
 {
-    /// <summary>
-    ///     Big integer.
-    /// </summary>
     public class BigInteger : IComparable<BigInteger>, IComparable, IEquatable<BigInteger>, IFormattable
     {
         // The primes b/w 2 and ~2^10
@@ -263,11 +259,9 @@ namespace System
                 return;
             }
 
-            //////
             // could we work out the max number of ints required to store
             // str.Length digits in the given base, then allocate that
             // storage in one hit?, then Generate the magnitude in one hit too?
-            //////
 
             BigInteger b = Zero;
 
@@ -534,34 +528,18 @@ namespace System
             }
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(byte value) : this((ulong) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">if set to <c>true</c> [value].</param>
         public BigInteger(bool value) : this((ulong) (value ? 1 : 0))
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(char value) : this((ulong) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(decimal value)
         {
             bool isNegative = value < 0;
@@ -580,98 +558,50 @@ namespace System
             _sign = isNegative ? -1 : 1;
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(double value) : this((decimal) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(float value) : this((decimal) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(short value) : this((ulong) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(int value) : this((ulong) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(long value) : this((ulong) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(sbyte value) : this((ulong) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(ushort value) : this((ulong) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(uint value) : this((ulong) value)
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(ulong value) : this(value.ToBytes(false))
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(Guid value) : this(value.ToByteArray())
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(Int128 value) : this(value.ToBytes(false))
         {
         }
 
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="BigInteger" /> struct.
-        /// </summary>
-        /// <param name="value">The value.</param>
         public BigInteger(Int256 value) : this(value.ToBytes(false))
         {
         }
@@ -752,29 +682,11 @@ namespace System
             get { return _sign; }
         }
 
-        /// <summary>
-        ///     Compares the current instance with another object of the same type and returns an integer that indicates whether
-        ///     the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
-        /// </summary>
-        /// <param name="obj">An object to compare with this instance.</param>
-        /// <returns>
-        ///     A value that indicates the relative order of the objects being compared. The return value has these meanings: Value
-        ///     Meaning Less than zero This instance is less than <paramref name="obj" />. Zero This instance is equal to
-        ///     <paramref name="obj" />. Greater than zero This instance is greater than <paramref name="obj" />.
-        /// </returns>
-        /// <exception cref="T:System.ArgumentException">
-        ///     <paramref name="obj" /> is not the same type as this instance.
-        /// </exception>
         int IComparable.CompareTo(object obj)
         {
             return Compare(this, obj);
         }
 
-        /// <summary>
-        ///     Compares this instance to a specified big integer and returns an indication of their relative values.
-        /// </summary>
-        /// <param name="value">An integer to compare.</param>
-        /// <returns>A signed number indicating the relative values of this instance and value.</returns>
         public int CompareTo(BigInteger value)
         {
             return Compare(this, value);
@@ -807,16 +719,6 @@ namespace System
             return true;
         }
 
-        /// <summary>
-        ///     Returns a <see cref="string" /> that represents this instance.
-        /// </summary>
-        /// <param name="format">
-        ///     The format. Only x, X, g, G, d, D, b, B are supported.
-        /// </param>
-        /// <param name="formatProvider">Format provider.</param>
-        /// <returns>
-        ///     A <see cref="string" /> that represents this instance.
-        /// </returns>
         public string ToString(string format, IFormatProvider formatProvider = null)
         {
             if (formatProvider == null)
@@ -856,205 +758,86 @@ namespace System
         }
 
         #region Operators
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="bool" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">if set to <c>true</c> [value].</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(bool value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="byte" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(byte value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="char" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(char value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="decimal" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator BigInteger(decimal value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="double" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator BigInteger(double value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="short" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(short value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="int" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(int value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="long" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(long value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="sbyte" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(sbyte value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="float" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator BigInteger(float value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="ushort" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(ushort value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="uint" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(uint value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="ulong" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(ulong value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="Int128" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(Int128 value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an implicit conversion from <see cref="Int256" /> to <see cref="BigInteger" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static implicit operator BigInteger(Int256 value)
         {
             return new BigInteger(value);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="bool" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator bool(BigInteger value)
         {
             return value._sign != 0;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="byte" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator byte(BigInteger value)
         {
             if (value._sign == 0)
@@ -1070,13 +853,6 @@ namespace System
             return (byte) value._magnitude[0];
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="char" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator char(BigInteger value)
         {
             if (value.Sign == 0)
@@ -1092,13 +868,6 @@ namespace System
             return (char) (ushort) value._magnitude[0];
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="decimal" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator decimal(BigInteger value)
         {
             throw new NotImplementedException();
@@ -1116,13 +885,6 @@ namespace System
             return new decimal((int)(value._magnitude & 0xFFFFFFFF), (int)(value._d >> 32), (int)(value._c & 0xFFFFFFFF), value.Sign < 0, 0);*/
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="double" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator double(BigInteger value)
         {
             if (value.Sign == 0)
@@ -1140,13 +902,6 @@ namespace System
             return d;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="float" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator float(BigInteger value)
         {
             if (value.Sign == 0)
@@ -1164,13 +919,6 @@ namespace System
             return f;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="short" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator short(BigInteger value)
         {
             if (value.Sign == 0)
@@ -1186,13 +934,6 @@ namespace System
             return (short) value.IntValue;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="ushort" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator ushort(BigInteger value)
         {
             if (value.Sign == 0)
@@ -1208,13 +949,6 @@ namespace System
             return (ushort) value.IntValue;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="int" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator int(BigInteger value)
         {
             if (value.Sign == 0)
@@ -1230,13 +964,6 @@ namespace System
             return value.IntValue;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="uint" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator uint(BigInteger value)
         {
             if (value.Sign == 0)
@@ -1252,13 +979,6 @@ namespace System
             return (uint) value.IntValue;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="long" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator long(BigInteger value)
         {
             if (value.Sign == 0)
@@ -1274,13 +994,6 @@ namespace System
             return value.LongValue;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="ulong" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator ulong(BigInteger value)
         {
             if ((value < ushort.MinValue) || (value > ushort.MaxValue))
@@ -1291,13 +1004,6 @@ namespace System
             return (ulong) value.LongValue;
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="Int128" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int128(BigInteger value)
         {
             if ((value < Int128.MinValue) || (value > Int128.MaxValue))
@@ -1308,13 +1014,6 @@ namespace System
             return value.ToByteArray().ToInt128(asLittleEndian: false);
         }
 
-        /// <summary>
-        ///     Performs an explicit conversion from <see cref="BigInteger" /> to <see cref="Int256" />.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the conversion.
-        /// </returns>
         public static explicit operator Int256(BigInteger value)
         {
             if ((value < Int256.MinValue) || (value > Int256.MaxValue))
@@ -1325,179 +1024,71 @@ namespace System
             return value.ToByteArray().ToInt256(asLittleEndian: false);
         }
 
-        /// <summary>
-        ///     Implements the operator &gt;.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator >(BigInteger left, BigInteger right)
         {
             return Compare(left, right) > 0;
         }
 
-        /// <summary>
-        ///     Implements the operator &lt;.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator <(BigInteger left, BigInteger right)
         {
             return Compare(left, right) < 0;
         }
 
-        /// <summary>
-        ///     Implements the operator &gt;=.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator >=(BigInteger left, BigInteger right)
         {
             return Compare(left, right) >= 0;
         }
 
-        /// <summary>
-        ///     Implements the operator &lt;=.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator <=(BigInteger left, BigInteger right)
         {
             return Compare(left, right) <= 0;
         }
 
-        /// <summary>
-        ///     Implements the operator !=.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator !=(BigInteger left, BigInteger right)
         {
             return !Equals(left, right);
         }
 
-        /// <summary>
-        ///     Implements the operator ==.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static bool operator ==(BigInteger left, BigInteger right)
         {
             return Equals(left, right);
         }
 
-        /// <summary>
-        ///     Implements the operator +.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static BigInteger operator +(BigInteger value)
         {
             return value;
         }
 
-        /// <summary>
-        ///     Implements the operator -.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static BigInteger operator -(BigInteger value)
         {
             return value.Negate();
         }
 
-        /// <summary>
-        ///     Implements the operator +.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static BigInteger operator +(BigInteger left, BigInteger right)
         {
             return left.Add(right);
         }
 
-        /// <summary>
-        ///     Implements the operator -.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static BigInteger operator -(BigInteger left, BigInteger right)
         {
             return left + -right;
         }
 
-        /// <summary>
-        ///     Implements the operator %.
-        /// </summary>
-        /// <param name="dividend">The dividend.</param>
-        /// <param name="divisor">The divisor.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static BigInteger operator %(BigInteger dividend, BigInteger divisor)
         {
             return dividend.Remainder(divisor);
         }
 
-        /// <summary>
-        ///     Implements the operator /.
-        /// </summary>
-        /// <param name="dividend">The dividend.</param>
-        /// <param name="divisor">The divisor.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static BigInteger operator /(BigInteger dividend, BigInteger divisor)
         {
             return dividend.Divide(divisor);
         }
 
-        /// <summary>
-        ///     Implements the operator *.
-        /// </summary>
-        /// <param name="left">The x.</param>
-        /// <param name="right">The y.</param>
-        /// <returns>
-        ///     The result of the operator.
-        /// </returns>
         public static BigInteger operator *(BigInteger left, BigInteger right)
         {
             return left.Multiply(right);
         }
 
-        /// <summary>
-        ///     Implements the operator &gt;&gt;.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="shift">The shift.</param>
-        /// <returns>The result of the operator.</returns>
         public static BigInteger operator >>(BigInteger value, int shift)
         {
             if (shift == 0)
@@ -1508,12 +1099,6 @@ namespace System
             return value.ShiftRight(shift);
         }
 
-        /// <summary>
-        ///     Implements the operator &lt;&lt;.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="shift">The shift.</param>
-        /// <returns>The result of the operator.</returns>
         public static BigInteger operator <<(BigInteger value, int shift)
         {
             if (shift == 0)
@@ -1524,12 +1109,6 @@ namespace System
             return value.ShiftLeft(shift);
         }
 
-        /// <summary>
-        ///     Implements the operator |.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
         public static BigInteger operator |(BigInteger left, BigInteger right)
         {
             if (left == 0)
@@ -1545,12 +1124,6 @@ namespace System
             return left.Or(right);
         }
 
-        /// <summary>
-        ///     Implements the operator &amp;.
-        /// </summary>
-        /// <param name="left">The left.</param>
-        /// <param name="right">The right.</param>
-        /// <returns>The result of the operator.</returns>
         public static BigInteger operator &(BigInteger left, BigInteger right)
         {
             if (left == 0 || right == 0)
@@ -1561,31 +1134,16 @@ namespace System
             return left.And(right);
         }
 
-        /// <summary>
-        ///     Implements the operator ~.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The result of the operator.</returns>
         public static BigInteger operator ~(BigInteger value)
         {
             return value.Not();
         }
 
-        /// <summary>
-        ///     Implements the operator ++.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The result of the operator.</returns>
         public static BigInteger operator ++(BigInteger value)
         {
             return value + 1;
         }
 
-        /// <summary>
-        ///     Implements the operator --.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns>The result of the operator.</returns>
         public static BigInteger operator --(BigInteger value)
         {
             return value - 1;
@@ -2347,8 +1905,6 @@ namespace System
         //
         //
         //				// TODO Check this is redundant given the way Jacobi() works?
-        ////				if (!a.Gcd(n).Equals(One))
-        ////					return false;
         //
         //				int x = Jacobi(a, n);
         //
@@ -2398,14 +1954,11 @@ namespace System
         //				if (a.BitLength == e + 1)
         //					break;
         //				BigInteger a1 = a.ShiftRight(e);
-        ////				if (a1.Equals(One))
-        ////					break;
         //
         //				int a1Lsw = a1.magnitude[a1.magnitude.Length - 1];
         //				if ((bLsw & 3) == 3 && (a1Lsw & 3) == 3)
         //					totalS = -totalS;
         //
-        ////				a = b.Mod(a1);
         //				a = b.Remainder(a1);
         //				b = a1;
         //			}
@@ -4108,14 +3661,6 @@ namespace System
             return new BigInteger(_sign, mag, false);
         }
 
-        /// <summary>
-        ///     Compares two BigInteger values and returns an integer that indicates whether the first value is less than, equal
-        ///     to, or
-        ///     greater than the second value.
-        /// </summary>
-        /// <param name="left">The first value to compare.</param>
-        /// <param name="right">The second value to compare.</param>
-        /// <returns>A signed integer that indicates the relative values of left and right, as shown in the following table.</returns>
         public static int Compare(BigInteger left, object right)
         {
             if (right is BigInteger)
@@ -4204,15 +3749,6 @@ namespace System
             throw new ArgumentException();
         }
 
-        /// <summary>
-        ///     Compares two 256-bit signed integer values and returns an integer that indicates whether the first value is less
-        ///     than, equal to, or greater than the second value.
-        /// </summary>
-        /// <param name="left">The first value to compare.</param>
-        /// <param name="right">The second value to compare.</param>
-        /// <returns>
-        ///     A signed number indicating the relative values of this instance and value.
-        /// </returns>
         public static int Compare(BigInteger left, BigInteger right)
         {
             int leftSign = left.Sign;
