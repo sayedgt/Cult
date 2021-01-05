@@ -44,7 +44,104 @@ namespace Cult.PersianDataset
 			}
 			return result;
 		}
+
+		public static IEnumerable<Bakhsh> GetBakhsh()
+		{
+			var result = new List<Bakhsh>();
+			var file = Assembly.GetExecutingAssembly().GetManifestResourceText("Bakhsh.csv");
+			var records = file.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var record in records.Skip(1))
+			{
+				var items = record.Split(',').Select(x => x.Trim()).ToArray();
+				result.Add(new Bakhsh()
+				{
+					Id = items[0],
+					Name = items[1],
+					OstanId = items[2],
+					ShahrestanId = items[3],
+					AmarCode = items[4]
+				});
+			}
+			return result;
+		}
+
+		public static IEnumerable<Dehestan> GetDehestan()
+		{
+			var result = new List<Dehestan>();
+			var file = Assembly.GetExecutingAssembly().GetManifestResourceText("Dehestan.csv");
+			var records = file.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var record in records.Skip(1))
+			{
+				var items = record.Split(',').Select(x => x.Trim()).ToArray();
+				result.Add(new Dehestan()
+				{
+					Id = items[0],
+					Name = items[1],
+					OstanId = items[2],
+					ShahrestanId = items[3],
+					BakhshId = items[4],
+					AmarCode = items[5]
+				});
+			}
+			return result;
+		}
+		public static IEnumerable<Ostan> GetOstan()
+		{
+			var result = new List<Ostan>();
+			var file = Assembly.GetExecutingAssembly().GetManifestResourceText("Ostan.csv");
+			var records = file.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var record in records.Skip(1))
+			{
+				var items = record.Split(',').Select(x => x.Trim()).ToArray();
+				result.Add(new Ostan()
+				{
+					Id = items[0],
+					Name = items[1],
+					AmarCode = items[2]
+				});
+			}
+			return result;
+		}
+
+		public static IEnumerable<Shahr> GetShahr()
+		{
+			var result = new List<Shahr>();
+			var file = Assembly.GetExecutingAssembly().GetManifestResourceText("Shahr.csv");
+			var records = file.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var record in records.Skip(1))
+			{
+				var items = record.Split(',').Select(x => x.Trim()).ToArray();
+				result.Add(new Shahr()
+				{
+					Id = items[0],
+					Name = items[1],
+					ShahrType = items[2],
+					OstanId = items[3],
+					ShahrestanId = items[4],
+					BakhshId = items[5],
+					AmarCode = items[6]
+				});
+			}
+			return result;
+		}
+
+		public static IEnumerable<Shahrestan> GetShahrestan()
+		{
+			var result = new List<Shahrestan>();
+			var file = Assembly.GetExecutingAssembly().GetManifestResourceText("Shahrestan.csv");
+			var records = file.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+			foreach (var record in records.Skip(1))
+			{
+				var items = record.Split(',').Select(x => x.Trim()).ToArray();
+				result.Add(new Shahrestan()
+				{
+					Id = items[0],
+					Name = items[1],
+					OstanId = items[3],
+					AmarCode = items[4]
+				});
+			}
+			return result;
+		}
 	}
-
-
 }
