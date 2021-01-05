@@ -2,24 +2,13 @@
 
 namespace Cult.Persian
 {
-    /// <summary>
-    /// Validate IR National Code
-    /// </summary>
     public static class NationalCodeUtils
     {
-        /// <summary>
-        /// If string is a number returns true
-        /// </summary>
         internal static bool IsNumber(this string data)
         {
             return !string.IsNullOrWhiteSpace(data) && data.All(char.IsDigit);
         }
 
-        /// <summary>
-        /// Validate IR National Code
-        /// </summary>
-        /// <param name="nationalCode">National Code</param>
-        /// <returns></returns>
         public static bool IsValidIranianNationalCode(this string nationalCode)
         {
             if (string.IsNullOrWhiteSpace(nationalCode))

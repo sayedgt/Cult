@@ -2,17 +2,8 @@
 
 namespace Cult.Persian
 {
-    /// <summary>
-    /// Validate IR National Legal Code
-    /// </summary>
     public static class NationalLegalCodeUtils
     {
-        /// <summary>
-        /// Validate IR National Legal Code
-        /// شناسه ملی حقوقی
-        /// </summary>
-        /// <param name="nationalLegalCode">National Legal Code</param>
-        /// <returns></returns>
         public static bool IsValidIranianNationalLegalCode(this string nationalLegalCode)
         {
             if (string.IsNullOrWhiteSpace(nationalLegalCode))

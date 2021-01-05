@@ -2,32 +2,20 @@
 
 namespace Cult.Persian
 {
-    /// <summary>
-    /// Converts English digits of a given number to their equivalent Persian digits.
-    /// </summary>
     public static class PersianNumbersUtils
     {
-        /// <summary>
-        /// Converts English digits of a given number to their equivalent Persian digits.
-        /// </summary>
         public static string ToPersianNumbers(this int number, string format = "")
         {
             return ToPersianNumbers(!string.IsNullOrEmpty(format) ?
                     number.ToString(format, CultureInfo.InvariantCulture) : number.ToString(CultureInfo.InvariantCulture));
         }
 
-        /// <summary>
-        /// Converts English digits of a given number to their equivalent Persian digits.
-        /// </summary>
         public static string ToPersianNumbers(this long number, string format = "")
         {
             return ToPersianNumbers(!string.IsNullOrEmpty(format) ?
                     number.ToString(format, CultureInfo.InvariantCulture) : number.ToString(CultureInfo.InvariantCulture));
         }
 
-        /// <summary>
-        /// Converts English digits of a given number to their equivalent Persian digits.
-        /// </summary>
         public static string ToPersianNumbers(this int? number, string format = "")
         {
             if (!number.HasValue) number = 0;
@@ -35,9 +23,6 @@ namespace Cult.Persian
                     number.Value.ToString(format, CultureInfo.InvariantCulture) : number.Value.ToString(CultureInfo.InvariantCulture));
         }
 
-        /// <summary>
-        /// Converts English digits of a given number to their equivalent Persian digits.
-        /// </summary>
         public static string ToPersianNumbers(this long? number, string format = "")
         {
             if (!number.HasValue) number = 0;
@@ -45,11 +30,6 @@ namespace Cult.Persian
                 number.Value.ToString(format, CultureInfo.InvariantCulture) : number.Value.ToString(CultureInfo.InvariantCulture));
         }
 
-        /// <summary>
-        /// Converts English digits of a given string to their equivalent Persian digits.
-        /// </summary>
-        /// <param name="data">English number</param>
-        /// <returns></returns>
         public static string ToPersianNumbers(this string data)
         {
             if (string.IsNullOrWhiteSpace(data)) return string.Empty;
@@ -118,11 +98,6 @@ namespace Cult.Persian
             return new string(dataChars);
         }
 
-        /// <summary>
-        /// Converts Persian and Arabic digits of a given string to their equivalent English digits.
-        /// </summary>
-        /// <param name="data">Persian number</param>
-        /// <returns></returns>
         public static string ToEnglishNumbers(this string data)
         {
             if (string.IsNullOrWhiteSpace(data)) return string.Empty;
