@@ -171,6 +171,18 @@ namespace Cult.Extensions
             for (var i = 0; i < value; i++)
                 action(i);
         }
+        public static string ToBase(this long input, string baseChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+        {
+            var text = string.Empty;
+            var targetBase = baseChars.Length;
+            do
+            {
+                text = $"{baseChars[(int)(input % targetBase)]}{text}";
+                input /= targetBase;
+            } while (input > 0);
+
+            return text;
+        }
         public static TimeSpan Weeks(this long @this)
         {
             return TimeSpan.FromDays(@this * 7);

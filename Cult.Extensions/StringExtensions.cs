@@ -213,6 +213,18 @@ namespace Cult.Extensions
         {
             return string.Format(format, args);
         }
+        public static long FromBase(this string input, string baseChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
+        {
+            var srcBase = baseChars.Length;
+            long id = 0;
+            var text = new string(input.Reverse().ToArray());
+            for (var i = 0; i < text.Length; i++)
+            {
+                var charIndex = baseChars.IndexOf(text[i]);
+                id += charIndex * (long)Math.Pow(srcBase, i);
+            }
+            return id;
+        }
         public static string GetAfter(this string @this, string value)
         {
             if (@this.IndexOf(value, StringComparison.Ordinal) == -1)

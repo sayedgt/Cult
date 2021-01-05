@@ -1,22 +1,9 @@
 using Cult.SimMetrics.Metric;
-using System.Collections.Generic;
 // ReSharper disable All 
 namespace Cult.SimMetrics
 {
     public static class SimMetricsExtensions
     {
-        public static IEnumerable<string> ApproximatelyEquals(this IEnumerable<string> list, string word, double threshold, SimMetricType simMetricType = SimMetricType.Levenstein)
-        {
-            var newList = new List<string>();
-            foreach (var l in list)
-            {
-                var num = l.ApproximatelyEquals(word, simMetricType);
-                var thr = 1 - num;
-                if (thr <= threshold)
-                    newList.Add(l);
-            }
-            return newList;
-        }
         public static double ApproximatelyEquals(this string firstWord, string secondWord, SimMetricType simMetricType = SimMetricType.Levenstein)
         {
             switch (simMetricType)
