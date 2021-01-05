@@ -22,7 +22,7 @@ namespace Cult.Persian
         private static readonly Regex _matchOnlyPersianNumbersRange = new Regex(@"^[\u06F0-\u06F9]+$", options: RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex _matchOnlyPersianLetters = new Regex(@"^[\\s,\u06A9\u06AF\u06C0\u06CC\u060C,\u062A\u062B\u062C\u062D\u062E\u062F,\u063A\u064A\u064B\u064C\u064D\u064E,\u064F\u067E\u0670\u0686\u0698\u200C,\u0621-\u0629\u0630-\u0639\u0641-\u0654]+$", options: RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex _hasHalfSpaces = new Regex(@"\u200B|\u200C|\u200E|\u200F", options: RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private static string ApplyCorrectYeKe(this string data)
+        public static string CorrectYeKeLetters(this string data)
         {
             if (string.IsNullOrWhiteSpace(data)) return string.Empty;
 
@@ -71,7 +71,7 @@ namespace Cult.Persian
                 .Replace("ى", "ی")
                 .Replace("ة", "ه")
                 .Replace("‍", "")
-                .ApplyCorrectYeKe();
+                .CorrectYeKeLetters();
             return text;
         }
         public static bool ContainsFarsi(this string txt)
