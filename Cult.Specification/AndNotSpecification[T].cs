@@ -3,15 +3,15 @@
 
     public class AndNotSpecification<T> : CompositeSpecification<T>
     {
-        readonly ISpecification<T> left;
-        readonly ISpecification<T> right;
+        private readonly ISpecification<T> _left;
+        private readonly ISpecification<T> _right;
 
         public AndNotSpecification(ISpecification<T> left, ISpecification<T> right)
         {
-            this.left = left;
-            this.right = right;
+            _left = left;
+            _right = right;
         }
 
-        public override bool IsSatisfiedBy(T candidate) => left.IsSatisfiedBy(candidate) && !right.IsSatisfiedBy(candidate);
+        public override bool IsSatisfiedBy(T candidate) => _left.IsSatisfiedBy(candidate) && !_right.IsSatisfiedBy(candidate);
     }
 }

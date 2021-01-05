@@ -1,4 +1,5 @@
-﻿namespace Cult.Specification
+﻿// ReSharper disable All
+namespace Cult.Specification
 {
     public interface ISpecification<T>
     {
