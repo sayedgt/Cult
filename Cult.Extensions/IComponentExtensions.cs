@@ -1,7 +1,4 @@
 ﻿using System.ComponentModel;
-// ReSharper disable InconsistentNaming
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class IComponentExtensions

@@ -1,23 +1,10 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class ByteArrayExtensions
     {
-        public static T FromByteArray<T>(this byte[] data)
-        {
-            if (data == null)
-                return default(T);
-            BinaryFormatter bf = new BinaryFormatter();
-            using (MemoryStream ms = new MemoryStream(data))
-            {
-                object obj = bf.Deserialize(ms);
-                return (T)obj;
-            }
-        }
         public static int FindArrayInArray(this byte[] array1, byte[] array2)
         {
             if (array2 == null)
@@ -41,6 +28,21 @@ namespace Cult.Extensions
                 }
             }
             return -1;
+        }
+        public static T FromByteArray<T>(this byte[] data)
+        {
+            if (data == null)
+                return default(T);
+            BinaryFormatter bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                object obj = bf.Deserialize(ms);
+                return (T)obj;
+            }
+        }
+        public static string ToAsciiString(this byte[] @this)
+        {
+            return System.Text.Encoding.ASCII.GetString(@this, 0, @this.Length);
         }
         public static int ToBase64CharArray(this byte[] inArray, int offsetIn, int length, char[] outArray, int offsetOut)
         {
@@ -76,11 +78,7 @@ namespace Cult.Extensions
         }
         public static string ToUtf8String(this byte[] @this)
         {
-           return System.Text.Encoding.UTF8.GetString(@this, 0, @this.Length);
-        }
-        public static string ToAsciiString(this byte[] @this)
-        {
-            return System.Text.Encoding.ASCII.GetString(@this, 0, @this.Length);
+            return System.Text.Encoding.UTF8.GetString(@this, 0, @this.Length);
         }
     }
 }

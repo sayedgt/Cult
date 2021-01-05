@@ -1,15 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
 namespace Cult.Persian
 {
-    public enum Language
-    {
-        English,
-
-        Persian
-    }
-
     public enum DigitGroup
     {
         Ones,
@@ -22,16 +14,12 @@ namespace Cult.Persian
 
         Thousands
     }
-
-    public class NumberWord
+    public enum Language
     {
-        public DigitGroup Group { set; get; }
+        English,
 
-        public Language Language { set; get; }
-
-        public IEnumerable<string> Names { get; set; } = new List<string>();
+        Persian
     }
-
     public static class HumanReadableInteger
     {
         internal static readonly IDictionary<Language, string> _and = new Dictionary<Language, string>
@@ -118,33 +106,30 @@ namespace Cult.Persian
             { Language.English, "Zero" },
             { Language.Persian, "صفر" }
         };
-
-
+        internal static string getName(int idx, Language language, DigitGroup group)
+        {
+            return _numberWords.First(x => x.Group == group && x.Language == language).Names.ElementAt(idx);
+        }
         public static string NumberToText(this int number, Language language)
         {
             return NumberToText((long)number, language);
         }
-
         public static string NumberToText(this uint number, Language language)
         {
             return NumberToText((long)number, language);
         }
-
         public static string NumberToText(this byte number, Language language)
         {
             return NumberToText((long)number, language);
         }
-
         public static string NumberToText(this decimal number, Language language)
         {
             return NumberToText((long)number, language);
         }
-
         public static string NumberToText(this double number, Language language)
         {
             return NumberToText((long)number, language);
         }
-
         public static string NumberToText(this long number, Language language)
         {
             if (number == 0)
@@ -159,12 +144,6 @@ namespace Cult.Persian
 
             return wordify(number, language, string.Empty, 0);
         }
-
-        internal static string getName(int idx, Language language, DigitGroup group)
-        {
-            return _numberWords.First(x => x.Group == group && x.Language == language).Names.ElementAt(idx);
-        }
-
         internal static string wordify(long number, Language language, string leftDigitsText, int thousands)
         {
             if (number == 0)
@@ -202,5 +181,11 @@ namespace Cult.Persian
             if (number % 1000 == 0) return wordValue;
             return wordValue + getName(thousands, language, DigitGroup.Thousands);
         }
+    }
+    public class NumberWord
+    {
+        public DigitGroup Group { set; get; }
+        public Language Language { set; get; }
+        public IEnumerable<string> Names { get; set; } = new List<string>();
     }
 }

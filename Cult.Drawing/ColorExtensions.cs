@@ -1,7 +1,4 @@
 ﻿using System.Drawing;
-
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Drawing
 {
     public static class ColorExtensions
@@ -10,12 +7,10 @@ namespace Cult.Drawing
         {
             return ColorTranslator.ToHtml(color);
         }
-
         public static int ToOleColor(this Color color)
         {
             return ColorTranslator.ToOle(color);
         }
-
         public static int ToWin32Color(this Color color)
         {
             return ColorTranslator.ToWin32(color);

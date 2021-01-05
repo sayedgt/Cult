@@ -5,19 +5,13 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class ArrayExtensions
     {
-        public static IEnumerable<T> Reverse<T>(this T[] source)
+        public static ReadOnlyCollection<T> AsReadOnly<T>(this T[] array)
         {
-            for (var i = source.Length - 1; i >= 0; i--)
-            {
-                yield return source[i];
-            }
+            return Array.AsReadOnly(array);
         }
         public static void Clear(this Array array, int index, int length)
         {
@@ -34,7 +28,6 @@ namespace Cult.Extensions
         {
             Array.Clear(@this, 0, @this.Length);
         }
-
         public static Array ClearAt(this Array arrayToClear, int at)
         {
             if (arrayToClear != null)
@@ -45,7 +38,6 @@ namespace Cult.Extensions
             }
             return arrayToClear;
         }
-
         public static T[] ClearAt<T>(this T[] arrayToClear, int at)
         {
             if (arrayToClear != null)
@@ -56,7 +48,16 @@ namespace Cult.Extensions
             }
             return arrayToClear;
         }
-        
+        public static T[] CombineArray<T>(this T[] combineWith, T[] arrayToCombine)
+        {
+            if (combineWith != default(T[]) && arrayToCombine != default(T[]))
+            {
+                var initialSize = combineWith.Length;
+                Array.Resize(ref combineWith, initialSize + arrayToCombine.Length);
+                Array.Copy(arrayToCombine, arrayToCombine.GetLowerBound(0), combineWith, initialSize, arrayToCombine.Length);
+            }
+            return combineWith;
+        }
         public static void Copy(this Array sourceArray, Array destinationArray, int length)
         {
             Array.Copy(sourceArray, destinationArray, length);
@@ -72,109 +73,6 @@ namespace Cult.Extensions
         public static void Copy(this Array sourceArray, long sourceIndex, Array destinationArray, long destinationIndex, long length)
         {
             Array.Copy(sourceArray, sourceIndex, destinationArray, destinationIndex, length);
-        }
-        public static byte GetByte(this Array array, int index)
-        {
-            return Buffer.GetByte(array, index);
-        }
-        public static int IndexOf(this Array array, object value)
-        {
-            return Array.IndexOf(array, value);
-        }
-        public static int IndexOf(this Array array, object value, int startIndex)
-        {
-            return Array.IndexOf(array, value, startIndex);
-        }
-        public static int IndexOf(this Array array, object value, int startIndex, int count)
-        {
-            return Array.IndexOf(array, value, startIndex, count);
-        }
-
-        public static bool IsEmpty(this Array array)
-        {
-            if (array.IsNull())
-            {
-                throw new ArgumentNullException(nameof(array));
-            }
-            return array.Length == 0;
-        }
-
-        public static int LastIndexOf(this Array array, object value)
-        {
-            return Array.LastIndexOf(array, value);
-        }
-        public static int LastIndexOf(this Array array, object value, int startIndex)
-        {
-            return Array.LastIndexOf(array, value, startIndex);
-        }
-        public static int LastIndexOf(this Array array, object value, int startIndex, int count)
-        {
-            return Array.LastIndexOf(array, value, startIndex, count);
-        }
-        public static void Reverse(this Array array)
-        {
-            Array.Reverse(array);
-        }
-        public static void Reverse(this Array array, int index, int length)
-        {
-            Array.Reverse(array, index, length);
-        }
-        public static void Sort(this Array array)
-        {
-            Array.Sort(array);
-        }
-        public static void Sort(this Array array, Array items)
-        {
-            Array.Sort(array, items);
-        }
-        public static void Sort(this Array array, int index, int length)
-        {
-            Array.Sort(array, index, length);
-        }
-        public static void Sort(this Array array, Array items, int index, int length)
-        {
-            Array.Sort(array, items, index, length);
-        }
-        public static void Sort(this Array array, IComparer comparer)
-        {
-            Array.Sort(array, comparer);
-        }
-        public static void Sort(this Array array, Array items, IComparer comparer)
-        {
-            Array.Sort(array, items, comparer);
-        }
-        public static void Sort(this Array array, int index, int length, IComparer comparer)
-        {
-            Array.Sort(array, index, length, comparer);
-        }
-        public static void Sort(this Array array, Array items, int index, int length, IComparer comparer)
-        {
-            Array.Sort(array, items, index, length, comparer);
-        }
-        public static bool WithinIndex(this Array @this, int index)
-        {
-            return index >= 0 && index < @this.Length;
-        }
-        public static bool WithinIndex(this Array @this, int index, int dimension)
-        {
-            var d = 0;
-            if (dimension > 0)
-                d = dimension;
-            return index >= @this.GetLowerBound(d) && index <= @this.GetUpperBound(d);
-        }
-        public static ReadOnlyCollection<T> AsReadOnly<T>(this T[] array)
-        {
-            return Array.AsReadOnly(array);
-        }
-        public static T[] CombineArray<T>(this T[] combineWith, T[] arrayToCombine)
-        {
-            if (combineWith != default(T[]) && arrayToCombine != default(T[]))
-            {
-                var initialSize = combineWith.Length;
-                Array.Resize(ref combineWith, initialSize + arrayToCombine.Length);
-                Array.Copy(arrayToCombine, arrayToCombine.GetLowerBound(0), combineWith, initialSize, arrayToCombine.Length);
-            }
-            return combineWith;
         }
         public static bool Exists<T>(this T[] array, Predicate<T> match)
         {
@@ -221,13 +119,11 @@ namespace Cult.Extensions
             foreach (var item in source)
                 action(item);
         }
-
         public static void ForEach<T>(this T[] source, Action<T> action, Func<T, bool> predicate)
         {
             foreach (var item in source.Where(predicate))
                 action(item);
         }
-
         public static void ForEachReverse<T>(this T[] source, Action<T> action)
         {
             var items = source.ToList();
@@ -236,7 +132,6 @@ namespace Cult.Extensions
                 action(items[i]);
             }
         }
-
         public static void ForEachReverse<T>(this T[] source, Action<T> action, Func<T, bool> predicate)
         {
             var items = source.ToList();
@@ -246,7 +141,48 @@ namespace Cult.Extensions
                     action(items[i]);
             }
         }
-
+        public static byte GetByte(this Array array, int index)
+        {
+            return Buffer.GetByte(array, index);
+        }
+        public static T[] GetDuplicateItems<T>(this T[] @this)
+        {
+            var hashset = new HashSet<T>();
+            var duplicates = @this.Where(e => !hashset.Add(e));
+            return duplicates.ToArray();
+        }
+        public static int IndexOf(this Array array, object value)
+        {
+            return Array.IndexOf(array, value);
+        }
+        public static int IndexOf(this Array array, object value, int startIndex)
+        {
+            return Array.IndexOf(array, value, startIndex);
+        }
+        public static int IndexOf(this Array array, object value, int startIndex, int count)
+        {
+            return Array.IndexOf(array, value, startIndex, count);
+        }
+        public static bool IsEmpty(this Array array)
+        {
+            if (array.IsNull())
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+            return array.Length == 0;
+        }
+        public static int LastIndexOf(this Array array, object value)
+        {
+            return Array.LastIndexOf(array, value);
+        }
+        public static int LastIndexOf(this Array array, object value, int startIndex)
+        {
+            return Array.LastIndexOf(array, value, startIndex);
+        }
+        public static int LastIndexOf(this Array array, object value, int startIndex, int count)
+        {
+            return Array.LastIndexOf(array, value, startIndex, count);
+        }
         public static T[] Remove<T>(this T[] source, T item)
         {
             var result = new T[source.Length - source.Count(s => s.Equals(item))];
@@ -258,7 +194,6 @@ namespace Cult.Extensions
             }
             return result;
         }
-
         public static T[] RemoveAll<T>(this T[] source, Predicate<T> predicate)
         {
             var result = new T[source.Length - source.Count(s => predicate(s))];
@@ -270,7 +205,6 @@ namespace Cult.Extensions
             }
             return result;
         }
-
         public static T[] RemoveAt<T>(this T[] source, int index)
         {
             var result = new T[source.Length - 1];
@@ -282,6 +216,62 @@ namespace Cult.Extensions
                 x++;
             }
             return result;
+        }
+        public static T[] RemoveDuplicateItems<T>(this T[] @this)
+        {
+            var hashset = new HashSet<T>();
+            foreach (var item in @this)
+            {
+                hashset.Add(item);
+            }
+            return hashset.ToArray();
+        }
+        public static IEnumerable<T> Reverse<T>(this T[] source)
+        {
+            for (var i = source.Length - 1; i >= 0; i--)
+            {
+                yield return source[i];
+            }
+        }
+        public static void Reverse(this Array array)
+        {
+            Array.Reverse(array);
+        }
+        public static void Reverse(this Array array, int index, int length)
+        {
+            Array.Reverse(array, index, length);
+        }
+        public static void Sort(this Array array)
+        {
+            Array.Sort(array);
+        }
+        public static void Sort(this Array array, Array items)
+        {
+            Array.Sort(array, items);
+        }
+        public static void Sort(this Array array, int index, int length)
+        {
+            Array.Sort(array, index, length);
+        }
+        public static void Sort(this Array array, Array items, int index, int length)
+        {
+            Array.Sort(array, items, index, length);
+        }
+        public static void Sort(this Array array, IComparer comparer)
+        {
+            Array.Sort(array, comparer);
+        }
+        public static void Sort(this Array array, Array items, IComparer comparer)
+        {
+            Array.Sort(array, items, comparer);
+        }
+        public static void Sort(this Array array, int index, int length, IComparer comparer)
+        {
+            Array.Sort(array, index, length, comparer);
+        }
+        public static void Sort(this Array array, Array items, int index, int length, IComparer comparer)
+        {
+            Array.Sort(array, items, index, length, comparer);
         }
         public static DataTable ToDataTable<T>(this T[] @this)
         {
@@ -325,21 +315,16 @@ namespace Cult.Extensions
         {
             return Array.TrueForAll(array, match);
         }
-
-        public static T[] GetDuplicateItems<T>(this T[] @this)
+        public static bool WithinIndex(this Array @this, int index)
         {
-            var hashset = new HashSet<T>();
-            var duplicates = @this.Where(e => !hashset.Add(e));
-            return duplicates.ToArray();
+            return index >= 0 && index < @this.Length;
         }
-        public static T[] RemoveDuplicateItems<T>(this T[] @this)
+        public static bool WithinIndex(this Array @this, int index, int dimension)
         {
-            var hashset = new HashSet<T>();
-            foreach (var item in @this)
-            {
-                hashset.Add(item);
-            }
-            return hashset.ToArray();
+            var d = 0;
+            if (dimension > 0)
+                d = dimension;
+            return index >= @this.GetLowerBound(d) && index <= @this.GetUpperBound(d);
         }
     }
 }

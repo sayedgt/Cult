@@ -1,11 +1,7 @@
-﻿using System;
+﻿using Castle.Sharp2Js;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Castle.Sharp2Js;
-
-// ReSharper disable UnusedMember.Global
-// ReSharper disable IdentifierTypo
-
 namespace Cult.Sharp2Js
 {
     public static class Sharp2JsExtensions
@@ -20,7 +16,6 @@ namespace Cult.Sharp2Js
             sb.AppendLine(source);
             return sb.ToString();
         }
-
         public static string GetJavaScriptPoco(this Type type, bool addModelArray = false)
         {
             var poco = JsGenerator.Generate(new[] { type }, new JsGeneratorOptions
@@ -31,13 +26,11 @@ namespace Cult.Sharp2Js
             });
             return addModelArray ? AddJavaScriptArrayModel(poco) : poco;
         }
-
         public static string GetJavaScriptPoco(this Type type, JsGeneratorOptions options, bool addModelArray = false)
         {
             var poco = JsGenerator.Generate(new[] { type }, options);
             return addModelArray ? AddJavaScriptArrayModel(poco) : poco;
         }
-
         public static string GetJavaScriptPocos(this IEnumerable<Type> types, bool addModelArray = false)
         {
             var poco = JsGenerator.Generate(types, new JsGeneratorOptions
@@ -48,12 +41,10 @@ namespace Cult.Sharp2Js
             });
             return addModelArray ? AddJavaScriptArrayModel(poco) : poco;
         }
-
         public static string GetTypeScriptPocos(this IEnumerable<Type> types, JsGeneratorOptions options, bool addModelArray = false)
         {
             var poco = JsGenerator.Generate(types, options);
             return addModelArray ? AddJavaScriptArrayModel(poco) : poco;
         }
     }
-
 }

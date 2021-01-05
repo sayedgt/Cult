@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Linq;
-
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.ParserKit
 {
     public class Token<TToken> where TToken : Enum
     {
+        public int Column { get; }
+        public int End { get; }
+        public bool IsMultiLine => Value.Contains('\n');
+        public int Length => Value.Length;
+        public int Line { get; }
+        public int Start => End - Length;
+        public TToken Type { get; }
+        public string Value { get; }
         public Token(TToken type, string value, int position, int line, int column)
         {
             Type = type;
@@ -15,14 +20,5 @@ namespace Cult.ParserKit
             Line = line;
             Column = column;
         }
-
-        public TToken Type { get; }
-        public string Value { get; }
-        public int End { get; }
-        public int Line { get; }
-        public int Column { get; }
-        public int Start => End - Length;
-        public int Length => Value.Length;
-        public bool IsMultiLine => Value.Contains('\n');
     }
 }

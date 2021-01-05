@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-// ReSharper disable UnusedMember.Global
-// ReSharper disable PossibleMultipleEnumeration
-
 namespace Cult.NetDiff
 {
     public static class DiffUtil
     {
+        public static IEnumerable<T> CreateDst<T>(IEnumerable<DiffResult<T>> diffResults)
+        {
+            return diffResults.Where(r => r.Status != DiffStatus.Deleted).Select(r => r.Obj2);
+        }
+        public static IEnumerable<T> CreateSrc<T>(IEnumerable<DiffResult<T>> diffResults)
+        {
+            return diffResults.Where(r => r.Status != DiffStatus.Inserted).Select(r => r.Obj1);
+        }
         public static IEnumerable<DiffResult<T>> Diff<T>(IEnumerable<T> seq1, IEnumerable<T> seq2)
         {
             return Diff(seq1, seq2, new DiffOption<T>());
         }
-
         public static IEnumerable<DiffResult<T>> Diff<T>(IEnumerable<T> seq1, IEnumerable<T> seq2, DiffOption<T> option)
         {
             if (seq1 == null || seq2 == null || (!seq1.Any() && !seq2.Any()))
@@ -23,54 +27,16 @@ namespace Cult.NetDiff
 
             return MakeResults<T>(wayPoints, seq1, seq2);
         }
-
-        public static IEnumerable<T> CreateSrc<T>(IEnumerable<DiffResult<T>> diffResults)
+        private static DiffStatus GetStatus(Point current, Point prev)
         {
-            return diffResults.Where(r => r.Status != DiffStatus.Inserted).Select(r => r.Obj1);
+            if (current.X != prev.X && current.Y != prev.Y)
+                return DiffStatus.Equal;
+            if (current.X != prev.X)
+                return DiffStatus.Deleted;
+            if (current.Y != prev.Y)
+                return DiffStatus.Inserted;
+            throw new Exception();
         }
-
-        public static IEnumerable<T> CreateDst<T>(IEnumerable<DiffResult<T>> diffResults)
-        {
-            return diffResults.Where(r => r.Status != DiffStatus.Deleted).Select(r => r.Obj2);
-        }
-
-        public static IEnumerable<DiffResult<T>> OptimizeCaseDeletedFirst<T>(IEnumerable<DiffResult<T>> diffResults)
-        {
-            return Optimize(diffResults, true);
-        }
-
-        public static IEnumerable<DiffResult<T>> OptimizeCaseInsertedFirst<T>(IEnumerable<DiffResult<T>> diffResults)
-        {
-            return Optimize(diffResults, false);
-        }
-
-        private static IEnumerable<DiffResult<T>> Optimize<T>(IEnumerable<DiffResult<T>> diffResults, bool deleteFirst = true)
-        {
-            var currentStatus = deleteFirst ? DiffStatus.Deleted : DiffStatus.Inserted;
-            var nextStatus = deleteFirst ? DiffStatus.Inserted : DiffStatus.Deleted;
-
-            var queue = new Queue<DiffResult<T>>(diffResults);
-            while (queue.Any())
-            {
-                var result = queue.Dequeue();
-                if (result.Status == currentStatus)
-                {
-                    if (queue.Any() && queue.Peek().Status == nextStatus)
-                    {
-                        var obj1 = deleteFirst ? result.Obj1 : queue.Dequeue().Obj1;
-                        var obj2 = deleteFirst ? queue.Dequeue().Obj2 : result.Obj2;
-                        yield return new DiffResult<T>(obj1, obj2, DiffStatus.Modified);
-                    }
-                    else
-                        yield return result;
-
-                    continue;
-                }
-
-                yield return result;
-            }
-        }
-
         private static IEnumerable<DiffResult<T>> MakeResults<T>(IEnumerable<Point> wayPoints, IEnumerable<T> seq1, IEnumerable<T> seq2)
         {
             var array1 = seq1.ToArray();
@@ -98,18 +64,40 @@ namespace Cult.NetDiff
                 yield return new DiffResult<T>(obj1, obj2, status);
             }
         }
-
-        private static DiffStatus GetStatus(Point current, Point prev)
+        private static IEnumerable<DiffResult<T>> Optimize<T>(IEnumerable<DiffResult<T>> diffResults, bool deleteFirst = true)
         {
-            if (current.X != prev.X && current.Y != prev.Y)
-                return DiffStatus.Equal;
-            if (current.X != prev.X)
-                return DiffStatus.Deleted;
-            if (current.Y != prev.Y)
-                return DiffStatus.Inserted;
-            throw new Exception();
-        }
+            var currentStatus = deleteFirst ? DiffStatus.Deleted : DiffStatus.Inserted;
+            var nextStatus = deleteFirst ? DiffStatus.Inserted : DiffStatus.Deleted;
 
+            var queue = new Queue<DiffResult<T>>(diffResults);
+            while (queue.Any())
+            {
+                var result = queue.Dequeue();
+                if (result.Status == currentStatus)
+                {
+                    if (queue.Any() && queue.Peek().Status == nextStatus)
+                    {
+                        var obj1 = deleteFirst ? result.Obj1 : queue.Dequeue().Obj1;
+                        var obj2 = deleteFirst ? queue.Dequeue().Obj2 : result.Obj2;
+                        yield return new DiffResult<T>(obj1, obj2, DiffStatus.Modified);
+                    }
+                    else
+                        yield return result;
+
+                    continue;
+                }
+
+                yield return result;
+            }
+        }
+        public static IEnumerable<DiffResult<T>> OptimizeCaseDeletedFirst<T>(IEnumerable<DiffResult<T>> diffResults)
+        {
+            return Optimize(diffResults, true);
+        }
+        public static IEnumerable<DiffResult<T>> OptimizeCaseInsertedFirst<T>(IEnumerable<DiffResult<T>> diffResults)
+        {
+            return Optimize(diffResults, false);
+        }
         public static IEnumerable<DiffResult<T>> Order<T>(IEnumerable<DiffResult<T>> results, DiffOrderType orderType)
         {
             var resultArray = results.ToArray();

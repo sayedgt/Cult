@@ -1,5 +1,4 @@
 ﻿using System.Net.Sockets;
-
 namespace Cult.Extensions
 {
     public static class SocketExtensions

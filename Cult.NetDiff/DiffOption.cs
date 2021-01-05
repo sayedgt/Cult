@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 namespace Cult.NetDiff
 {
     public class DiffOption<T>

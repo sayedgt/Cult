@@ -1,7 +1,6 @@
 ﻿using Cult.Mvc.Extensions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-
 namespace Cult.Mvc.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

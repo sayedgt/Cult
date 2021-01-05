@@ -1,7 +1,4 @@
 ﻿using System;
-// ReSharper disable UnusedMember.Global
-// ReSharper disable InconsistentNaming
-
 namespace Cult.Extensions
 {
     public static class IDisposableExtensions

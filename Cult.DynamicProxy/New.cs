@@ -1,14 +1,11 @@
 using System.Linq;
 using System.Reflection;
-
-// ReSharper disable once CheckNamespace
-
 namespace Castle.DynamicProxy
 {
     public static class New
     {
         public static TClass Of<TClass>()
-                    where TClass : class, new()
+                            where TClass : class, new()
         {
             var interceptors = typeof(TClass).GetTypeInfo().GetCustomAttributes(typeof(InterceptorAttribute), false);
 
@@ -21,9 +18,8 @@ namespace Castle.DynamicProxy
             var tc = generator.CreateClassProxy<TClass>(instanceCustom);
             return tc;
         }
-
         public static TClass Of<TClass>(ProxyGenerationOptions options, params IInterceptor[] interceptors)
-                    where TClass : class, new()
+                            where TClass : class, new()
         {
             var generator = new ProxyGenerator();
             return generator.CreateClassProxy<TClass>(options, interceptors);

@@ -4,14 +4,20 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Dynamic;
 using System.Linq;
-
-// ReSharper disable UnusedMember.Global
-// ReSharper disable InconsistentNaming
-
 namespace Cult.Extensions
 {
     public static class IDictionaryExtensions
     {
+        public static void AddDistinctRange<TKey, TValue>(this IDictionary<TKey, TValue> source, IDictionary<TKey, TValue> dictionary)
+        {
+            foreach (var kvp in dictionary)
+            {
+                if (!source.ContainsKey(kvp.Key))
+                {
+                    source.Add(kvp);
+                }
+            }
+        }
         public static bool AddIfNotContainsKey<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, TValue value)
         {
             if (!@this.ContainsKey(key))
@@ -22,7 +28,6 @@ namespace Cult.Extensions
 
             return false;
         }
-
         public static bool AddIfNotContainsKey<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, Func<TValue> valueFactory)
         {
             if (!@this.ContainsKey(key))
@@ -33,7 +38,6 @@ namespace Cult.Extensions
 
             return false;
         }
-
         public static bool AddIfNotContainsKey<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, Func<TKey, TValue> valueFactory)
         {
             if (!@this.ContainsKey(key))
@@ -44,7 +48,6 @@ namespace Cult.Extensions
 
             return false;
         }
-
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, TValue value)
         {
             if (!@this.ContainsKey(key))
@@ -58,7 +61,6 @@ namespace Cult.Extensions
 
             return @this[key];
         }
-
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, TValue addValue, Func<TKey, TValue, TValue> updateValueFactory)
         {
             if (!@this.ContainsKey(key))
@@ -72,7 +74,6 @@ namespace Cult.Extensions
 
             return @this[key];
         }
-
         public static TValue AddOrUpdate<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, Func<TKey, TValue> addValueFactory, Func<TKey, TValue, TValue> updateValueFactory)
         {
             if (!@this.ContainsKey(key))
@@ -86,9 +87,8 @@ namespace Cult.Extensions
 
             return @this[key];
         }
-
         public static void AddRange<TKey, TValue>(this Dictionary<TKey, TValue> container,
-                Func<TValue, TKey> keyProducerFunc, IEnumerable<TValue> rangeToAdd)
+                        Func<TValue, TKey> keyProducerFunc, IEnumerable<TValue> rangeToAdd)
         {
             if ((container == null) || (rangeToAdd == null))
             {
@@ -104,7 +104,17 @@ namespace Cult.Extensions
                 container[keyProducerFunc(toAdd)] = toAdd;
             }
         }
-
+        public static void AddRange<TKey, TValue>(this IDictionary<TKey, TValue> source, IDictionary<TKey, TValue> dictionary)
+        {
+            foreach (var kvp in dictionary)
+            {
+                if (source.ContainsKey(kvp.Key))
+                {
+                    throw new ArgumentException("An item with the same key has already been added.");
+                }
+                source.Add(kvp);
+            }
+        }
         public static bool ContainsAllKey<TKey, TValue>(this IDictionary<TKey, TValue> @this, params TKey[] keys)
         {
             foreach (TKey value in keys)
@@ -117,7 +127,6 @@ namespace Cult.Extensions
 
             return true;
         }
-
         public static bool ContainsAnyKey<TKey, TValue>(this IDictionary<TKey, TValue> @this, params TKey[] keys)
         {
             foreach (TKey value in keys)
@@ -130,7 +139,6 @@ namespace Cult.Extensions
 
             return false;
         }
-
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, TValue value)
         {
             if (!@this.ContainsKey(key))
@@ -140,7 +148,6 @@ namespace Cult.Extensions
 
             return @this[key];
         }
-
         public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key, Func<TKey, TValue> valueFactory)
         {
             if (!@this.ContainsKey(key))
@@ -150,7 +157,6 @@ namespace Cult.Extensions
 
             return @this[key];
         }
-
         public static TValue GetValue<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key)
         {
             TValue toReturn;
@@ -160,7 +166,38 @@ namespace Cult.Extensions
             }
             return toReturn;
         }
-
+        public static IDictionary<TValue, TKey> Invert<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+        {
+            if (dictionary == null)
+                throw new ArgumentNullException(nameof(dictionary));
+            return dictionary.ToDictionary(pair => pair.Value, pair => pair.Key);
+        }
+        public static bool IsEmpty(this IDictionary @this)
+        {
+            if (@this == null)
+            {
+                throw new ArgumentNullException(nameof(@this));
+            }
+            return @this.Count == 0;
+        }
+        public static bool IsEmpty<TKey, TValue>(this IDictionary<TKey, TValue> @this)
+        {
+            if (@this == null)
+            {
+                throw new ArgumentNullException(nameof(@this));
+            }
+            return @this.Count == 0;
+        }
+        public static bool IsNullOrEmpty(this IDictionary @this)
+        {
+            if (@this == null) return true;
+            return @this.Count == 0;
+        }
+        public static bool IsNullOrEmpty<TKey, TValue>(this IDictionary<TKey, TValue> @this)
+        {
+            if (@this == null) return true;
+            return @this.Count == 0;
+        }
         public static void RemoveIfContainsKey<TKey, TValue>(this IDictionary<TKey, TValue> @this, TKey key)
         {
             if (@this.ContainsKey(key))
@@ -168,40 +205,6 @@ namespace Cult.Extensions
                 @this.Remove(key);
             }
         }
-
-        public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>(this IDictionary<TKey, TValue> @this)
-        {
-            return new SortedDictionary<TKey, TValue>(@this);
-        }
-
-        public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>(this IDictionary<TKey, TValue> @this, IComparer<TKey> comparer)
-        {
-            return new SortedDictionary<TKey, TValue>(@this, comparer);
-        }
-
-        public static void AddRange<TKey, TValue>(this IDictionary<TKey, TValue> source, IDictionary<TKey, TValue> dictionary)
-        {
-            foreach (var kvp in dictionary)
-            {
-                if (source.ContainsKey(kvp.Key))
-                {
-                    throw new ArgumentException("An item with the same key has already been added.");
-                }
-                source.Add(kvp);
-            }
-        }
-
-        public static void AddDistinctRange<TKey, TValue>(this IDictionary<TKey, TValue> source, IDictionary<TKey, TValue> dictionary)
-        {
-            foreach (var kvp in dictionary)
-            {
-                if (!source.ContainsKey(kvp.Key))
-                {
-                    source.Add(kvp);
-                }
-            }
-        }
-
         public static IDictionary<TKey, TValue> Sort<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
         {
             if (dictionary == null)
@@ -209,7 +212,6 @@ namespace Cult.Extensions
 
             return new SortedDictionary<TKey, TValue>(dictionary);
         }
-
         public static IDictionary<TKey, TValue> Sort<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer)
         {
             if (dictionary == null)
@@ -219,35 +221,9 @@ namespace Cult.Extensions
 
             return new SortedDictionary<TKey, TValue>(dictionary, comparer);
         }
-
         public static IDictionary<TKey, TValue> SortByValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
         {
             return (new SortedDictionary<TKey, TValue>(dictionary)).OrderBy(kvp => kvp.Value).ToDictionary(item => item.Key, item => item.Value);
-        }
-
-        public static IDictionary<TValue, TKey> Invert<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
-        {
-            if (dictionary == null)
-                throw new ArgumentNullException(nameof(dictionary));
-            return dictionary.ToDictionary(pair => pair.Value, pair => pair.Key);
-        }
-
-        public static Hashtable ToHashTable<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
-        {
-            var table = new Hashtable();
-            foreach (var item in dictionary)
-                table.Add(item.Key, item.Value);
-
-            return table;
-        }
-        public static NameValueCollection ToNameValueCollection(this IDictionary<string, string> @this)
-        {
-            if (@this == null)
-                return null;
-
-            var nameValueCollection = new NameValueCollection();
-            foreach (var item in @this) nameValueCollection.Add(item.Key, item.Value);
-            return nameValueCollection;
         }
         public static ExpandoObject ToExpando(this IDictionary<string, object> @this)
         {
@@ -270,34 +246,30 @@ namespace Cult.Extensions
         {
             return new Hashtable(@this);
         }
+        public static Hashtable ToHashTable<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+        {
+            var table = new Hashtable();
+            foreach (var item in dictionary)
+                table.Add(item.Key, item.Value);
 
-        public static bool IsEmpty(this IDictionary @this)
+            return table;
+        }
+        public static NameValueCollection ToNameValueCollection(this IDictionary<string, string> @this)
         {
             if (@this == null)
-            {
-                throw new ArgumentNullException(nameof(@this));
-            }
-            return @this.Count == 0;
-        }
+                return null;
 
-        public static bool IsEmpty<TKey, TValue>(this IDictionary<TKey, TValue> @this)
-        {
-            if (@this == null)
-            {
-                throw new ArgumentNullException(nameof(@this));
-            }
-            return @this.Count == 0;
+            var nameValueCollection = new NameValueCollection();
+            foreach (var item in @this) nameValueCollection.Add(item.Key, item.Value);
+            return nameValueCollection;
         }
-
-        public static bool IsNullOrEmpty(this IDictionary @this)
+        public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>(this IDictionary<TKey, TValue> @this)
         {
-            if (@this == null) return true;
-            return @this.Count == 0;
+            return new SortedDictionary<TKey, TValue>(@this);
         }
-        public static bool IsNullOrEmpty<TKey, TValue>(this IDictionary<TKey, TValue> @this)
+        public static SortedDictionary<TKey, TValue> ToSortedDictionary<TKey, TValue>(this IDictionary<TKey, TValue> @this, IComparer<TKey> comparer)
         {
-            if (@this == null) return true;
-            return @this.Count == 0;
+            return new SortedDictionary<TKey, TValue>(@this, comparer);
         }
     }
 }

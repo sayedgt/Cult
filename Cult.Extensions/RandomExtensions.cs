@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class RandomExtensions
@@ -12,29 +9,11 @@ namespace Cult.Extensions
         {
             return @this.Next(2) == 0;
         }
-
-        public static T OneOf<T>(this Random @this, params T[] values)
-        {
-            return values[@this.Next(values.Length)];
-        }
-        public static T OneOf<T>(this Random @this, IEnumerable<T> values)
-        {
-            var arr = values.ToArray();
-            return @this.OneOf(arr);
-        }
-        public static int NextInt32(this Random @this)
-        {
-            var firstBits = @this.Next(0, 1 << 4) << 28;
-            var lastBits = @this.Next(0, 1 << 28);
-            return firstBits | lastBits;
-        }
-
         public static decimal NextDecimal(this Random @this)
         {
             var sign = @this.Next(2) == 1;
             return @this.NextDecimal(sign);
         }
-
         public static decimal NextDecimal(this Random @this, bool sign)
         {
             var scale = (byte)@this.Next(29);
@@ -44,18 +23,11 @@ namespace Cult.Extensions
                 sign,
                 scale);
         }
-
-        public static decimal NextNonNegativeDecimal(this Random @this)
-        {
-            return @this.NextDecimal(false);
-        }
-
         public static decimal NextDecimal(this Random @this, decimal maxValue)
         {
             return @this.NextNonNegativeDecimal() / decimal.MaxValue * maxValue;
             ;
         }
-
         public static decimal NextDecimal(this Random @this, decimal minValue, decimal maxValue)
         {
             if (minValue >= maxValue)
@@ -65,21 +37,20 @@ namespace Cult.Extensions
             var range = maxValue - minValue;
             return @this.NextDecimal(range) + minValue;
         }
-
-        public static long NextNonNegativeLong(this Random @this)
+        public static double NextDouble(this Random @this, double min, double max)
         {
-            var bytes = new byte[sizeof(long)];
-            @this.NextBytes(bytes);
-            // strip out the sign bit
-            bytes[7] = (byte)(bytes[7] & 0x7f);
-            return BitConverter.ToInt64(bytes, 0);
+            return @this.NextDouble() * (max - min) + min;
         }
-
+        public static int NextInt32(this Random @this)
+        {
+            var firstBits = @this.Next(0, 1 << 4) << 28;
+            var lastBits = @this.Next(0, 1 << 28);
+            return firstBits | lastBits;
+        }
         public static long NextInt64(this Random @this, long maxValue)
         {
             return (long)(@this.NextNonNegativeLong() / (double)long.MaxValue * maxValue);
         }
-
         public static long NextInt64(this Random @this, long minValue, long maxValue)
         {
             if (minValue >= maxValue)
@@ -89,17 +60,32 @@ namespace Cult.Extensions
             var range = maxValue - minValue;
             return @this.NextInt64(range) + minValue;
         }
-
         public static long NextInt64(this Random @this)
         {
             var buffer = new byte[sizeof(long)];
             @this.NextBytes(buffer);
             return BitConverter.ToInt64(buffer, 0);
         }
-
-        public static double NextDouble(this Random @this, double min, double max)
+        public static decimal NextNonNegativeDecimal(this Random @this)
         {
-            return @this.NextDouble() * (max - min) + min;
+            return @this.NextDecimal(false);
+        }
+        public static long NextNonNegativeLong(this Random @this)
+        {
+            var bytes = new byte[sizeof(long)];
+            @this.NextBytes(bytes);
+            // strip out the sign bit
+            bytes[7] = (byte)(bytes[7] & 0x7f);
+            return BitConverter.ToInt64(bytes, 0);
+        }
+        public static T OneOf<T>(this Random @this, params T[] values)
+        {
+            return values[@this.Next(values.Length)];
+        }
+        public static T OneOf<T>(this Random @this, IEnumerable<T> values)
+        {
+            var arr = values.ToArray();
+            return @this.OneOf(arr);
         }
     }
 }

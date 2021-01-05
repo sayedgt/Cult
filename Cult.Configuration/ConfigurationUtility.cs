@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
-
 namespace Cult.Configuration
 {
     public static class ConfigurationUtility

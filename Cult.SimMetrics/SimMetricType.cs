@@ -1,4 +1,3 @@
-// ReSharper disable IdentifierTypo
 namespace Cult.SimMetrics
 {
     public enum SimMetricType

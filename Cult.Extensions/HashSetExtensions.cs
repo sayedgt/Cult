@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class HashSetExtensions
@@ -15,7 +13,6 @@ namespace Cult.Extensions
             }
             return allAdded;
         }
-
         public static bool AddRange<T>(this HashSet<T> @this, T[] items)
         {
             if (items == null) return false;

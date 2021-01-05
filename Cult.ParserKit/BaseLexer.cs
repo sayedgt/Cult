@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
-// ReSharper disable UnusedMember.Global
-// ReSharper disable RedundantDefaultMemberInitializer
-
 namespace Cult.ParserKit
 {
     public abstract class BaseLexer<TToken> where TToken : Enum
     {
         private readonly string _input;
-        protected int Position { get; set; }
-        protected int Line { get; set; }
         protected int Column { get; set; }
+        protected int Line { get; set; }
+        protected int Position { get; set; }
         private StringReader Reader { get; }
         protected BaseLexer(string input)
         {
@@ -22,21 +18,10 @@ namespace Cult.ParserKit
             Column = 0;
             _input = input;
         }
-        protected abstract Token<TToken> ReadToken();
-
-        public LexerResult<TToken> Tokenize()
+        protected bool IsEndOfFile()
         {
-            var tokens = new List<Token<TToken>>();
-            while (true)
-            {
-                if (IsEndOfFile()) break;
-                var token = ReadToken();
-                if (token == null) break;
-                tokens.Add(token);
-            }
-            return new LexerResult<TToken> { Input = _input, Tokens = tokens };
+            return Reader.Peek() == -1;
         }
-
         protected bool IsMatch(char ch)
         {
             if (!IsEndOfFile())
@@ -45,39 +30,31 @@ namespace Cult.ParserKit
             }
             return false;
         }
-
-        protected string ReadWhile(Func<char, bool> predicate)
+        protected char Peek()
         {
-            var result = "";
-            while (!IsEndOfFile() && predicate(Peek()))
+            return (char)Reader.Peek();
+        }
+        protected char? Read()
+        {
+            var value = Reader.Read();
+            ++Position;
+
+            if (value == -1)
+                return null;
+
+            var ch = (char)value;
+
+            if (ch == '\n')
             {
-                result += Read();
+                Line++;
+                Column = 0;
             }
-            return result;
-        }
-        protected void SkipWhile(Func<char, bool> predicate)
-        {
-            ReadWhile(predicate);
-        }
-
-        protected string ReadLine(bool movePointerToNextLine = false)
-        {
-            var result = ReadWhile(ch => ch != '\n');
-            if (movePointerToNextLine)
-            {
-                Skip();
-            }
-            return result;
-        }
-
-        protected void SkipLine(bool movePointerToNextLine = false)
-        {
-            if (movePointerToNextLine)
-                ReadLine(true);
             else
-                ReadLine();
+            {
+                ++Column;
+            }
+            return ch;
         }
-
         protected string ReadEscaped(char ch, char indicator)
         {
             var escaped = false;
@@ -106,11 +83,6 @@ namespace Cult.ParserKit
             }
             return result;
         }
-        protected virtual string ReadIntegerNumber()
-        {
-            return ReadWhile(ch => ch.IsDigit());
-        }
-
         protected virtual string ReadFloatNumber()
         {
             var hasDot = false;
@@ -125,43 +97,55 @@ namespace Cult.ParserKit
                 return ch.IsDigit();
             });
         }
-
-
-        protected char Peek()
+        protected virtual string ReadIntegerNumber()
         {
-            return (char)Reader.Peek();
+            return ReadWhile(ch => ch.IsDigit());
         }
-
-        protected char? Read()
+        protected string ReadLine(bool movePointerToNextLine = false)
         {
-            var value = Reader.Read();
-            ++Position;
-
-            if (value == -1)
-                return null;
-
-            var ch = (char)value;
-
-            if (ch == '\n')
+            var result = ReadWhile(ch => ch != '\n');
+            if (movePointerToNextLine)
             {
-                Line++;
-                Column = 0;
+                Skip();
             }
-            else
-            {
-                ++Column;
-            }
-            return ch;
+            return result;
         }
-
+        protected abstract Token<TToken> ReadToken();
+        protected string ReadWhile(Func<char, bool> predicate)
+        {
+            var result = "";
+            while (!IsEndOfFile() && predicate(Peek()))
+            {
+                result += Read();
+            }
+            return result;
+        }
         protected void Skip()
         {
             Read();
         }
-
-        protected bool IsEndOfFile()
+        protected void SkipLine(bool movePointerToNextLine = false)
         {
-            return Reader.Peek() == -1;
+            if (movePointerToNextLine)
+                ReadLine(true);
+            else
+                ReadLine();
+        }
+        protected void SkipWhile(Func<char, bool> predicate)
+        {
+            ReadWhile(predicate);
+        }
+        public LexerResult<TToken> Tokenize()
+        {
+            var tokens = new List<Token<TToken>>();
+            while (true)
+            {
+                if (IsEndOfFile()) break;
+                var token = ReadToken();
+                if (token == null) break;
+                tokens.Add(token);
+            }
+            return new LexerResult<TToken> { Input = _input, Tokens = tokens };
         }
     }
 }

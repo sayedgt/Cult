@@ -4,14 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-
-// ReSharper disable PossibleMultipleEnumeration
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class XmlExtensions
     {
+        public static string FormatXmlText(this string xmlText)
+        {
+            var document = new XmlDocument();
+            document.Load(new StringReader(xmlText));
+
+            var builder = new StringBuilder();
+            using (var writer = new XmlTextWriter(new StringWriter(builder)))
+            {
+                writer.Formatting = Formatting.Indented;
+                document.Save(writer);
+            }
+            return xmlText;
+        }
         private static XElement SortXmlElement(this XElement xe, bool sortAttributes = true, Action<XElement> postSort = null, params string[] customAttributes)
         {
             var nodesToBePreserved = xe.Nodes().Where(p => p.GetType() != typeof(XElement));
@@ -37,14 +46,12 @@ namespace Cult.Extensions
             }
             return xe;
         }
-
         public static string SortXmlText(this string xmlText, bool sortAttributes = true, Action<XElement> postSort = null, params string[] customAttributes)
         {
             var xmlTree = XElement.Parse(xmlText);
             var sortedXmlTree = SortXmlElement(xmlTree, sortAttributes, postSort, customAttributes);
             return sortedXmlTree.ToString();
         }
-
         public static Stream ToMemoryStream(this XmlDocument xmlDocument)
         {
             var xmlStream = new MemoryStream();
@@ -53,12 +60,10 @@ namespace Cult.Extensions
             xmlStream.Position = 0;
             return xmlStream;
         }
-
         public static Stream ToMemoryStream(this XElement xElement)
         {
             return xElement.ToXmlDocument().ToMemoryStream();
         }
-
         public static XDocument ToXDocument(this XmlDocument xmlDocument)
         {
             using (var nodeReader = new XmlNodeReader(xmlDocument))
@@ -67,7 +72,6 @@ namespace Cult.Extensions
                 return XDocument.Load(nodeReader);
             }
         }
-
         public static XmlDocument ToXmlDocument(this XDocument xDocument)
         {
             var xmlDocument = new XmlDocument();
@@ -77,7 +81,6 @@ namespace Cult.Extensions
             }
             return xmlDocument;
         }
-
         public static XmlDocument ToXmlDocument(this XElement xElement)
         {
             var sb = new StringBuilder();
@@ -89,19 +92,6 @@ namespace Cult.Extensions
             var doc = new XmlDocument();
             doc.LoadXml(sb.ToString());
             return doc;
-        }
-        public static string FormatXmlText(this string xmlText)
-        {
-            var document = new XmlDocument();
-            document.Load(new StringReader(xmlText));
-
-            var builder = new StringBuilder();
-            using (var writer = new XmlTextWriter(new StringWriter(builder)))
-            {
-                writer.Formatting = Formatting.Indented;
-                document.Save(writer);
-            }
-            return xmlText;
         }
     }
 }

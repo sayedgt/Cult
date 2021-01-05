@@ -1,8 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-
-// ReSharper disable All
-
 namespace Cult.Utilities
 {
     public static class PathUtility
@@ -14,17 +11,14 @@ namespace Cult.Utilities
             var newPath = Path.GetDirectoryName(path);
             return Path.GetFullPath(newPath ?? string.Empty).Split(Path.DirectorySeparatorChar).LastOrDefault();
         }
-
         public static string GetFilePathWithoutExtension(string path)
         {
             return Path.ChangeExtension(path, null);
         }
-
         public static string GetFullPathWithoutExtension(string path)
         {
             return Path.Combine(Path.GetDirectoryName(path) ?? string.Empty, Path.GetFileNameWithoutExtension(path));
         }
-
         public static bool? IsDirectory(string path)
         {
             if (Directory.Exists(path))
@@ -33,7 +27,6 @@ namespace Cult.Utilities
                 return false;
             return null;
         }
-
         public static bool? IsFile(string path)
         {
             var isDir = IsDirectory(path);

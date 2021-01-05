@@ -11,50 +11,34 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
-
-// ReSharper disable UnusedMember.Global
-// ReSharper disable StringLiteralTypo
-// ReSharper disable CommentTypo
-
 namespace Cult.Extensions
 {
     public static class StringExtensions
     {
-        public static MemoryStream ToMemoryStream(this string text)
-        {
-            return new MemoryStream(Encoding.UTF8.GetBytes(text ?? ""));
-        }
-
         public static string BreakLineToNewLine(this string @this)
         {
             return @this.Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("<br/>", "\r\n");
         }
-
         public static int CompareOrdinal(this string strA, string strB)
         {
             return string.CompareOrdinal(strA, strB);
         }
-
         public static int CompareOrdinal(this string strA, int indexA, string strB, int indexB, int length)
         {
             return string.CompareOrdinal(strA, indexA, strB, indexB, length);
         }
-
         public static string Concat(this string str0, string str1)
         {
             return string.Concat(str0, str1);
         }
-
         public static string Concat(this string str0, string str1, string str2)
         {
             return string.Concat(str0, str1, str2);
         }
-
         public static string Concat(this string str0, string str1, string str2, string str3)
         {
             return string.Concat(str0, str1, str2, str3);
         }
-
         public static string Concat(this IEnumerable<string> @this)
         {
             var sb = new StringBuilder();
@@ -66,7 +50,6 @@ namespace Cult.Extensions
 
             return sb.ToString();
         }
-
         public static string Concat<T>(this IEnumerable<T> source, Func<T, string> func)
         {
             var sb = new StringBuilder();
@@ -77,22 +60,18 @@ namespace Cult.Extensions
 
             return sb.ToString();
         }
-
         public static string ConcatWith(this string @this, params string[] values)
         {
             return string.Concat(@this, string.Concat(values));
         }
-
         public static bool Contains(this string @this, string value)
         {
             return @this.IndexOf(value, StringComparison.Ordinal) != -1;
         }
-
         public static bool Contains(this string @this, string value, StringComparison comparisonType)
         {
             return @this.IndexOf(value, comparisonType) != -1;
         }
-
         public static bool ContainsAll(this string @this, params string[] values)
         {
             foreach (var value in values)
@@ -104,7 +83,6 @@ namespace Cult.Extensions
             }
             return true;
         }
-
         public static bool ContainsAll(this string @this, StringComparison comparisonType, params string[] values)
         {
             foreach (var value in values)
@@ -116,7 +94,6 @@ namespace Cult.Extensions
             }
             return true;
         }
-
         public static bool ContainsAny(this string @this, params string[] values)
         {
             foreach (var value in values)
@@ -128,7 +105,6 @@ namespace Cult.Extensions
             }
             return false;
         }
-
         public static bool ContainsAny(this string @this, StringComparison comparisonType, params string[] values)
         {
             foreach (var value in values)
@@ -140,51 +116,38 @@ namespace Cult.Extensions
             }
             return false;
         }
-
         public static int ConvertToUtf32(this string s, int index)
         {
             return char.ConvertToUtf32(s, index);
         }
-
-        public static string RemoveEmptyLines(this string text)
-        {
-            return Regex.Replace(text, @"^\s*$\n|\r", string.Empty, RegexOptions.Multiline).TrimEnd();
-        }
-
         public static string Copy(this string str)
         {
             return string.Copy(str);
         }
-
         public static string DecodeBase64(this string encodedValue)
         {
             return encodedValue.DecodeBase64(null);
         }
-
         public static string DecodeBase64(this string encodedValue, Encoding encoding)
         {
             encoding = encoding ?? Encoding.UTF8;
             var bytes = Convert.FromBase64String(encodedValue);
             return encoding.GetString(bytes);
         }
-
         public static string EncodeBase64(this string value)
         {
             return value.EncodeBase64(null);
         }
-
         public static string EncodeBase64(this string value, Encoding encoding)
         {
             encoding = encoding ?? Encoding.UTF8;
             var bytes = encoding.GetBytes(value);
             return Convert.ToBase64String(bytes);
         }
-
         public static bool EqualsIgnoreCase(this string @this, string comparedString)
         {
             return @this.Equals(comparedString, StringComparison.OrdinalIgnoreCase);
         }
-
         public static string EscapeXml(this string @this)
         {
             return @this
@@ -195,18 +158,14 @@ namespace Cult.Extensions
                 .Replace("'", "&apos;")
                 ;
         }
-
         public static string Extract(this string @this, Func<char, bool> predicate)
         {
             return new string(@this.ToCharArray().Where(predicate).ToArray());
         }
-
-       
         public static string ExtractLetter(this string @this)
         {
             return new string(@this.ToCharArray().Where(char.IsLetter).ToArray());
         }
-        
         public static IEnumerable<int> FindAllIndexOf(this string str, string substr, bool ignoreCase)
         {
             if (string.IsNullOrEmpty(str))
@@ -228,7 +187,6 @@ namespace Cult.Extensions
             }
             return indexes;
         }
-
         public static IEnumerable<int> FindAllIndexOf(this string text, string pattern)
         {
             var indices = new List<int>();
@@ -237,7 +195,6 @@ namespace Cult.Extensions
 
             return indices;
         }
-
         public static IEnumerable<int> FindAllIndexOf(this string text, Regex pattern)
         {
             var indices = new List<int>();
@@ -246,19 +203,15 @@ namespace Cult.Extensions
 
             return indices;
         }
-
         public static IEnumerable<int> FindAllIndexOf<T>(this T[] @this, Predicate<T> predicate) where T : class
         {
             var subArray = Array.FindAll(@this, predicate);
             return (from T item in subArray select Array.IndexOf(@this, item));
         }
-
         public static string Format(this string format, object[] args)
         {
             return string.Format(format, args);
         }
-
-
         public static string GetAfter(this string @this, string value)
         {
             if (@this.IndexOf(value, StringComparison.Ordinal) == -1)
@@ -267,7 +220,6 @@ namespace Cult.Extensions
             }
             return @this.Substring(@this.IndexOf(value, StringComparison.Ordinal) + value.Length);
         }
-
         public static string GetBefore(this string @this, string value)
         {
             if (@this.IndexOf(value, StringComparison.Ordinal) == -1)
@@ -276,7 +228,6 @@ namespace Cult.Extensions
             }
             return @this.Substring(0, @this.IndexOf(value, StringComparison.Ordinal));
         }
-
         public static string GetBetween(this string @this, string before, string after)
         {
             var beforeStartIndex = @this.IndexOf(before, StringComparison.Ordinal);
@@ -290,22 +241,18 @@ namespace Cult.Extensions
 
             return @this.Substring(startIndex, afterStartIndex - startIndex);
         }
-
         public static MatchCollection GetMatches(this string value, string regexPattern)
         {
             return GetMatches(value, regexPattern, RegexOptions.None);
         }
-
         public static MatchCollection GetMatches(this string value, string regexPattern, RegexOptions options)
         {
             return Regex.Matches(value, regexPattern, options);
         }
-
         public static IEnumerable<string> GetMatchingValues(this string value, string regexPattern)
         {
             return GetMatchingValues(value, regexPattern, RegexOptions.None);
         }
-
         public static IEnumerable<string> GetMatchingValues(this string value, string regexPattern, RegexOptions options)
         {
             foreach (Match match in GetMatches(value, regexPattern, options))
@@ -313,52 +260,42 @@ namespace Cult.Extensions
                 if (match.Success) yield return match.Value;
             }
         }
-
         public static string HtmlDecode(this string s)
         {
             return HttpUtility.HtmlDecode(s);
         }
-
         public static void HtmlDecode(this string s, TextWriter output)
         {
             HttpUtility.HtmlDecode(s, output);
         }
-
         public static string HtmlEncode(this string s)
         {
             return HttpUtility.HtmlEncode(s);
         }
-
         public static void HtmlEncode(this string s, TextWriter output)
         {
             HttpUtility.HtmlEncode(s, output);
         }
-
         public static string IfEmpty(this string value, string defaultValue)
         {
             return (value.IsNotEmpty() ? value : defaultValue);
         }
-
         public static bool In(this string @this, params string[] values)
         {
             return Array.IndexOf(values, @this) != -1;
         }
-
         public static bool IsAlphabetic(this string @this)
         {
             return !Regex.IsMatch(@this, "[^a-zA-Z]");
         }
-
         public static bool IsAlphabeticNumeric(this string @this)
         {
             return !Regex.IsMatch(@this, "[^a-zA-Z0-9]");
         }
-
         public static bool IsControl(this string s, int index)
         {
             return char.IsControl(s, index);
         }
-
         public static bool IsDateTime(this string date)
         {
             var isDate = true;
@@ -373,42 +310,34 @@ namespace Cult.Extensions
             }
             return isDate;
         }
-
         public static bool IsDigit(this string str)
         {
             return !string.IsNullOrEmpty(str) && str.All(char.IsDigit);
         }
-
         public static bool IsDigit(this string s, int index)
         {
             return char.IsDigit(s, index);
         }
-
         public static bool IsEmpty(this string @this)
         {
             return @this == "";
         }
-
         public static bool IsHighSurrogate(this string s, int index)
         {
             return char.IsHighSurrogate(s, index);
         }
-
         public static string IsInterned(this string str)
         {
             return string.IsInterned(str);
         }
-
         public static bool IsLetter(this string s, int index)
         {
             return char.IsLetter(s, index);
         }
-
         public static bool IsLetterOrDigit(this string s, int index)
         {
             return char.IsLetterOrDigit(s, index);
         }
-
         public static bool IsLike(this string @this, string pattern)
         {
             // Turn the pattern into regex pattern, and match the whole string with ^$
@@ -424,207 +353,166 @@ namespace Cult.Extensions
 
             return Regex.IsMatch(@this, regexPattern);
         }
-
         public static bool IsLower(this string s, int index)
         {
             return char.IsLower(s, index);
         }
-
         public static bool IsLowSurrogate(this string s, int index)
         {
             return char.IsLowSurrogate(s, index);
         }
-
         public static bool IsMatch(this string input, string pattern)
         {
             return Regex.IsMatch(input, pattern);
         }
-
         public static bool IsMatch(this string input, string pattern, RegexOptions options)
         {
             return Regex.IsMatch(input, pattern, options);
         }
-
         public static bool IsMatchingTo(this string value, string regexPattern)
         {
             return IsMatchingTo(value, regexPattern, RegexOptions.None);
         }
-
         public static bool IsMatchingTo(this string value, string regexPattern, RegexOptions options)
         {
             return Regex.IsMatch(value, regexPattern, options);
         }
-
         public static bool IsNotEmpty(this string @this)
         {
             return @this != "";
         }
-
         public static bool IsNotNull(this string @this)
         {
             return @this != null;
         }
-
         public static bool IsNotNullOrEmpty(this string @this)
         {
             return !string.IsNullOrEmpty(@this);
         }
-
         public static bool IsNotNullOrWhiteSpace(this string value)
         {
             return !string.IsNullOrWhiteSpace(value);
         }
-
         public static bool IsNull(this string @this)
         {
             return @this == null;
         }
-
         public static bool IsNullOrEmpty(this string @this)
         {
             return string.IsNullOrEmpty(@this);
         }
-
         public static bool IsNullOrWhiteSpace(this string value)
         {
             return string.IsNullOrWhiteSpace(value);
         }
-
         public static bool IsNumber(this string s, int index)
         {
             return char.IsNumber(s, index);
         }
-
         public static bool IsNumeric(this string @this)
         {
             return !Regex.IsMatch(@this, "[^0-9]");
         }
-
         public static bool IsPunctuation(this string s, int index)
         {
             return char.IsPunctuation(s, index);
         }
-
         public static bool IsSeparator(this string s, int index)
         {
             return char.IsSeparator(s, index);
         }
-
         public static bool IsSurrogate(this string s, int index)
         {
             return char.IsSurrogate(s, index);
         }
-
         public static bool IsSurrogatePair(this string s, int index)
         {
             return char.IsSurrogatePair(s, index);
         }
-
         public static bool IsSymbol(this string s, int index)
         {
             return char.IsSymbol(s, index);
         }
-
         public static bool IsUpper(this string s, int index)
         {
             return char.IsUpper(s, index);
         }
-
         public static bool IsValidEmail(this string obj)
         {
             return Regex.IsMatch(obj, @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z0-9]{1,30})(\]?)$");
         }
-
         public static bool IsValidIp(this string obj)
         {
             return Regex.IsMatch(obj, @"^(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])$");
         }
-
         public static bool IsWhiteSpace(this string s, int index)
         {
             return char.IsWhiteSpace(s, index);
         }
-
         public static string JavaScriptStringEncode(this string value)
         {
             return HttpUtility.JavaScriptStringEncode(value);
         }
-
         public static string JavaScriptStringEncode(this string value, bool addDoubleQuotes)
         {
             return HttpUtility.JavaScriptStringEncode(value, addDoubleQuotes);
         }
-
         public static string Join(this string separator, string[] value)
         {
             return string.Join(separator, value);
         }
-
         public static string Join(this string separator, object[] values)
         {
             return string.Join(separator, values);
         }
-
         public static string Join<T>(this string separator, IEnumerable<T> values)
         {
             return string.Join(separator, values);
         }
-
         public static string Join(this string separator, IEnumerable<string> values)
         {
             return string.Join(separator, values);
         }
-
         public static string Join(this string separator, string[] value, int startIndex, int count)
         {
             return string.Join(separator, value, startIndex, count);
         }
-
         public static string Left(this string @this, int length)
         {
             return @this.Substring(0, length);
         }
-
         public static string LeftSafe(this string @this, int length)
         {
             return @this.Substring(0, Math.Min(length, @this.Length));
         }
-
         public static Match Match(this string input, string pattern)
         {
             return Regex.Match(input, pattern);
         }
-
         public static Match Match(this string input, string pattern, RegexOptions options)
         {
             return Regex.Match(input, pattern, options);
         }
-
         public static MatchCollection Matches(this string input, string pattern)
         {
             return Regex.Matches(input, pattern);
         }
-
         public static MatchCollection Matches(this string input, string pattern, RegexOptions options)
         {
             return Regex.Matches(input, pattern, options);
         }
-
         public static string NewLineToBreakLine(this string @this)
         {
             return @this.Replace("\r\n", "<br />").Replace("\n", "<br />");
         }
-
         public static bool NotIn(this string @this, params string[] values)
         {
             return Array.IndexOf(values, @this) == -1;
         }
-
         public static string NullIfEmpty(this string @this)
         {
             return @this == "" ? null : @this;
         }
-
         public static string PadBoth(this string value, int width, char padChar, bool truncate = false)
         {
             var diff = width - value.Length;
@@ -638,24 +526,20 @@ namespace Cult.Extensions
             }
             return value.PadLeft(width - diff / 2, padChar).PadRight(width, padChar);
         }
-
         public static NameValueCollection ParseQueryString(this string query)
         {
             return HttpUtility.ParseQueryString(query);
         }
-
         public static NameValueCollection ParseQueryString(this string query, Encoding encoding)
         {
             return HttpUtility.ParseQueryString(query, encoding);
         }
-
         public static string PathCombine(this string @this, params string[] paths)
         {
             var list = paths.ToList();
             list.Insert(0, @this);
             return Path.Combine(list.ToArray());
         }
-
         public static string RemoveAll(this string source, params string[] removeStrings)
         {
             var v = source;
@@ -665,7 +549,6 @@ namespace Cult.Extensions
             }
             return v;
         }
-
         public static string RemoveAllSpecialCharacters(this string value)
         {
             var sb = new StringBuilder(value.Length);
@@ -673,7 +556,6 @@ namespace Cult.Extensions
                 sb.Append(c);
             return sb.ToString();
         }
-
         public static string RemoveControlCharacters(this string input)
         {
             return
@@ -681,7 +563,6 @@ namespace Cult.Extensions
                     .Aggregate(new StringBuilder(), (builder, character) => builder.Append(character))
                     .ToString();
         }
-
         public static string RemoveDiacritics(this string @this)
         {
             var normalizedString = @this.Normalize(NormalizationForm.FormD);
@@ -698,52 +579,46 @@ namespace Cult.Extensions
 
             return sb.ToString().Normalize(NormalizationForm.FormC);
         }
-
+        public static string RemoveEmptyLines(this string text)
+        {
+            return Regex.Replace(text, @"^\s*$\n|\r", string.Empty, RegexOptions.Multiline).TrimEnd();
+        }
         public static string RemoveFirst(this string instr, int number)
         {
             return instr.Substring(number);
         }
-
         public static string RemoveFirstCharacter(this string instr)
         {
             return instr.Substring(1);
         }
-
         public static string RemoveHtmlTags(this string htmlString)
         {
             return Regex.Replace(htmlString, @"<[^>]*(>|$)|&nbsp;|&zwnj;|&raquo;|&laquo;", string.Empty).Trim();
         }
-
         public static string RemoveLast(this string instr, int number)
         {
             return instr.Substring(0, instr.Length - number);
         }
-
         public static string RemoveLastCharacter(this string instr)
         {
             return instr.Substring(0, instr.Length - 1);
         }
-
         public static string RemoveLetter(this string @this)
         {
             return new string(@this.ToCharArray().Where(x => !char.IsLetter(x)).ToArray());
         }
-
         public static string RemoveNumber(this string @this)
         {
             return new string(@this.ToCharArray().Where(x => !char.IsNumber(x)).ToArray());
         }
-
         public static string RemoveWhere(this string @this, Func<char, bool> predicate)
         {
             return new string(@this.ToCharArray().Where(x => !predicate(x)).ToArray());
         }
-
         public static string RemoveWhiteSpaces(this string input)
         {
             return Regex.Replace(input, @"\s+", "");
         }
-
         public static string Repeat(this string @this, int repeatCount)
         {
             if (@this.Length == 1)
@@ -759,16 +634,14 @@ namespace Cult.Extensions
 
             return sb.ToString();
         }
-
         public static string Replace(this string @this, int startIndex, int length, string value)
         {
             @this = @this.Remove(startIndex, length).Insert(startIndex, value);
 
             return @this;
         }
-
         public static string ReplaceAll(this string value, IEnumerable<string> oldValues,
-            Func<string, string> replacePredicate)
+                    Func<string, string> replacePredicate)
         {
             var sbStr = new StringBuilder(value);
             foreach (var oldValue in oldValues)
@@ -779,7 +652,6 @@ namespace Cult.Extensions
 
             return sbStr.ToString();
         }
-
         public static string ReplaceAll(this string value, IEnumerable<string> oldValues, string newValue)
         {
             var sbStr = new StringBuilder(value);
@@ -788,7 +660,6 @@ namespace Cult.Extensions
 
             return sbStr.ToString();
         }
-
         public static string ReplaceAll(this string value, IEnumerable<string> oldValues, IEnumerable<string> newValues)
         {
             var sbStr = new StringBuilder(value);
@@ -808,27 +679,23 @@ namespace Cult.Extensions
             newValueEnum.Dispose();
             return sbStr.ToString();
         }
-
         public static string ReplaceAt(this string str, int index, string replace)
         {
             var length = replace.Length;
             return str.Remove(index, Math.Min(length, str.Length - index))
                 .Insert(index, replace);
         }
-
         public static string ReplaceAt(this string str, int index, int length, string replace)
         {
             return str.Remove(index, Math.Min(length, str.Length - index))
                 .Insert(index, replace);
         }
-
         public static string ReplaceAt(this string str, int startIndex, long endIndex, string replace)
         {
             var length = endIndex - startIndex;
             return str.Remove(startIndex, Math.Min(Convert.ToInt32(length), str.Length - startIndex))
                 .Insert(startIndex, replace);
         }
-
         public static string ReplaceAt(this string text, char target, string replace, ReplaceMode replaceMode = ReplaceMode.On)
         {
             var i = text.IndexOf(target);
@@ -853,7 +720,6 @@ namespace Cult.Extensions
             }
 
         }
-
         public static string ReplaceByEmpty(this string @this, params string[] values)
         {
             foreach (var value in values)
@@ -863,13 +729,11 @@ namespace Cult.Extensions
 
             return @this;
         }
-
         public static string ReplaceFirst(this string @this, string oldValue, string newValue)
         {
             var startIndex = @this.IndexOf(oldValue, StringComparison.Ordinal);
             return startIndex == -1 ? @this : @this.Remove(startIndex, oldValue.Length).Insert(startIndex, newValue);
         }
-
         public static string ReplaceFirst(this string @this, int number, string oldValue, string newValue)
         {
             var list = @this.Split(oldValue).ToList();
@@ -881,13 +745,11 @@ namespace Cult.Extensions
                    (listEnd.Any() ? oldValue : "") +
                    string.Join(oldValue, listEnd);
         }
-
         public static string ReplaceLast(this string @this, string oldValue, string newValue)
         {
             var startIndex = @this.LastIndexOf(oldValue, StringComparison.Ordinal);
             return startIndex == -1 ? @this : @this.Remove(startIndex, oldValue.Length).Insert(startIndex, newValue);
         }
-
         public static string ReplaceLast(this string @this, int number, string oldValue, string newValue)
         {
             var list = @this.Split(oldValue).ToList();
@@ -899,39 +761,32 @@ namespace Cult.Extensions
                    (old > 0 ? oldValue : "") +
                    string.Join(newValue, listEnd);
         }
-
         public static string ReplaceWhenEquals(this string @this, string oldValue, string newValue)
         {
             return @this == oldValue ? newValue : @this;
         }
-
         public static string ReplaceWhiteSpacesWithOne(this string input)
         {
             return Regex.Replace(input, @"\s+", " ");
         }
-
         public static string ReplaceWith(this string value, string regexPattern, string replaceValue)
         {
             return ReplaceWith(value, regexPattern, replaceValue, RegexOptions.None);
         }
-
         public static string ReplaceWith(this string value, string regexPattern, string replaceValue,
-            RegexOptions options)
+                    RegexOptions options)
         {
             return Regex.Replace(value, regexPattern, replaceValue, options);
         }
-
         public static string ReplaceWith(this string value, string regexPattern, MatchEvaluator evaluator)
         {
             return ReplaceWith(value, regexPattern, RegexOptions.None, evaluator);
         }
-
         public static string ReplaceWith(this string value, string regexPattern, RegexOptions options,
-            MatchEvaluator evaluator)
+                    MatchEvaluator evaluator)
         {
             return Regex.Replace(value, regexPattern, evaluator, options);
         }
-
         public static string Reverse(this string @this)
         {
             if (@this.Length <= 1)
@@ -943,17 +798,14 @@ namespace Cult.Extensions
             Array.Reverse(chars);
             return new string(chars);
         }
-
         public static string Right(this string @this, int length)
         {
             return @this.Substring(@this.Length - length);
         }
-
         public static string RightSafe(this string @this, int length)
         {
             return @this.Substring(Math.Max(0, @this.Length - length));
         }
-
         public static void SaveAs(this string @this, string fileName, bool append = false)
         {
             using (TextWriter tw = new StreamWriter(fileName, append))
@@ -961,34 +813,12 @@ namespace Cult.Extensions
                 tw.Write(@this);
             }
         }
-
         public static void SaveAs(this string @this, FileInfo file, bool append = false)
         {
             using (TextWriter tw = new StreamWriter(file.FullName, append))
             {
                 tw.Write(@this);
             }
-        }
-
-        public static string[] Split(this string @this, string separator, StringSplitOptions option = StringSplitOptions.None)
-        {
-            return @this.Split(new[] { separator }, option);
-        }
-
-        public static string[] Split(this string str, int chunkSize)
-        {
-            return
-                Enumerable.Range(0, str.Length / chunkSize).Select(i => str.Substring(i * chunkSize, chunkSize)).ToArray();
-        }
-
-        public static string[] Split(this string value, string regexPattern)
-        {
-            return value.Split(regexPattern, RegexOptions.None);
-        }
-
-        public static string[] Split(this string value, string regexPattern, RegexOptions options)
-        {
-            return Regex.Split(value, regexPattern, options);
         }
         public static string Slice(this string source, int start, int end)
         {
@@ -998,6 +828,23 @@ namespace Cult.Extensions
             }
             var len = end - start;               // Calculate length
             return source.Substring(start, len); // Return Substring of length
+        }
+        public static string[] Split(this string @this, string separator, StringSplitOptions option = StringSplitOptions.None)
+        {
+            return @this.Split(new[] { separator }, option);
+        }
+        public static string[] Split(this string str, int chunkSize)
+        {
+            return
+                Enumerable.Range(0, str.Length / chunkSize).Select(i => str.Substring(i * chunkSize, chunkSize)).ToArray();
+        }
+        public static string[] Split(this string value, string regexPattern)
+        {
+            return value.Split(regexPattern, RegexOptions.None);
+        }
+        public static string[] Split(this string value, string regexPattern, RegexOptions options)
+        {
+            return Regex.Split(value, regexPattern, options);
         }
         public static SqlDbType SqlTypeNameToSqlDbType(this string @this)
         {
@@ -1107,50 +954,45 @@ namespace Cult.Extensions
                         $"Unsupported Type: {@this}. Please let us know about this type and we will support it: sales@zzzprojects.com");
             }
         }
-        
         public static byte[] ToAsciiByteArray(this string str)
         {
             return Encoding.ASCII.GetBytes(str);
         }
-
         public static byte[] ToByteArray(this string @this)
         {
             Encoding encoding = Activator.CreateInstance<ASCIIEncoding>();
             return encoding.GetBytes(@this);
         }
-
         public static byte[] ToByteArray<TEncoding>(this string str) where TEncoding : Encoding
         {
             Encoding enc = Activator.CreateInstance<TEncoding>();
             return enc.GetBytes(str);
         }
-
         public static IEnumerable<char> ToChars(this string str)
         {
             return str.Select(x => x);
         }
-
         public static DirectoryInfo ToDirectoryInfo(this string @this)
         {
             return new DirectoryInfo(@this);
         }
-
         public static T ToEnum<T>(this string @this)
         {
             var enumType = typeof(T);
             return (T)Enum.Parse(enumType, @this);
         }
-
         public static FileInfo ToFileInfo(this string @this)
         {
             return new FileInfo(@this);
         }
-
         public static IEnumerable<string> ToLines(this string str, StringSplitOptions stringSplitOptions = StringSplitOptions.RemoveEmptyEntries)
         {
             return str.Split(new[] { Environment.NewLine }, stringSplitOptions);
         }
-
+        public static MemoryStream ToMemoryStream(this string text)
+        {
+            return new MemoryStream(Encoding.UTF8.GetBytes(text ?? ""));
+        }
         public static SecureString ToSecureString(this string @this)
         {
             var secureString = new SecureString();
@@ -1159,27 +1001,22 @@ namespace Cult.Extensions
 
             return secureString;
         }
-
         public static Stream ToStream(this string str)
         {
             return str.ToStream<ASCIIEncoding>();
         }
-
         public static Stream ToStream<TEncoding>(this string str) where TEncoding : Encoding
         {
             return new MemoryStream(str.ToByteArray<TEncoding>());
         }
-
         public static string ToTitleCase(this string @this, CultureInfo culture)
         {
             return culture.TextInfo.ToTitleCase(@this);
         }
-
         public static string ToTitleCase(this string @this)
         {
             return new CultureInfo("en-US").TextInfo.ToTitleCase(@this);
         }
-
         public static string ToUnicodeString(this string str)
         {
             var builder = new StringBuilder();
@@ -1189,12 +1026,10 @@ namespace Cult.Extensions
             }
             return builder.ToString();
         }
-
         public static byte[] ToUtf8ByteArray(this string str)
         {
             return Encoding.UTF8.GetBytes(str);
         }
-
         public static DateTime? ToValidDateTimeOrNull(this string @this)
         {
             if (DateTime.TryParse(@this, out var date))
@@ -1204,13 +1039,11 @@ namespace Cult.Extensions
 
             return null;
         }
-
         public static IEnumerable<string> ToWords(this string str, string[] wordSeparators = null)
         {
             var ws = wordSeparators.IsNullOrEmpty() ? new[] { " " } : wordSeparators;
             return str.Split(ws, StringSplitOptions.RemoveEmptyEntries);
         }
-
         public static XDocument ToXDocument(this string @this)
         {
             Encoding encoding = Activator.CreateInstance<ASCIIEncoding>();
@@ -1219,7 +1052,6 @@ namespace Cult.Extensions
                 return XDocument.Load(ms);
             }
         }
-
         public static XDocument ToXDocument<TEncoding>(this string @this) where TEncoding : Encoding
         {
             Encoding encoding = Activator.CreateInstance<TEncoding>();
@@ -1228,38 +1060,32 @@ namespace Cult.Extensions
                 return XDocument.Load(ms);
             }
         }
-
         public static XElement ToXElement(this string xml)
         {
             return XElement.Parse(xml);
         }
-
         public static XmlDocument ToXmlDocument(this string @this)
         {
             var doc = new XmlDocument();
             doc.LoadXml(@this);
             return doc;
         }
-
         public static XmlElement ToXmlElement(this string xmlText)
         {
             var doc = new XmlDocument();
             doc.LoadXml(xmlText);
             return doc.DocumentElement;
         }
-
         public static string TrimToMaxLength(this string value, int maxLength)
         {
             return value == null || value.Length <= maxLength ? value : value.Substring(0, maxLength);
         }
-
         public static string TrimToMaxLength(this string value, int maxLength, string suffix)
         {
             return value == null || value.Length <= maxLength
                 ? value
                 : string.Concat(value.Substring(0, maxLength), suffix);
         }
-
         public static string Truncate(this string @this, int maxLength)
         {
             const string suffix = "...";
@@ -1272,7 +1098,6 @@ namespace Cult.Extensions
             var strLength = maxLength - suffix.Length;
             return @this.Substring(0, strLength) + suffix;
         }
-
         public static string Truncate(this string @this, int maxLength, string suffix)
         {
             if (@this == null || @this.Length <= maxLength)
@@ -1283,47 +1108,38 @@ namespace Cult.Extensions
             var strLength = maxLength - suffix.Length;
             return @this.Substring(0, strLength) + suffix;
         }
-
         public static string UrlDecode(this string str)
         {
             return HttpUtility.UrlDecode(str);
         }
-
         public static string UrlDecode(this string str, Encoding e)
         {
             return HttpUtility.UrlDecode(str, e);
         }
-
         public static byte[] UrlDecodeToBytes(this string str)
         {
             return HttpUtility.UrlDecodeToBytes(str);
         }
-
         public static byte[] UrlDecodeToBytes(this string str, Encoding e)
         {
             return HttpUtility.UrlDecodeToBytes(str, e);
         }
-
         public static string UrlEncode(this string str)
         {
             return HttpUtility.UrlEncode(str);
         }
-
         public static string UrlEncode(this string str, Encoding e)
         {
             return HttpUtility.UrlEncode(str, e);
         }
-
         public static byte[] UrlEncodeToBytes(this string str)
         {
             return HttpUtility.UrlEncodeToBytes(str);
         }
-
         public static byte[] UrlEncodeToBytes(this string str, Encoding e)
         {
             return HttpUtility.UrlEncodeToBytes(str, e);
         }
-
         public static string UrlPathEncode(this string str)
         {
             return HttpUtility.UrlPathEncode(str);

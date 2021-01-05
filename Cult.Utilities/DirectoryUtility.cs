@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-// ReSharper disable All
-
 namespace Cult.Utilities
 {
     public static class DirectoryUtility
@@ -16,7 +14,6 @@ namespace Cult.Utilities
 
             return tempDirectory;
         }
-
         public static void CreateTempDirectory(Action<string> action, bool autoDelete = true)
         {
             var tempDirectory = GetTempDirectory();
@@ -30,7 +27,6 @@ namespace Cult.Utilities
                 Directory.Delete(tempDirectory, true);
             }
         }
-
         public static string GetTempDirectory()
         {
             return Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());

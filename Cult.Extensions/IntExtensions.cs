@@ -1,142 +1,102 @@
 using System;
 using System.Data;
 using System.Net;
-// ReSharper disable UnusedMember.Global
-// ReSharper disable InconsistentNaming
-// ReSharper disable IdentifierTypo
-// ReSharper disable CommentTypo
 namespace Cult.Extensions
 {
     public static class IntExtensions
     {
-        public static void Times(this int value, Action action)
-        {
-            for (var i = 0; i < value; i++)
-                action();
-        }
-
-        public static void Times(this int value, Action<int> action)
-        {
-            for (var i = 0; i < value; i++)
-                action(i);
-        }
-
-
-        public static bool IsIndexInArray(this int index, Array arrayToCheck)
-        {
-            return index.GetArrayIndex().InRange(arrayToCheck.GetLowerBound(0), arrayToCheck.GetUpperBound(0));
-        }
-
-        public static int GetArrayIndex(this int at)
-        {
-            return at == 0 ? 0 : at - 1;
-        }
-
         public static int Abs(this int value)
         {
             return Math.Abs(value);
         }
-
         public static bool Between(this int @this, int minValue, int maxValue)
         {
             return minValue.CompareTo(@this) == -1 && @this.CompareTo(maxValue) == -1;
         }
-
         public static long BigMul(this int a, int b)
         {
             return Math.BigMul(a, b);
         }
-
         public static string ConvertFromUtf32(this int utf32)
         {
             return char.ConvertFromUtf32(utf32);
         }
-
-        public static TimeSpan FromDays(this int days)
-        {
-            return TimeSpan.FromDays(days);
-        }
-
-        public static TimeSpan FromHours(this int hours)
-        {
-            return TimeSpan.FromHours(hours);
-        }
-
-        public static TimeSpan FromMilliseconds(this int milliseconds)
-        {
-            return TimeSpan.FromMilliseconds(milliseconds);
-        }
-
-        public static TimeSpan FromSeconds(this int seconds)
-        {
-            return TimeSpan.FromSeconds(seconds);
-        }
-
-        public static TimeSpan FromTicks(this int ticks)
-        {
-            return TimeSpan.FromTicks(ticks);
-        }
-
         public static int DaysInMonth(this int year, int month)
         {
             return DateTime.DaysInMonth(year, month);
         }
-
         public static int DivRem(this int a, int b, out int result)
         {
             return Math.DivRem(a, b, out result);
         }
-
         public static bool FactorOf(this int @this, int factorNumber)
         {
             return factorNumber % @this == 0;
         }
-
+        public static TimeSpan FromDays(this int days)
+        {
+            return TimeSpan.FromDays(days);
+        }
+        public static TimeSpan FromHours(this int hours)
+        {
+            return TimeSpan.FromHours(hours);
+        }
+        public static TimeSpan FromMilliseconds(this int milliseconds)
+        {
+            return TimeSpan.FromMilliseconds(milliseconds);
+        }
+        public static TimeSpan FromSeconds(this int seconds)
+        {
+            return TimeSpan.FromSeconds(seconds);
+        }
+        public static TimeSpan FromTicks(this int ticks)
+        {
+            return TimeSpan.FromTicks(ticks);
+        }
+        public static int GetArrayIndex(this int at)
+        {
+            return at == 0 ? 0 : at - 1;
+        }
         public static byte[] GetBytes(this int value)
         {
             return BitConverter.GetBytes(value);
         }
-
         public static int HostToNetworkOrder(this int host)
         {
             return IPAddress.HostToNetworkOrder(host);
         }
-
         public static TimeSpan Hours(this int @this)
         {
             return TimeSpan.FromHours(@this);
         }
-
         public static bool In(this int @this, params int[] values)
         {
             return Array.IndexOf(values, @this) != -1;
         }
-
         public static bool InRange(this int @this, int minValue, int maxValue)
         {
             return @this.CompareTo(minValue) >= 0 && @this.CompareTo(maxValue) <= 0;
         }
-
         public static bool IsEven(this int @this)
         {
             return @this % 2 == 0;
         }
-
+        public static bool IsIndexInArray(this int index, Array arrayToCheck)
+        {
+            return index.GetArrayIndex().InRange(arrayToCheck.GetLowerBound(0), arrayToCheck.GetUpperBound(0));
+        }
         public static bool IsLeapYear(this int year)
         {
             return DateTime.IsLeapYear(year);
         }
-
         public static bool IsMultipleOf(this int @this, int factor)
         {
             return @this % factor == 0;
         }
-
         public static bool IsOdd(this int @this)
         {
             return @this % 2 != 0;
         }
-
         public static bool IsPrime(this int @this)
         {
             if (@this == 1 || @this == 2)
@@ -160,47 +120,38 @@ namespace Cult.Extensions
 
             return true;
         }
-
         public static int Max(this int val1, int val2)
         {
             return Math.Max(val1, val2);
         }
-
         public static TimeSpan Milliseconds(this int @this)
         {
             return TimeSpan.FromMilliseconds(@this);
         }
-
         public static int Min(this int val1, int val2)
         {
             return Math.Min(val1, val2);
         }
-
         public static TimeSpan Minutes(this int @this)
         {
             return TimeSpan.FromMinutes(@this);
         }
-
         public static int NetworkToHostOrder(this int network)
         {
             return IPAddress.NetworkToHostOrder(network);
         }
-
         public static bool NotIn(this int @this, params int[] values)
         {
             return Array.IndexOf(values, @this) == -1;
         }
-
         public static TimeSpan Seconds(this int @this)
         {
             return TimeSpan.FromSeconds(@this);
         }
-
         public static int Sign(this int value)
         {
             return Math.Sign(value);
         }
-
         public static SqlDbType SqlSystemTypeToSqlDbType(this int @this)
         {
             switch (@this)
@@ -303,7 +254,16 @@ namespace Cult.Extensions
                         $"Unsupported Type: {@this}. Please let us know about this type and we will support it: sales@zzzprojects.com");
             }
         }
-
+        public static void Times(this int value, Action action)
+        {
+            for (var i = 0; i < value; i++)
+                action();
+        }
+        public static void Times(this int value, Action<int> action)
+        {
+            for (var i = 0; i < value; i++)
+                action(i);
+        }
         public static TimeSpan Weeks(this int @this)
         {
             return TimeSpan.FromDays(@this * 7);

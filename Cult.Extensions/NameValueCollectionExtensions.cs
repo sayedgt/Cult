@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class NameValueCollectionExtensions

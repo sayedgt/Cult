@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-
-// ReSharper disable once CheckNamespace
 namespace Quartz
 {
     public static partial class QuartzLambdaExtensions
@@ -32,9 +30,8 @@ namespace Quartz
 
             return scheduler.ScheduleJob(jobDetail, trigger);
         }
-
         public static Task<DateTimeOffset> Enqueue<T>(this IScheduler scheduler, Action<T> action, bool disallowConcurrentJob = false)
-            where T : new()
+                    where T : new()
         {
             IJobDetail jobDetail;
             if (disallowConcurrentJob)

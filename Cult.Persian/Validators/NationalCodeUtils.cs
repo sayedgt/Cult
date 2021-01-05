@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-
 namespace Cult.Persian
 {
     public static class NationalCodeUtils
@@ -8,7 +7,6 @@ namespace Cult.Persian
         {
             return !string.IsNullOrWhiteSpace(data) && data.All(char.IsDigit);
         }
-
         public static bool IsValidIranianNationalCode(this string nationalCode)
         {
             if (string.IsNullOrWhiteSpace(nationalCode))

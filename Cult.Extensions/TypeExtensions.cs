@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class TypeExtensions
@@ -17,13 +15,11 @@ namespace Cult.Extensions
         {
             return CreateInstance<object>(type, constructorParameters);
         }
-
         public static T CreateInstance<T>(this Type type, params object[] constructorParameters)
         {
             var instance = Activator.CreateInstance(type, constructorParameters);
             return (T)instance;
         }
-
         public static IDictionary<string, int> EnumToDictionary(this Type @this)
         {
             if (@this == null) throw new NullReferenceException();
@@ -36,7 +32,6 @@ namespace Cult.Extensions
                     select new { Key = names[i], Value = (int)values.GetValue(i) })
                 .ToDictionary(k => k.Key, k => k.Value);
         }
-
         private static IEnumerable<Type> GetAllInterfaces(Type type, HashSet<Type> types = null)
         {
             types = types ?? new HashSet<Type>();
@@ -51,7 +46,6 @@ namespace Cult.Extensions
             }
             return types;
         }
-
         public static string GetFullTypeName(this Type type)
         {
             if (type == null)
@@ -68,17 +62,50 @@ namespace Cult.Extensions
             }
             return type.AssemblyQualifiedName;
         }
-
         public static IEnumerable<Type> GetNestedInterfaces(this Type type)
         {
             return GetAllInterfaces(type);
         }
-
+        public static bool HasAttribute<TAttribute>(this PropertyInfo @this, bool inherit = false) where TAttribute : Attribute
+        {
+            var tAttribute = typeof(TAttribute);
+            var attrs = @this.GetCustomAttributes(inherit);
+            return IsOneOfAttributes(tAttribute, attrs);
+        }
+        public static bool HasAttribute<TAttribute>(this MemberInfo @this, bool inherit = false) where TAttribute : Attribute
+        {
+            var tAttribute = typeof(TAttribute);
+            var attrs = @this.GetCustomAttributes(inherit);
+            return IsOneOfAttributes(tAttribute, attrs);
+        }
+        public static bool HasAttribute<TAttribute>(this FieldInfo @this, bool inherit = false) where TAttribute : Attribute
+        {
+            var tAttribute = typeof(TAttribute);
+            var attrs = @this.GetCustomAttributes(inherit);
+            return IsOneOfAttributes(tAttribute, attrs);
+        }
+        public static bool HasAttribute<TAttribute>(this MethodInfo @this, bool inherit = false) where TAttribute : Attribute
+        {
+            var tAttribute = typeof(TAttribute);
+            var attrs = @this.GetCustomAttributes(inherit);
+            return IsOneOfAttributes(tAttribute, attrs);
+        }
+        public static bool HasAttribute<TAttribute>(this EventInfo @this, bool inherit = false) where TAttribute : Attribute
+        {
+            var tAttribute = typeof(TAttribute);
+            var attrs = @this.GetCustomAttributes(inherit);
+            return IsOneOfAttributes(tAttribute, attrs);
+        }
+        public static bool HasAttribute<TAttribute>(this Type @this, bool inherit = false) where TAttribute : Attribute
+        {
+            var tAttribute = typeof(TAttribute);
+            var attrs = @this.GetCustomAttributes(inherit);
+            return IsOneOfAttributes(tAttribute, attrs);
+        }
         public static bool HasDefaultConstructor(this Type t)
         {
             return t.IsValueType || t.GetConstructor(Type.EmptyTypes) != null;
         }
-
         public static bool HasInterface(this Type type)
         {
             var list = GetNestedInterfaces(type);
@@ -89,17 +116,10 @@ namespace Cult.Extensions
 
             return false;
         }
-
         public static bool IsCollection(this Type type)
         {
             return type.GetInterface("ICollection") != null;
         }
-
-        public static bool IsEnumerable(this Type type)
-        {
-            return type.GetInterface("IEnumerable") != null;
-        }
-
         public static bool IsDotNetSystemType(this Type type)
         {
             if (type == null)
@@ -112,7 +132,10 @@ namespace Cult.Extensions
                        .Any(s => (s.EndsWith(".") && nameToCheck.Name.StartsWith(s)) || (nameToCheck.Name == s)) &&
                    !exceptions.Any(s => nameToCheck.Name.StartsWith(s));
         }
-
+        public static bool IsEnumerable(this Type type)
+        {
+            return type.GetInterface("IEnumerable") != null;
+        }
         public static bool IsNullableValueType(this Type toCheck)
         {
             if ((toCheck == null) || !toCheck.IsValueType)
@@ -121,12 +144,20 @@ namespace Cult.Extensions
             }
             return toCheck.IsGenericType && toCheck.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
-
+        private static bool IsOneOfAttributes(Type attribute, object[] objects)
+        {
+            foreach (var attr in objects)
+            {
+                var currentAttr = attr.GetType();
+                if (currentAttr == attribute)
+                    return true;
+            }
+            return false;
+        }
         public static bool None<T>(this T obj, params T[] values)
         {
             return obj.Any(values);
         }
-
         public static DbType ToDbType(this Type type)
         {
             var typeMap = new Dictionary<Type, DbType>
@@ -169,59 +200,6 @@ namespace Cult.Extensions
             };
 
             return typeMap[type];
-        }
-
-        private static bool IsOneOfAttributes(Type attribute, object[] objects)
-        {
-            foreach (var attr in objects)
-            {
-                var currentAttr = attr.GetType();
-                if (currentAttr == attribute)
-                    return true;
-            }
-            return false;
-        }
-
-        public static bool HasAttribute<TAttribute>(this PropertyInfo @this, bool inherit = false) where TAttribute : Attribute
-        {
-            var tAttribute = typeof(TAttribute);
-            var attrs = @this.GetCustomAttributes(inherit);
-            return IsOneOfAttributes(tAttribute, attrs);
-        }
-
-        public static bool HasAttribute<TAttribute>(this MemberInfo @this, bool inherit = false) where TAttribute : Attribute
-        {
-            var tAttribute = typeof(TAttribute);
-            var attrs = @this.GetCustomAttributes(inherit);
-            return IsOneOfAttributes(tAttribute, attrs);
-        }
-
-        public static bool HasAttribute<TAttribute>(this FieldInfo @this, bool inherit = false) where TAttribute : Attribute
-        {
-            var tAttribute = typeof(TAttribute);
-            var attrs = @this.GetCustomAttributes(inherit);
-            return IsOneOfAttributes(tAttribute, attrs);
-        }
-
-        public static bool HasAttribute<TAttribute>(this MethodInfo @this, bool inherit = false) where TAttribute : Attribute
-        {
-            var tAttribute = typeof(TAttribute);
-            var attrs = @this.GetCustomAttributes(inherit);
-            return IsOneOfAttributes(tAttribute, attrs);
-        }
-
-        public static bool HasAttribute<TAttribute>(this EventInfo @this, bool inherit = false) where TAttribute : Attribute
-        {
-            var tAttribute = typeof(TAttribute);
-            var attrs = @this.GetCustomAttributes(inherit);
-            return IsOneOfAttributes(tAttribute, attrs);
-        }
-
-        public static bool HasAttribute<TAttribute>(this Type @this, bool inherit = false) where TAttribute : Attribute
-        {
-            var tAttribute = typeof(TAttribute);
-            var attrs = @this.GetCustomAttributes(inherit);
-            return IsOneOfAttributes(tAttribute, attrs);
         }
     }
 }

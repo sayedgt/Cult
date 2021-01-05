@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
 using RoslynQuoter;
-
 namespace Cult.Roslyn
 {
     public static class RoslynExtensions
@@ -16,15 +15,13 @@ namespace Cult.Roslyn
             var syntax = Formatter.Format(root, workspace);
             return syntax.GetText().ToString();
         }
-
         public static SyntaxNode FormatCsharpSourceCode(this SyntaxNode syntaxNode)
         {
             var workspace = new AdhocWorkspace();
             return Formatter.Format(syntaxNode, workspace);
         }
-
         public static string ToRoslynApi(this string source, bool useDefaultFormatting = true, bool openParenthesisOnNewLine = false
-                , bool closingParenthesisOnNewLine = false, bool removeRedundantModifyingCalls = false, bool shortenCodeWithUsingStatic = false)
+                        , bool closingParenthesisOnNewLine = false, bool removeRedundantModifyingCalls = false, bool shortenCodeWithUsingStatic = false)
         {
             var quoter = new Quoter()
             {

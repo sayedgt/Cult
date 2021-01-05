@@ -3,9 +3,6 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Drawing
 {
     public static class ImageExtensions
@@ -18,7 +15,6 @@ namespace Cult.Drawing
             ms.Write(imageBytes, 0, imageBytes.Length);
             return Image.FromStream(ms, true);
         }
-
         public static string ConvertImageToBase64(this Image image, ImageFormat imageFormat)
         {
             using (var ms = new MemoryStream())
@@ -28,20 +24,37 @@ namespace Cult.Drawing
                 return Convert.ToBase64String(imageBytes);
             }
         }
-
-        public static byte[] ToByteArray(this Image @this, ImageFormat imageFormat)
+        public static Image ResizeAndFit(this Image @this, Size newSize)
         {
-            var ms = new MemoryStream();
-            @this.Save(ms, imageFormat);
-            return ms.ToArray();
-        }
+            var sourceIsLandscape = @this.Width > @this.Height;
+            var targetIsLandscape = newSize.Width > newSize.Height;
 
-        public static Image ToImage(this byte[] byteArray)
-        {
-            var ms = new MemoryStream(byteArray);
-            return Image.FromStream(ms);
-        }
+            var ratioWidth = newSize.Width / (double)@this.Width;
+            var ratioHeight = newSize.Height / (double)@this.Height;
 
+            double ratio;
+
+            if (ratioWidth > ratioHeight && sourceIsLandscape == targetIsLandscape)
+                ratio = ratioWidth;
+            else
+                ratio = ratioHeight;
+
+            var targetWidth = (int)(@this.Width * ratio);
+            var targetHeight = (int)(@this.Height * ratio);
+
+            var bitmap = new Bitmap(newSize.Width, newSize.Height);
+            var graphics = Graphics.FromImage(bitmap);
+
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            var offsetX = (double)(newSize.Width - targetWidth) / 2;
+            var offsetY = (double)(newSize.Height - targetHeight) / 2;
+
+            graphics.DrawImage(@this, (int)offsetX, (int)offsetY, targetWidth, targetHeight);
+            graphics.Dispose();
+
+            return bitmap;
+        }
         public static Image ScaleImage(this Image @this, int height, int width)
         {
             if (@this == null || height <= 0 || width <= 0)
@@ -76,37 +89,16 @@ namespace Cult.Drawing
             //g.DrawRectangle(new Pen(Color.Red, 1), 0, 0, bmp.Width - 1, bmp.Height - 1);
             return bmp;
         }
-
-        public static Image ResizeAndFit(this Image @this, Size newSize)
+        public static byte[] ToByteArray(this Image @this, ImageFormat imageFormat)
         {
-            var sourceIsLandscape = @this.Width > @this.Height;
-            var targetIsLandscape = newSize.Width > newSize.Height;
-
-            var ratioWidth = newSize.Width / (double)@this.Width;
-            var ratioHeight = newSize.Height / (double)@this.Height;
-
-            double ratio;
-
-            if (ratioWidth > ratioHeight && sourceIsLandscape == targetIsLandscape)
-                ratio = ratioWidth;
-            else
-                ratio = ratioHeight;
-
-            var targetWidth = (int)(@this.Width * ratio);
-            var targetHeight = (int)(@this.Height * ratio);
-
-            var bitmap = new Bitmap(newSize.Width, newSize.Height);
-            var graphics = Graphics.FromImage(bitmap);
-
-            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            var offsetX = (double)(newSize.Width - targetWidth) / 2;
-            var offsetY = (double)(newSize.Height - targetHeight) / 2;
-
-            graphics.DrawImage(@this, (int)offsetX, (int)offsetY, targetWidth, targetHeight);
-            graphics.Dispose();
-
-            return bitmap;
+            var ms = new MemoryStream();
+            @this.Save(ms, imageFormat);
+            return ms.ToArray();
+        }
+        public static Image ToImage(this byte[] byteArray)
+        {
+            var ms = new MemoryStream(byteArray);
+            return Image.FromStream(ms);
         }
     }
 }

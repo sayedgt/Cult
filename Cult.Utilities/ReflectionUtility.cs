@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Reflection;
-
-// ReSharper disable All
-
 namespace Cult.Utilities
 {
     public static class ReflectionUtility
     {
         public static TProperty GetProperty<TClass, TProperty>(TClass classInstance, string propertyName)
-                              where TClass : class
+                                      where TClass : class
         {
             if (propertyName == null || string.IsNullOrEmpty(propertyName))
                 throw new ArgumentNullException(nameof(propertyName), "Value can not be null or empty.");
@@ -20,9 +17,8 @@ namespace Cult.Utilities
                 obj = info.GetValue(classInstance, null);
             return (TProperty)obj;
         }
-
         public static void SetProperty<TClass>(TClass classInstance, string propertyName, object propertyValue)
-                            where TClass : class
+                                    where TClass : class
         {
             if (propertyName == null || string.IsNullOrEmpty(propertyName))
                 throw new ArgumentNullException(nameof(propertyName), "Value can not be null or empty.");

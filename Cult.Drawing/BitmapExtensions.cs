@@ -2,34 +2,29 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Drawing
 {
     public static class BitmapExtensions
     {
-        public static Bitmap ScaleToSize(this Bitmap bitmap, Size size)
+        public static Bitmap FromBytes(this byte[] imageBytes)
         {
-            return bitmap.ScaleToSize(size.Width, size.Height);
-        }
-
-        public static Bitmap ScaleToSize(this Bitmap bitmap, int width, int height)
-        {
-            var scaledBitmap = new Bitmap(width, height);
-            using (var g = Graphics.FromImage(scaledBitmap))
+            using (var ms = new MemoryStream(imageBytes))
             {
-                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.DrawImage(bitmap, 0, 0, width, height);
+                return new Bitmap(ms);
             }
-            return scaledBitmap;
         }
-
+        public static byte[] GetBytes(this Bitmap value, ImageFormat imageFormat)
+        {
+            using (var ms = new MemoryStream())
+            {
+                value.Save(ms, imageFormat);
+                return ms.GetBuffer();
+            }
+        }
         public static Bitmap ScaleProportional(this Bitmap bitmap, Size size)
         {
             return bitmap.ScaleProportional(size.Width, size.Height);
         }
-
         public static Bitmap ScaleProportional(this Bitmap bitmap, int width, int height)
         {
             float proportionalWidth, proportionalHeight;
@@ -57,22 +52,32 @@ namespace Cult.Drawing
 
             return bitmap.ScaleToSize((int)proportionalWidth, (int)proportionalHeight);
         }
-
+        public static Bitmap ScaleToSize(this Bitmap bitmap, Size size)
+        {
+            return bitmap.ScaleToSize(size.Width, size.Height);
+        }
+        public static Bitmap ScaleToSize(this Bitmap bitmap, int width, int height)
+        {
+            var scaledBitmap = new Bitmap(width, height);
+            using (var g = Graphics.FromImage(scaledBitmap))
+            {
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.DrawImage(bitmap, 0, 0, width, height);
+            }
+            return scaledBitmap;
+        }
         public static Bitmap ScaleToSizeProportional(this Bitmap bitmap, Size size)
         {
             return bitmap.ScaleToSizeProportional(Color.White, size);
         }
-
         public static Bitmap ScaleToSizeProportional(this Bitmap bitmap, Color backgroundColor, Size size)
         {
             return bitmap.ScaleToSizeProportional(backgroundColor, size.Width, size.Height);
         }
-
         public static Bitmap ScaleToSizeProportional(this Bitmap bitmap, int width, int height)
         {
             return bitmap.ScaleToSizeProportional(Color.White, width, height);
         }
-
         public static Bitmap ScaleToSizeProportional(this Bitmap bitmap, Color backgroundColor, int width, int height)
         {
             var scaledBitmap = new Bitmap(width, height);
@@ -87,23 +92,6 @@ namespace Cult.Drawing
             }
 
             return scaledBitmap;
-        }
-
-        public static Bitmap FromBytes(this byte[] imageBytes)
-        {
-            using (var ms = new MemoryStream(imageBytes))
-            {
-                return new Bitmap(ms);
-            }
-        }
-
-        public static byte[] GetBytes(this Bitmap value, ImageFormat imageFormat)
-        {
-            using (var ms = new MemoryStream())
-            {
-                value.Save(ms, imageFormat);
-                return ms.GetBuffer();
-            }
         }
     }
 }

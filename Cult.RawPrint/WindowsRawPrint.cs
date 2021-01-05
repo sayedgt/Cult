@@ -1,9 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-
-// ReSharper disable All
-
 namespace Cult.RawPrint
 {
     public static class WindowsRawPrint
@@ -18,24 +15,19 @@ namespace Cult.RawPrint
             [MarshalAs(UnmanagedType.LPStr)]
             public string pOutputFile;
         }
-
         [DllImport("winspool.Drv", EntryPoint = "ClosePrinter", SetLastError = true, ExactSpelling = true,
-                    CallingConvention = CallingConvention.StdCall)]
+                            CallingConvention = CallingConvention.StdCall)]
         public static extern bool ClosePrinter(IntPtr hPrinter);
-
         [DllImport("winspool.Drv", EntryPoint = "EndDocPrinter", SetLastError = true, ExactSpelling = true,
-                    CallingConvention = CallingConvention.StdCall)]
+                            CallingConvention = CallingConvention.StdCall)]
         public static extern bool EndDocPrinter(IntPtr hPrinter);
-
         [DllImport("winspool.Drv", EntryPoint = "EndPagePrinter", SetLastError = true, ExactSpelling = true,
-                    CallingConvention = CallingConvention.StdCall)]
+                            CallingConvention = CallingConvention.StdCall)]
         public static extern bool EndPagePrinter(IntPtr hPrinter);
-
         [DllImport("winspool.Drv", EntryPoint = "OpenPrinterA", SetLastError = true, CharSet = CharSet.Ansi,
-                    ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+                            ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         public static extern bool OpenPrinter([MarshalAs(UnmanagedType.LPStr)] string szPrinter, out IntPtr hPrinter,
-                    IntPtr pd);
-
+                            IntPtr pd);
         public static bool SendBytesTo(string szPrinterName, IntPtr pBytes, int dwCount)
         {
             // ReSharper disable once NotAccessedVariable
@@ -73,7 +65,6 @@ namespace Cult.RawPrint
             }
             return bSuccess;
         }
-
         public static bool SendFileTo(string szPrinterName, string szFileName)
         {
             // Open the file.
@@ -100,7 +91,6 @@ namespace Cult.RawPrint
             Marshal.FreeCoTaskMem(pUnmanagedBytes);
             return bSuccess;
         }
-
         public static bool SendStringTo(string szPrinterName, string szString)
         {
             // How many characters are in the string?
@@ -113,18 +103,15 @@ namespace Cult.RawPrint
             Marshal.FreeCoTaskMem(pBytes);
             return true;
         }
-
         [DllImport("winspool.Drv", EntryPoint = "StartDocPrinterA", SetLastError = true, CharSet = CharSet.Ansi,
-                    ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
+                            ExactSpelling = true, CallingConvention = CallingConvention.StdCall)]
         public static extern bool StartDocPrinter(IntPtr hPrinter, int level,
-                    [In, MarshalAs(UnmanagedType.LPStruct)] DOCINFOA di);
-
+                            [In, MarshalAs(UnmanagedType.LPStruct)] DOCINFOA di);
         [DllImport("winspool.Drv", EntryPoint = "StartPagePrinter", SetLastError = true, ExactSpelling = true,
-                    CallingConvention = CallingConvention.StdCall)]
+                            CallingConvention = CallingConvention.StdCall)]
         public static extern bool StartPagePrinter(IntPtr hPrinter);
-
         [DllImport("winspool.Drv", EntryPoint = "WritePrinter", SetLastError = true, ExactSpelling = true,
-                    CallingConvention = CallingConvention.StdCall)]
+                            CallingConvention = CallingConvention.StdCall)]
         public static extern bool WritePrinter(IntPtr hPrinter, IntPtr pBytes, int dwCount, out int dwWritten);
     }
 }

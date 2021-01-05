@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Timers;
-
 namespace Cult.Extensions
 {
     public static class TimerExtensions

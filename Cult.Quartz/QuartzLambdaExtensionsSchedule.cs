@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-
-// ReSharper disable once CheckNamespace
 namespace Quartz
 {
     public static partial class QuartzLambdaExtensions
@@ -33,11 +31,8 @@ namespace Quartz
 
             return scheduler.ScheduleJob(jobDetail, trigger);
         }
-
         public static Task<DateTimeOffset> ScheduleJob(this IScheduler scheduler, Action action, int delay, int interval, bool disallowConcurrentJob = false) =>
-            ScheduleJob(scheduler, action, new TimeSpan(0, 0, 0, delay), new TimeSpan(0, 0, 0, interval), disallowConcurrentJob);
-
-
+                    ScheduleJob(scheduler, action, new TimeSpan(0, 0, 0, delay), new TimeSpan(0, 0, 0, interval), disallowConcurrentJob);
         public static Task<DateTimeOffset> ScheduleJob(this IScheduler scheduler, Action action, Func<TriggerBuilder, TriggerBuilder> triggerBuilder, bool disallowConcurrentJob = false)
         {
             IJobDetail jobDetail;
@@ -62,7 +57,6 @@ namespace Quartz
 
             return scheduler.ScheduleJob(jobDetail, trigger);
         }
-
         public static Task<DateTimeOffset> ScheduleJob(this IScheduler scheduler, Action action, string cron, bool disallowConcurrentJob = false)
         {
             IJobDetail jobDetail;

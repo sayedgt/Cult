@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-
 namespace Cult.Mvc.Extensions
 {
     public static class HttpRequestExtensions

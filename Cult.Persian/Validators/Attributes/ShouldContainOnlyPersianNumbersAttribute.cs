@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-
 namespace Cult.Persian
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]

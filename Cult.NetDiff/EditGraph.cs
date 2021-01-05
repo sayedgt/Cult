@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 namespace Cult.NetDiff
 {
     internal enum Direction
@@ -10,18 +9,15 @@ namespace Cult.NetDiff
         Bottom,
         Diagonal,
     }
-
     internal readonly struct Point : IEquatable<Point>
     {
         public int X { get; }
         public int Y { get; }
-
         public Point(int x, int y)
         {
             X = x;
             Y = y;
         }
-
         public override bool Equals(object obj)
         {
             if (!(obj is Point))
@@ -29,7 +25,10 @@ namespace Cult.NetDiff
 
             return Equals((Point)obj);
         }
-
+        public bool Equals(Point other)
+        {
+            return X == other.X && Y == other.Y;
+        }
         public override int GetHashCode()
         {
             var hash = 17;
@@ -38,34 +37,11 @@ namespace Cult.NetDiff
 
             return hash;
         }
-
-        public bool Equals(Point other)
-        {
-            return X == other.X && Y == other.Y;
-        }
-
         public override string ToString()
         {
             return $"X:{X} Y:{Y}";
         }
     }
-
-    internal class Node
-    {
-        public Point Point { get; set; }
-        public Node Parent { get; set; }
-
-        public Node(Point point)
-        {
-            Point = point;
-        }
-
-        public override string ToString()
-        {
-            return $"X:{Point.X} Y:{Point.Y}";
-        }
-    }
-
     internal class EditGraph<T>
     {
         private readonly T[] _seq1;
@@ -76,16 +52,22 @@ namespace Cult.NetDiff
         private int[] _farthestPoints;
         private readonly int _offset;
         private bool _isEnd;
-
         public EditGraph(
-            IEnumerable<T> seq1, IEnumerable<T> seq2)
+                    IEnumerable<T> seq1, IEnumerable<T> seq2)
         {
             this._seq1 = seq1.ToArray();
             this._seq2 = seq2.ToArray();
             _endpoint = new Point(this._seq1.Length, this._seq2.Length);
             _offset = this._seq2.Length;
         }
+        private void BeginCalculatePath()
+        {
+            Initialize();
 
+            _heads.Add(new Node(new Point(0, 0)));
+
+            Snake();
+        }
         public List<Point> CalculatePath(DiffOption<T> option)
         {
             if (!_seq1.Any())
@@ -102,22 +84,21 @@ namespace Cult.NetDiff
 
             return EndCalculatePath();
         }
-
-        private void Initialize()
+        private bool CanCreateHead(Point currentPoint, Direction direction, Point nextPoint)
         {
-            _farthestPoints = new int[_seq1.Length + _seq2.Length + 1];
-            _heads = new List<Node>();
+            if (!InRange(nextPoint))
+                return false;
+
+            if (direction == Direction.Diagonal)
+            {
+                var equal = _option.EqualityComparer?.Equals(_seq1[nextPoint.X - 1], (_seq2[nextPoint.Y - 1])) ?? _seq1[nextPoint.X - 1].Equals(_seq2[nextPoint.Y - 1]);
+
+                if (!equal)
+                    return false;
+            }
+
+            return UpdateFarthestPoint(nextPoint);
         }
-
-        private void BeginCalculatePath()
-        {
-            Initialize();
-
-            _heads.Add(new Node(new Point(0, 0)));
-
-            Snake();
-        }
-
         private List<Point> EndCalculatePath()
         {
             var wayPoint = new List<Point>();
@@ -134,7 +115,29 @@ namespace Cult.NetDiff
 
             return wayPoint;
         }
+        private Point GetPoint(Point currentPoint, Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Right:
+                    return new Point(currentPoint.X + 1, currentPoint.Y);
+                case Direction.Bottom:
+                    return new Point(currentPoint.X, currentPoint.Y + 1);
+                case Direction.Diagonal:
+                    return new Point(currentPoint.X + 1, currentPoint.Y + 1);
+            }
 
+            throw new ArgumentException();
+        }
+        private void Initialize()
+        {
+            _farthestPoints = new int[_seq1.Length + _seq2.Length + 1];
+            _heads = new List<Node>();
+        }
+        private bool InRange(Point point)
+        {
+            return point.X >= 0 && point.Y >= 0 && point.X <= _endpoint.X && point.Y <= _endpoint.Y;
+        }
         private bool Next()
         {
             if (_isEnd)
@@ -144,7 +147,57 @@ namespace Cult.NetDiff
 
             return true;
         }
+        private void Snake()
+        {
+            var tmp = new List<Node>();
+            foreach (var h in _heads)
+            {
+                var newHead = Snake(h);
 
+                tmp.Add(newHead ?? h);
+            }
+
+            _heads = tmp;
+        }
+        private Node Snake(Node head)
+        {
+            Node newHead = null;
+            while (true)
+            {
+                if (TryCreateHead(newHead ?? head, Direction.Diagonal, out var tmp))
+                    newHead = tmp;
+                else
+                    break;
+            }
+
+            return newHead;
+        }
+        private bool TryCreateHead(Node head, Direction direction, out Node newHead)
+        {
+            newHead = null;
+            var newPoint = GetPoint(head.Point, direction);
+
+            if (!CanCreateHead(head.Point, direction, newPoint))
+                return false;
+
+            newHead = new Node(newPoint) { Parent = head };
+
+            _isEnd |= newHead.Point.Equals(_endpoint);
+
+            return true;
+        }
+        private bool UpdateFarthestPoint(Point point)
+        {
+            var k = point.X - point.Y;
+            var y = _farthestPoints[k + _offset];
+
+            if (point.Y <= y)
+                return false;
+
+            _farthestPoints[k + _offset] = point.Y;
+
+            return true;
+        }
         private void UpdateHeads()
         {
             if (_option.Limit > 0 && _heads.Count > _option.Limit)
@@ -174,98 +227,18 @@ namespace Cult.NetDiff
 
             Snake();
         }
-
-        private void Snake()
+    }
+    internal class Node
+    {
+        public Node Parent { get; set; }
+        public Point Point { get; set; }
+        public Node(Point point)
         {
-            var tmp = new List<Node>();
-            foreach (var h in _heads)
-            {
-                var newHead = Snake(h);
-
-                tmp.Add(newHead ?? h);
-            }
-
-            _heads = tmp;
+            Point = point;
         }
-
-        private Node Snake(Node head)
+        public override string ToString()
         {
-            Node newHead = null;
-            while (true)
-            {
-                if (TryCreateHead(newHead ?? head, Direction.Diagonal, out var tmp))
-                    newHead = tmp;
-                else
-                    break;
-            }
-
-            return newHead;
-        }
-
-        private bool TryCreateHead(Node head, Direction direction, out Node newHead)
-        {
-            newHead = null;
-            var newPoint = GetPoint(head.Point, direction);
-
-            if (!CanCreateHead(head.Point, direction, newPoint))
-                return false;
-
-            newHead = new Node(newPoint) { Parent = head };
-
-            _isEnd |= newHead.Point.Equals(_endpoint);
-
-            return true;
-        }
-
-        // ReSharper disable once UnusedParameter.Local
-        private bool CanCreateHead(Point currentPoint, Direction direction, Point nextPoint)
-        {
-            if (!InRange(nextPoint))
-                return false;
-
-            if (direction == Direction.Diagonal)
-            {
-                var equal = _option.EqualityComparer?.Equals(_seq1[nextPoint.X - 1], (_seq2[nextPoint.Y - 1])) ?? _seq1[nextPoint.X - 1].Equals(_seq2[nextPoint.Y - 1]);
-
-                if (!equal)
-                    return false;
-            }
-
-            return UpdateFarthestPoint(nextPoint);
-        }
-
-        private Point GetPoint(Point currentPoint, Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.Right:
-                    return new Point(currentPoint.X + 1, currentPoint.Y);
-                case Direction.Bottom:
-                    return new Point(currentPoint.X, currentPoint.Y + 1);
-                case Direction.Diagonal:
-                    return new Point(currentPoint.X + 1, currentPoint.Y + 1);
-            }
-
-            throw new ArgumentException();
-        }
-
-        private bool InRange(Point point)
-        {
-            return point.X >= 0 && point.Y >= 0 && point.X <= _endpoint.X && point.Y <= _endpoint.Y;
-        }
-
-        private bool UpdateFarthestPoint(Point point)
-        {
-            var k = point.X - point.Y;
-            var y = _farthestPoints[k + _offset];
-
-            if (point.Y <= y)
-                return false;
-
-            _farthestPoints[k + _offset] = point.Y;
-
-            return true;
+            return $"X:{Point.X} Y:{Point.Y}";
         }
     }
 }
-

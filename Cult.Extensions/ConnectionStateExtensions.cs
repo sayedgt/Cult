@@ -1,6 +1,4 @@
 ﻿using System.Data;
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class ConnectionStateExtensions

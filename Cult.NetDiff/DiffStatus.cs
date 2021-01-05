@@ -7,7 +7,6 @@
         Deleted,
         Modified,
     }
-
     public static class DiffStatusExtension
     {
         public static char GetStatusChar(this DiffStatus self)

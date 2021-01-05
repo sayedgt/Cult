@@ -3,27 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-
-// ReSharper disable UnusedMember.Global
-// ReSharper disable InconsistentNaming
-
 namespace Cult.Extensions
 {
-    public static  class ICollectionExtensions
+    public static class ICollectionExtensions
     {
-        public static bool IsEmpty(this ICollection collection)
-        {
-            if (collection == null)
-                throw new ArgumentNullException(nameof(collection));
-            return collection.Count == 0;
-        }
-        public static void RemoveWhere<T>(this ICollection<T> collection, Func<T, bool> predicate)
-        {
-            if (collection == null)
-                throw new ArgumentNullException(nameof(collection));
-            var deleteList = collection.Where(child => predicate(child)).ToList();
-            deleteList.ForEach(t => collection.Remove(t));
-        }
         public static bool AddDistinctRange<T>(this ICollection<T> collection, T value)
         {
             var alreadyHas = collection.Contains(value);
@@ -33,7 +16,6 @@ namespace Cult.Extensions
             }
             return alreadyHas;
         }
-
         public static int AddDistinctRange<T>(this ICollection<T> collection, IEnumerable<T> values)
         {
             var count = 0;
@@ -44,7 +26,6 @@ namespace Cult.Extensions
             }
             return count;
         }
-
         public static bool AddIf<T>(this ICollection<T> @this, Func<T, bool> predicate, T value)
         {
             if (predicate(value))
@@ -55,7 +36,6 @@ namespace Cult.Extensions
 
             return false;
         }
-
         public static bool AddIfNotContains<T>(this ICollection<T> @this, T value)
         {
             if (!@this.Contains(value))
@@ -66,7 +46,6 @@ namespace Cult.Extensions
 
             return false;
         }
-
         public static void AddRange<T>(this ICollection<T> @this, params T[] values)
         {
             foreach (T value in values)
@@ -74,7 +53,6 @@ namespace Cult.Extensions
                 @this.Add(value);
             }
         }
-
         public static void AddRangeIf<T>(this ICollection<T> @this, Func<T, bool> predicate, params T[] values)
         {
             foreach (T value in values)
@@ -85,7 +63,6 @@ namespace Cult.Extensions
                 }
             }
         }
-
         public static void AddRangeIfNotContains<T>(this ICollection<T> @this, params T[] values)
         {
             foreach (T value in values)
@@ -96,7 +73,6 @@ namespace Cult.Extensions
                 }
             }
         }
-
         public static bool ContainsAll<T>(this ICollection<T> @this, params T[] values)
         {
             foreach (T value in values)
@@ -109,7 +85,6 @@ namespace Cult.Extensions
 
             return true;
         }
-
         public static bool ContainsAny<T>(this ICollection<T> @this, params T[] values)
         {
             foreach (T value in values)
@@ -122,17 +97,12 @@ namespace Cult.Extensions
 
             return false;
         }
-
-        public static bool IsNotEmpty<T>(this ICollection<T> @this)
+        public static bool IsEmpty(this ICollection collection)
         {
-            return @this.Count != 0;
+            if (collection == null)
+                throw new ArgumentNullException(nameof(collection));
+            return collection.Count == 0;
         }
-
-        public static bool IsNotNullOrEmpty<T>(this ICollection<T> @this)
-        {
-            return @this != null && @this.Count != 0;
-        }
-
         public static bool IsEmpty<T>(this ICollection<T> collection)
         {
             if (collection == null)
@@ -140,7 +110,14 @@ namespace Cult.Extensions
 
             return collection.Count == 0;
         }
-
+        public static bool IsNotEmpty<T>(this ICollection<T> @this)
+        {
+            return @this.Count != 0;
+        }
+        public static bool IsNotNullOrEmpty<T>(this ICollection<T> @this)
+        {
+            return @this != null && @this.Count != 0;
+        }
         public static void RemoveAll<T>(this ICollection<T> collection, Func<T, bool> predicate)
         {
             if (collection == null) throw new ArgumentNullException(nameof(collection));
@@ -155,7 +132,6 @@ namespace Cult.Extensions
                 }
             }
         }
-
         public static void RemoveIf<T>(this ICollection<T> @this, T value, Func<T, bool> predicate)
         {
             if (predicate(value))
@@ -163,7 +139,6 @@ namespace Cult.Extensions
                 @this.Remove(value);
             }
         }
-
         public static void RemoveIfContains<T>(this ICollection<T> @this, T value)
         {
             if (@this.Contains(value))
@@ -171,7 +146,6 @@ namespace Cult.Extensions
                 @this.Remove(value);
             }
         }
-
         public static void RemoveRange<T>(this ICollection<T> @this, params T[] values)
         {
             foreach (T value in values)
@@ -179,7 +153,6 @@ namespace Cult.Extensions
                 @this.Remove(value);
             }
         }
-
         public static void RemoveRangeIf<T>(this ICollection<T> @this, Func<T, bool> predicate, params T[] values)
         {
             foreach (T value in values)
@@ -190,7 +163,6 @@ namespace Cult.Extensions
                 }
             }
         }
-
         public static void RemoveRangeIfContains<T>(this ICollection<T> @this, params T[] values)
         {
             foreach (T value in values)
@@ -201,21 +173,26 @@ namespace Cult.Extensions
                 }
             }
         }
-
-        public static PagedList<T> ToPagedList<T>(this ICollection<T> items, int pageIndex, int pageSize)
+        public static void RemoveWhere<T>(this ICollection<T> collection, Func<T, bool> predicate)
         {
-            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
-        }
-
-        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this ICollection<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
-        {
-            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
+            if (collection == null)
+                throw new ArgumentNullException(nameof(collection));
+            var deleteList = collection.Where(child => predicate(child)).ToList();
+            deleteList.ForEach(t => collection.Remove(t));
         }
         public static IEnumerable<T> ToPaged<T>(this ICollection<T> query, int pageIndex, int pageSize)
         {
             return query
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize);
+        }
+        public static PagedList<T> ToPagedList<T>(this ICollection<T> items, int pageIndex, int pageSize)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
+        }
+        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this ICollection<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
         }
     }
 }

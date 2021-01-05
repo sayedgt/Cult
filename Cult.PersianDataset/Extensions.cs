@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
 namespace Cult.PersianDataset
 {
     internal static class Extensions
@@ -10,7 +9,7 @@ namespace Cult.PersianDataset
         internal static string GetManifestResourceText(this Assembly assembly, string resourceName)
         {
             var result = "";
-            var resourceFileName = assembly.GetManifestResourceNames().FirstOrDefault(x=>x.EndsWith(resourceName, StringComparison.InvariantCultureIgnoreCase));
+            var resourceFileName = assembly.GetManifestResourceNames().FirstOrDefault(x => x.EndsWith(resourceName, StringComparison.InvariantCultureIgnoreCase));
 
             if (string.IsNullOrEmpty(resourceFileName)) return result;
 

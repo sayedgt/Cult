@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Cult.DotLiquid.Filters;
+using DotLiquid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Cult.DotLiquid.Filters;
-using DotLiquid;
-
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.DotLiquid
 {
     public static class DotLiquidUtility
@@ -15,7 +12,6 @@ namespace Cult.DotLiquid
         {
             Template.RegisterFilter(typeof(DotLiquidCustomFilters));
         }
-
         public static void RegisterSafeTypes(params Type[] types)
         {
             if (types == null || types.Length <= 0) return;
@@ -26,7 +22,6 @@ namespace Cult.DotLiquid
                 Template.RegisterSafeType(type, props);
             }
         }
-
         public static void RegisterSafeTypes(bool withReferencedAssemblies = false)
         {
             var types = new List<Type>();
@@ -51,7 +46,6 @@ namespace Cult.DotLiquid
                 Template.RegisterSafeType(type, props);
             }
         }
-
         public static void RegisterSafeTypes(Assembly assembly)
         {
             foreach (var type in assembly.GetTypes())
@@ -60,7 +54,6 @@ namespace Cult.DotLiquid
                 Template.RegisterSafeType(type, props);
             }
         }
-
         public static void RegisterSafeTypes(List<Assembly> assemblies)
         {
             foreach (var assembly in assemblies)

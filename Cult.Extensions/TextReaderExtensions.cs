@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class TextReaderExtensions
@@ -13,7 +11,6 @@ namespace Cult.Extensions
             while ((line = reader.ReadLine()) != null)
                 yield return line;
         }
-
         public static void IterateLines(this TextReader reader, Action<string> action)
         {
             foreach (var line in reader.IterateLines())

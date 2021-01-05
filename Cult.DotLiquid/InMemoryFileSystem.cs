@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using DotLiquid;
+﻿using DotLiquid;
 using DotLiquid.FileSystems;
-// ReSharper disable UnusedMember.Global
-
+using System;
+using System.Collections.Generic;
 namespace Cult.DotLiquid
 {
     public class InMemoryFileSystem : IFileSystem
     {
         private static readonly object Lock = new object();
         private readonly Dictionary<string, string> _includes;
-
         public InMemoryFileSystem(Dictionary<string, string> includes)
         {
             _includes = includes;
         }
-
         public string ReadTemplateFile(Context context, string templateName)
         {
             lock (Lock)

@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-// ReSharper disable UnusedMember.Global
-// ReSharper disable InconsistentNaming
-
 namespace Cult.Extensions
 {
     public static class IListExtensions
@@ -15,7 +12,6 @@ namespace Cult.Extensions
                 list.Add(item);
             }
         }
-
         public static void AddDistinctRange<T>(this IList<T> list, T[] items) where T : class
         {
             foreach (var item in items)
@@ -26,7 +22,6 @@ namespace Cult.Extensions
                 }
             }
         }
-
         public static void AddDistinctRange<T>(this IList<T> list, IEnumerable<T> items) where T : class
         {
             foreach (var item in items)
@@ -37,7 +32,6 @@ namespace Cult.Extensions
                 }
             }
         }
-
         public static void AddRange<T>(this IList<T> container, IEnumerable<T> rangeToAdd)
         {
             if (container == null || rangeToAdd == null)
@@ -49,7 +43,6 @@ namespace Cult.Extensions
                 container.Add(toAdd);
             }
         }
-
         public static int BinarySearch<T>(this IList sortedList, T element, IComparer<T> comparer)
         {
             if (sortedList == null)
@@ -89,7 +82,43 @@ namespace Cult.Extensions
             }
             return ~left;
         }
-
+        public static int IndexOf<T>(this IList<T> list, Func<T, bool> comparison)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (comparison(list[i]))
+                    return i;
+            }
+            return -1;
+        }
+        public static bool IsEmpty(this IList collection)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+            return collection.Count == 0;
+        }
+        public static bool IsEmpty<T>(this IList<T> collection)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+            return collection.Count == 0;
+        }
+        public static bool IsFirst<T>(this IList<T> list, T element)
+        {
+            return list.IndexOf(element) == 0;
+        }
+        public static bool IsLast<T>(this IList<T> list, T element)
+        {
+            return list.IndexOf(element) == list.Count - 1;
+        }
+        public static bool IsNullOrEmpty<T>(this IList<T> toCheck)
+        {
+            return toCheck == null || toCheck.Count <= 0;
+        }
         public static T OneOf<T>(this IList<T> list)
         {
             var rng = new Random();
@@ -100,50 +129,6 @@ namespace Cult.Extensions
             var rng = new Random();
             return list[rng.Next(list.Length)];
         }
-
-        public static int IndexOf<T>(this IList<T> list, Func<T, bool> comparison)
-        {
-            for (var i = 0; i < list.Count; i++)
-            {
-                if (comparison(list[i]))
-                    return i;
-            }
-            return -1;
-        }
-
-        public static bool IsEmpty(this IList collection)
-        {
-            if (collection == null)
-            {
-                throw new ArgumentNullException(nameof(collection));
-            }
-            return collection.Count == 0;
-        }
-
-        public static bool IsEmpty<T>(this IList<T> collection)
-        {
-            if (collection == null)
-            {
-                throw new ArgumentNullException(nameof(collection));
-            }
-            return collection.Count == 0;
-        }
-
-        public static bool IsFirst<T>(this IList<T> list, T element)
-        {
-            return list.IndexOf(element) == 0;
-        }
-
-        public static bool IsLast<T>(this IList<T> list, T element)
-        {
-            return list.IndexOf(element) == list.Count - 1;
-        }
-
-        public static bool IsNullOrEmpty<T>(this IList<T> toCheck)
-        {
-            return toCheck == null || toCheck.Count <= 0;
-        }
-
         public static void Replace<T>(this IList<T> @this, T oldValue, T newValue)
         {
             var oldIndex = @this.IndexOf(oldValue);
@@ -154,7 +139,6 @@ namespace Cult.Extensions
                 oldIndex = @this.IndexOf(oldValue);
             }
         }
-
         public static void Shuffle<T>(this IList<T> list)
         {
             var rng = new Random();
@@ -168,7 +152,6 @@ namespace Cult.Extensions
                 list[n] = value;
             }
         }
-
         public static void Swap<T>(this IList<T> source, int indexA, int indexB)
         {
             if (indexA < 0 || indexA >= source.Count)

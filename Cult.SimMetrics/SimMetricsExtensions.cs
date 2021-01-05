@@ -1,8 +1,5 @@
-using System.Collections.Generic;
 using Cult.SimMetrics.Metric;
-
-// ReSharper disable UnusedMember.Global
-
+using System.Collections.Generic;
 namespace Cult.SimMetrics
 {
     public static class SimMetricsExtensions
@@ -19,7 +16,6 @@ namespace Cult.SimMetrics
             }
             return newList;
         }
-
         public static double ApproximatelyEquals(this string firstWord, string secondWord, SimMetricType simMetricType = SimMetricType.Levenstein)
         {
             switch (simMetricType)

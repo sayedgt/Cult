@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class ExpressionExtensions
     {
-        public static string ToReadableString(this Expression expression, bool trimLongArgumentList = false)
-        {
-            return ExpressionStringBuilder.ToString(expression, trimLongArgumentList);
-        }
         public static string GetMemberName<TSource, TProperty>(this Expression<Func<TSource, TProperty>> property)
         {
             if (Equals(property, null))
@@ -36,6 +30,10 @@ namespace Cult.Extensions
             }
 
             return expr.Member.Name;
+        }
+        public static string ToReadableString(this Expression expression, bool trimLongArgumentList = false)
+        {
+            return ExpressionStringBuilder.ToString(expression, trimLongArgumentList);
         }
     }
 }

@@ -35,12 +35,9 @@ namespace Cult.MustacheSharp.Mustache
                 visited.Add(type);
                 yield return type;
 
-                if (type.BaseType != null)
+                if (type.BaseType != null && !visited.Contains(type.BaseType))
                 {
-                    if (!visited.Contains(type.BaseType))
-                    {
-                        pending.Enqueue(type.BaseType);
-                    }
+                    pending.Enqueue(type.BaseType);
                 }
 
                 foreach (Type interfaceType in type.GetInterfaces())

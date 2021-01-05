@@ -1,22 +1,10 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
-// ReSharper disable UnusedMember.Global
-
 namespace Cult.Extensions
 {
     public static class EnumExtensions
     {
-        public static bool In(this Enum @this, params Enum[] values)
-        {
-            return Array.IndexOf(values, @this) != -1;
-        }
-
-        public static bool NotIn(this Enum @this, params Enum[] values)
-        {
-            return Array.IndexOf(values, @this) == -1;
-        }
-
         public static string GetDescription(this Enum @this)
         {
             return @this.GetType()
@@ -24,9 +12,8 @@ namespace Cult.Extensions
                 .GetCustomAttributes(typeof(DescriptionAttribute), false)
                 .FirstOrDefault() is DescriptionAttribute attr ? attr.Description : @this.ToString();
         }
-
         public static bool HasFlags<TEnum>(this TEnum @this, params TEnum[] flags)
-            where TEnum : Enum
+                    where TEnum : Enum
         {
             foreach (var flag in flags)
             {
@@ -39,6 +26,14 @@ namespace Cult.Extensions
             }
 
             return true;
+        }
+        public static bool In(this Enum @this, params Enum[] values)
+        {
+            return Array.IndexOf(values, @this) != -1;
+        }
+        public static bool NotIn(this Enum @this, params Enum[] values)
+        {
+            return Array.IndexOf(values, @this) == -1;
         }
     }
 }
