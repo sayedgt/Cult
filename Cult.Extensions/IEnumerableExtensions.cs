@@ -285,14 +285,6 @@ namespace Cult.Extensions
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize);
         }
-        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> items, int pageIndex, int pageSize)
-        {
-            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
-        }
-        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this IEnumerable<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
-        {
-            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
-        }
         public static ReadOnlyCollection<TDestination> ToReadOnlyCollection<TDestination>(this IEnumerable source)
         {
             var sourceAsDestination = new List<TDestination>();

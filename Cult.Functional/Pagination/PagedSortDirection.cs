@@ -1,6 +1,5 @@
-// ReSharper disable once CheckNamespace
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Functional
 {
 	public enum PagedSortDirection
 	{

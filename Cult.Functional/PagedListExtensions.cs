@@ -2,21 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-// ReSharper disable All 
-namespace Cult.Extensions
+// ReSharper disable All
+
+namespace Cult.Functional
 {
-    public static class QueryableExtensions
+    public static class PagedListExtensions
     {
-        public static IEnumerable<TEntity> ToPaged<TEntity>(this IQueryable<TEntity> query, int pageIndex, int pageSize)
-        {
-            return query
-                .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize);
-        }
-        public static PagedList<TEntity> ToPagedList<TEntity>(this IQueryable<TEntity> items, int pageIndex, int pageSize, int totalCount)
-        {
-            return new PagedList<TEntity>(items.ToList(), pageIndex, pageSize, totalCount);
-        }
         public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this IQueryable<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderByExpression = null)
         {
             if (pageIndex < 1)
@@ -58,6 +49,22 @@ namespace Cult.Extensions
                 return items.ToPagedList(1, pageSize);
             }
             return pagedList;
+        }
+        public static PagedList<T> ToPagedList<T>(this ICollection<T> items, int pageIndex, int pageSize)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
+        }
+        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this ICollection<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
+        }
+        public static PagedList<T> ToPagedList<T>(this IEnumerable<T> items, int pageIndex, int pageSize)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
+        }
+        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this IEnumerable<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
         }
     }
 }

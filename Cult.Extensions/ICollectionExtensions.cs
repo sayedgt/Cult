@@ -187,13 +187,5 @@ namespace Cult.Extensions
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize);
         }
-        public static PagedList<T> ToPagedList<T>(this ICollection<T> items, int pageIndex, int pageSize)
-        {
-            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
-        }
-        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this ICollection<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
-        {
-            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
-        }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-// ReSharper disable once CheckNamespace
-
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Functional
 {
     public interface IPagedList<T> : IPagedList
     {
