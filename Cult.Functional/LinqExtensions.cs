@@ -1,4 +1,5 @@
-using Cult.Monad;
+using Cult.Functional;
+
 // ReSharper disable All
 
 namespace System.Linq
