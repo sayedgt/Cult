@@ -86,18 +86,5 @@ namespace Cult.Cryptography
         {
             return ComputeHash(data.ToByteArray(), hashAlgorithm);
         }
-
-        private static byte[] ToByteArray(this string data)
-        {
-            return Encoding.UTF8.GetBytes(data);
-        }
-        private static byte[] ToByteArray(this Stream data)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                data.CopyTo(memoryStream);
-                return memoryStream.ToArray();
-            }
-        }
     }
 }
