@@ -4,7 +4,7 @@ using Cult.SimMetrics.Api;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
-    public sealed class SubCostRange5ToMinus3 : AbstractSubstitutionCost
+    internal sealed class SubCostRange5ToMinus3 : AbstractSubstitutionCost
     {
         private readonly Collection<string>[] _approx = new Collection<string>[7];
         private const int CharApproximateMatchScore = 3;

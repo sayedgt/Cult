@@ -3,7 +3,7 @@
 // ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
-    public interface ITokeniser
+    internal interface ITokeniser
     {
         Collection<string> Tokenize(string word);
         Collection<string> TokenizeToSet(string word);

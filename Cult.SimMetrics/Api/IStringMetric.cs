@@ -1,7 +1,7 @@
 ﻿// ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
-    public interface IStringMetric
+    internal interface IStringMetric
     {
         double GetSimilarity(string firstWord, string secondWord);
         string GetSimilarityExplained(string firstWord, string secondWord);

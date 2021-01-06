@@ -1,7 +1,7 @@
 ﻿// ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
-    public interface ISubstitutionCost
+    internal interface ISubstitutionCost
     {
         double GetCost(string firstWord, int firstWordIndex, string secondWord, int secondWordIndex);
 

@@ -5,7 +5,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public class SmithWatermanGotohWindowedAffine : AbstractStringMetric
+    internal class SmithWatermanGotohWindowedAffine : AbstractStringMetric
     {
         private AbstractSubstitutionCost _dCostFunction;
         private const double DefaultMismatchScore = 0.0;

@@ -5,7 +5,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class DiceSimilarity : AbstractStringMetric
+    internal sealed class DiceSimilarity : AbstractStringMetric
     {
         private readonly double _estimatedTimingConstant;
         private readonly ITokeniser _tokeniser;

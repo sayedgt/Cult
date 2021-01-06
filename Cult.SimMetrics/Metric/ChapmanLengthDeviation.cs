@@ -4,7 +4,7 @@ using Cult.SimMetrics.Api;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class ChapmanLengthDeviation : AbstractStringMetric
+    internal sealed class ChapmanLengthDeviation : AbstractStringMetric
     {
         public override double GetSimilarity(string firstWord, string secondWord)
         {

@@ -5,7 +5,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
-    public abstract class AbstractTokeniserQGramN : ITokeniser
+    internal abstract class AbstractTokeniserQGramN : ITokeniser
     {
         private int _characterCombinationIndex;
         private const string DefaultEndPadCharacter = "#";

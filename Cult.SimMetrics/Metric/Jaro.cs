@@ -5,7 +5,7 @@ using Cult.SimMetrics.Api;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class Jaro : AbstractStringMetric
+    internal sealed class Jaro : AbstractStringMetric
     {
         private const double DefaultMismatchScore = 0.0;
         private readonly double _estimatedTimingConstant = 4.1200000850949436E-05;

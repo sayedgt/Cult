@@ -6,7 +6,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public class MongeElkan : AbstractStringMetric
+    internal class MongeElkan : AbstractStringMetric
     {
         private const double DefaultMismatchScore = 0.0;
         private readonly double _estimatedTimingConstant;

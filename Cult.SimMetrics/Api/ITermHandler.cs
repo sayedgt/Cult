@@ -3,7 +3,7 @@
 // ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
-    public interface ITermHandler
+    internal interface ITermHandler
     {
         void AddWord(string termToAdd);
         bool IsWord(string termToTest);

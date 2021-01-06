@@ -5,7 +5,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class NeedlemanWunch : AbstractStringMetric
+    internal sealed class NeedlemanWunch : AbstractStringMetric
     {
         private AbstractSubstitutionCost _dCostFunction;
         private const double DefaultGapCost = 2.0;

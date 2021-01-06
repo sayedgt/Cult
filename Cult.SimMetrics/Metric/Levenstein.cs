@@ -5,7 +5,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class Levenstein : AbstractStringMetric
+    internal sealed class Levenstein : AbstractStringMetric
     {
         private readonly AbstractSubstitutionCost _dCostFunction = new SubCostRange0To1();
         private const double DefaultMismatchScore = 0.0;

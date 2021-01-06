@@ -6,7 +6,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class MatchingCoefficient : AbstractStringMetric
+    internal sealed class MatchingCoefficient : AbstractStringMetric
     {
         private const double DefaultMismatchScore = 0.0;
         private readonly double _estimatedTimingConstant;

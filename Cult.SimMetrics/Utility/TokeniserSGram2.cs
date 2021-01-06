@@ -3,7 +3,7 @@
 // ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
-    public class TokeniserSGram2 : TokeniserQGram2
+    internal class TokeniserSGram2 : TokeniserQGram2
     {
         public TokeniserSGram2()
         {

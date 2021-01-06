@@ -1,7 +1,7 @@
 ﻿// ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
-    public abstract class AbstractAffineGapCost : IAffineGapCost
+    internal abstract class AbstractAffineGapCost : IAffineGapCost
     {
         protected AbstractAffineGapCost()
         {

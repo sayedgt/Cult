@@ -3,7 +3,7 @@
 // ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
-    public class TokeniserUtilities<T>
+    internal class TokeniserUtilities<T>
     {
         private readonly Collection<T> _allTokens;
         private int _firstSetTokenCount;

@@ -3,7 +3,7 @@
 // ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
-    public sealed class AffineGapRange1To0Multiplier1Over3 : AbstractAffineGapCost
+    internal sealed class AffineGapRange1To0Multiplier1Over3 : AbstractAffineGapCost
     {
         private const int CharExactMatchScore = 1;
         private const int CharMismatchMatchScore = 0;

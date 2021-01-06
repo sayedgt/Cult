@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
-    public class TokeniserQGram3Extended : TokeniserQGram3
+    internal class TokeniserQGram3Extended : TokeniserQGram3
     {
         public override Collection<string> Tokenize(string word)
         {

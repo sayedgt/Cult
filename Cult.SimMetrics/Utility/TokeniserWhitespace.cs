@@ -4,7 +4,7 @@ using Cult.SimMetrics.Api;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
-    public sealed class TokeniserWhitespace : ITokeniser
+    internal sealed class TokeniserWhitespace : ITokeniser
     {
         private readonly string _delimiters = "\r\n\t \x00a0";
         private ITermHandler _stopWordHandler = new DummyStopTermHandler();

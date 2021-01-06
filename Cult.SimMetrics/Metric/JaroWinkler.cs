@@ -5,7 +5,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class JaroWinkler : AbstractStringMetric
+    internal sealed class JaroWinkler : AbstractStringMetric
     {
         private readonly double _estimatedTimingConstant = 4.3420001020422205E-05;
         private readonly AbstractStringMetric _jaroStringMetric = new Jaro();

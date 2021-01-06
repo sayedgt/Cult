@@ -6,7 +6,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class EuclideanDistance : AbstractStringMetric
+    internal sealed class EuclideanDistance : AbstractStringMetric
     {
         private const double DefaultMismatchScore = 0.0;
         private readonly double _estimatedTimingConstant;

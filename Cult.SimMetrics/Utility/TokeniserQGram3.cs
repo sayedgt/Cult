@@ -5,7 +5,7 @@ using Cult.SimMetrics.Api;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
-    public class TokeniserQGram3 : AbstractTokeniserQGramN
+    internal class TokeniserQGram3 : AbstractTokeniserQGramN
     {
         public TokeniserQGram3()
         {

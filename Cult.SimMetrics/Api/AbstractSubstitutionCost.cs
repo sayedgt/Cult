@@ -1,7 +1,7 @@
 ﻿// ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
-    public abstract class AbstractSubstitutionCost : ISubstitutionCost
+    internal abstract class AbstractSubstitutionCost : ISubstitutionCost
     {
         protected AbstractSubstitutionCost()
         {

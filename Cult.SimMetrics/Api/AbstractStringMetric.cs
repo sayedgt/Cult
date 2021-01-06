@@ -3,7 +3,7 @@
 // ReSharper disable All 
 namespace Cult.SimMetrics.Api
 {
-    public abstract class AbstractStringMetric : IStringMetric
+    internal abstract class AbstractStringMetric : IStringMetric
     {
         protected AbstractStringMetric()
         {

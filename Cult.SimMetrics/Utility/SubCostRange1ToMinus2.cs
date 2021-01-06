@@ -3,7 +3,7 @@
 // ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
-    public sealed class SubCostRange1ToMinus2 : AbstractSubstitutionCost
+    internal sealed class SubCostRange1ToMinus2 : AbstractSubstitutionCost
     {
         private const int CharExactMatchScore = 1;
         private const int CharMismatchMatchScore = -2;

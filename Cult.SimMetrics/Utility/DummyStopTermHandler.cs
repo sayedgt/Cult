@@ -4,7 +4,7 @@ using Cult.SimMetrics.Api;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Utility
 {
-    public sealed class DummyStopTermHandler : ITermHandler
+    internal sealed class DummyStopTermHandler : ITermHandler
     {
         public void AddWord(string termToAdd)
         {

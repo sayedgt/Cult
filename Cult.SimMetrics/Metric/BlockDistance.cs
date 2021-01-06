@@ -6,7 +6,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class BlockDistance : AbstractStringMetric
+    internal sealed class BlockDistance : AbstractStringMetric
     {
         private readonly double _estimatedTimingConstant;
         private readonly ITokeniser _tokeniser;

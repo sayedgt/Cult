@@ -4,7 +4,7 @@ using Cult.SimMetrics.Utility;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class SmithWatermanGotoh : SmithWatermanGotohWindowedAffine
+    internal sealed class SmithWatermanGotoh : SmithWatermanGotohWindowedAffine
     {
         private const int AffineGapWindowSize = 0x7fffffff;
         private const double EstimatedTimingConstant = 2.2000000171829015E-05;

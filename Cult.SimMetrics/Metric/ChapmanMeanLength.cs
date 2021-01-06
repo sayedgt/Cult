@@ -4,7 +4,7 @@ using Cult.SimMetrics.Api;
 // ReSharper disable All 
 namespace Cult.SimMetrics.Metric
 {
-    public sealed class ChapmanMeanLength : AbstractStringMetric
+    internal sealed class ChapmanMeanLength : AbstractStringMetric
     {
         private const int ChapmanMeanLengthMaxString = 500;
         private const double DefaultMismatchScore = 0.0;
