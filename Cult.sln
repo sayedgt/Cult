@@ -57,9 +57,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DryIoc", "Cult.DryIoc\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Monad", "Cult.Monad\Cult.Monad.csproj", "{4F278D98-4C89-4F87-B450-5670BA7BE041}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Specification", "Cult.Specification\Cult.Specification.csproj", "{43F3A660-374C-4AF3-BBC3-0E0DA035326D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Specification", "Cult.Specification\Cult.Specification.csproj", "{43F3A660-374C-4AF3-BBC3-0E0DA035326D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Cryptography", "Cult.Cryptography\Cult.Cryptography.csproj", "{CA986426-1C11-43DB-8440-DF8EB53A7587}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Cryptography", "Cult.Cryptography\Cult.Cryptography.csproj", "{CA986426-1C11-43DB-8440-DF8EB53A7587}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Repositories", "Cult.Repositories\Cult.Repositories.csproj", "{FC02BD93-88AC-4C2B-BB1B-02598DE47DF8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Cqrs", "Cult.Cqrs\Cult.Cqrs.csproj", "{1025564E-D29D-4832-84AC-7F906CACE85A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DomainDrivenDesign", "Cult.DomainDrivenDesign\Cult.DomainDrivenDesign.csproj", "{5FE3CB15-9B31-4B89-90D9-E7C70CB957F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Mediator", "Cult.Mediator\Cult.Mediator.csproj", "{57196DAA-8AF3-430A-8D70-D0A9C9E2BC29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -183,6 +191,22 @@ Global
 		{CA986426-1C11-43DB-8440-DF8EB53A7587}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA986426-1C11-43DB-8440-DF8EB53A7587}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA986426-1C11-43DB-8440-DF8EB53A7587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC02BD93-88AC-4C2B-BB1B-02598DE47DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC02BD93-88AC-4C2B-BB1B-02598DE47DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC02BD93-88AC-4C2B-BB1B-02598DE47DF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC02BD93-88AC-4C2B-BB1B-02598DE47DF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1025564E-D29D-4832-84AC-7F906CACE85A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1025564E-D29D-4832-84AC-7F906CACE85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1025564E-D29D-4832-84AC-7F906CACE85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1025564E-D29D-4832-84AC-7F906CACE85A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FE3CB15-9B31-4B89-90D9-E7C70CB957F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FE3CB15-9B31-4B89-90D9-E7C70CB957F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FE3CB15-9B31-4B89-90D9-E7C70CB957F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FE3CB15-9B31-4B89-90D9-E7C70CB957F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57196DAA-8AF3-430A-8D70-D0A9C9E2BC29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57196DAA-8AF3-430A-8D70-D0A9C9E2BC29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57196DAA-8AF3-430A-8D70-D0A9C9E2BC29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57196DAA-8AF3-430A-8D70-D0A9C9E2BC29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
