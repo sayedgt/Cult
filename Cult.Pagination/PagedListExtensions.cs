@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 // ReSharper disable All
 
-namespace Cult.Functional
+namespace Cult.Pagination
 {
     public static class PagedListExtensions
     {
@@ -63,6 +63,23 @@ namespace Cult.Functional
             return items.AsQueryable().ToPagedList(pageIndex, pageSize);
         }
         public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this IEnumerable<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
+        }
+        public static PagedList<T> ToPagedList<T>(this T[] items, int pageIndex, int pageSize)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
+        }
+        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this TEntity[] items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
+        }
+
+        public static PagedList<T> ToPagedList<T>(this IList<T> items, int pageIndex, int pageSize)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
+        }
+        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this IList<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
         {
             return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
         }

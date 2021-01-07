@@ -65,9 +65,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Cqrs", "Cult.Cqrs\Cult
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DomainDrivenDesign", "Cult.DomainDrivenDesign\Cult.DomainDrivenDesign.csproj", "{5FE3CB15-9B31-4B89-90D9-E7C70CB957F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Mediator", "Cult.Mediator\Cult.Mediator.csproj", "{57196DAA-8AF3-430A-8D70-D0A9C9E2BC29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Mediator", "Cult.Mediator\Cult.Mediator.csproj", "{57196DAA-8AF3-430A-8D70-D0A9C9E2BC29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Functional", "Cult.Functional\Cult.Functional.csproj", "{8CE6329A-BD44-4FE0-AEAB-991E81BDBA27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Functional", "Cult.Functional\Cult.Functional.csproj", "{8CE6329A-BD44-4FE0-AEAB-991E81BDBA27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Pagination", "Cult.Pagination\Cult.Pagination.csproj", "{7704964C-5660-44EB-99A7-421DA25339F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -207,6 +209,10 @@ Global
 		{8CE6329A-BD44-4FE0-AEAB-991E81BDBA27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CE6329A-BD44-4FE0-AEAB-991E81BDBA27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CE6329A-BD44-4FE0-AEAB-991E81BDBA27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7704964C-5660-44EB-99A7-421DA25339F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7704964C-5660-44EB-99A7-421DA25339F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7704964C-5660-44EB-99A7-421DA25339F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7704964C-5660-44EB-99A7-421DA25339F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

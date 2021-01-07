@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 // ReSharper disable All 
-namespace Cult.Functional
+namespace Cult.Pagination
 {
     public class PagedList<T> : IPagedList<T>
     {

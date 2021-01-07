@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 // ReSharper disable All 
-namespace Cult.Functional
+namespace Cult.Pagination
 {
     public interface IPagedList<T> : IPagedList
     {
