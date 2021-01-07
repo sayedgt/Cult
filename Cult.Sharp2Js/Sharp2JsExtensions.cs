@@ -17,35 +17,50 @@ namespace Cult.Sharp2Js
             sb.AppendLine(source);
             return sb.ToString();
         }
-        public static string GetJavaScriptPoco(this Type type, bool addModelArray = false)
+        public static string ToJavaScript(this Type type, bool addModelVariable = false)
         {
-            var poco = JsGenerator.Generate(new[] { type }, new JsGeneratorOptions
+            var result = JsGenerator.Generate(new[] { type }, new JsGeneratorOptions
             {
                 CamelCase = true,
                 IncludeMergeFunction = false,
                 IncludeEqualsFunction = false
             });
-            return addModelArray ? AddJavaScriptArrayModel(poco) : poco;
+            return addModelVariable ? AddJavaScriptArrayModel(result) : result;
         }
-        public static string GetJavaScriptPoco(this Type type, JsGeneratorOptions options, bool addModelArray = false)
+        public static string ToJavaScript(this Type type, JsGeneratorOptions options, bool addModelVariable = false)
         {
-            var poco = JsGenerator.Generate(new[] { type }, options);
-            return addModelArray ? AddJavaScriptArrayModel(poco) : poco;
+            var result = JsGenerator.Generate(new[] { type }, options);
+            return addModelVariable ? AddJavaScriptArrayModel(result) : result;
         }
-        public static string GetJavaScriptPocos(this IEnumerable<Type> types, bool addModelArray = false)
+        public static string ToJavaScript(this IEnumerable<Type> types, bool addModelVariable = false)
         {
-            var poco = JsGenerator.Generate(types, new JsGeneratorOptions
+            var result = JsGenerator.Generate(types, new JsGeneratorOptions
             {
                 CamelCase = true,
                 IncludeMergeFunction = false,
                 IncludeEqualsFunction = false
             });
-            return addModelArray ? AddJavaScriptArrayModel(poco) : poco;
+            return addModelVariable ? AddJavaScriptArrayModel(result) : result;
         }
-        public static string GetTypeScriptPocos(this IEnumerable<Type> types, JsGeneratorOptions options, bool addModelArray = false)
+        public static string ToJavaScript(this IEnumerable<Type> types, JsGeneratorOptions options, bool addModelVariable = false)
         {
-            var poco = JsGenerator.Generate(types, options);
-            return addModelArray ? AddJavaScriptArrayModel(poco) : poco;
+            var result = JsGenerator.Generate(types, options);
+            return addModelVariable ? AddJavaScriptArrayModel(result) : result;
+        }
+        public static string ToJavaScript(this Type[] types, bool addModelVariable = false)
+        {
+            var result = JsGenerator.Generate(types, new JsGeneratorOptions
+            {
+                CamelCase = true,
+                IncludeMergeFunction = false,
+                IncludeEqualsFunction = false
+            });
+            return addModelVariable ? AddJavaScriptArrayModel(result) : result;
+        }
+        public static string ToJavaScript(this Type[] types, JsGeneratorOptions options, bool addModelVariable = false)
+        {
+            var result = JsGenerator.Generate(types, options);
+            return addModelVariable ? AddJavaScriptArrayModel(result) : result;
         }
     }
 }
