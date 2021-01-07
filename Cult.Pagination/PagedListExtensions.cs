@@ -83,5 +83,22 @@ namespace Cult.Pagination
         {
             return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
         }
+
+        public static PagedList<T> ToPagedList<T>(this IReadOnlyCollection<T> items, int pageIndex, int pageSize)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
+        }
+        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this IReadOnlyCollection<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
+        }
+        public static PagedList<T> ToPagedList<T>(this IReadOnlyList<T> items, int pageIndex, int pageSize)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize);
+        }
+        public static PagedList<TEntity> ToPagedList<TEntity, TProperty>(this IReadOnlyList<TEntity> items, int pageIndex, int pageSize, PagedSortDirection sortDirection = PagedSortDirection.Ascending, Expression<Func<TEntity, TProperty>> orderbyExpression = null)
+        {
+            return items.AsQueryable().ToPagedList(pageIndex, pageSize, sortDirection, orderbyExpression);
+        }
     }
 }
