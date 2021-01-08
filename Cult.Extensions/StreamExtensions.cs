@@ -7,6 +7,10 @@ namespace Cult.Extensions
 {
     public static class StreamExtensions
     {
+        public static void Clear(this Stream stream)
+        {
+            stream.SetLength(0);
+        }
         public static void CopyTo(this Stream fromStream, Stream toStream)
         {
             if (fromStream == null)
