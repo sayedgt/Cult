@@ -7,10 +7,8 @@ namespace Cult.Extensions
 {
     public static class StreamExtensions
     {
-        public static void Clear(this Stream stream)
-        {
-            stream.SetLength(0);
-        }
+        public static void Clear(this Stream stream) => stream.SetLength(0);
+        
         public static void CopyTo(this Stream fromStream, Stream toStream)
         {
             if (fromStream == null)
@@ -30,20 +28,7 @@ namespace Cult.Extensions
                 return ms.ToArray();
             }
         }
-        public static string ToMd5Hash(this Stream @this)
-        {
-            using (var md5 = MD5.Create())
-            {
-                byte[] hashBytes = md5.ComputeHash(@this);
-                var sb = new StringBuilder();
-                foreach (var bytes in hashBytes)
-                {
-                    sb.Append(bytes.ToString("X2"));
-                }
-
-                return sb.ToString();
-            }
-        }
+        
         public static MemoryStream ToMemoryStream(this Stream stream)
         {
             var ret = new MemoryStream();
