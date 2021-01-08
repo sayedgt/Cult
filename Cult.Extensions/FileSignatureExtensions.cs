@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+
 // ReSharper disable All 
 
 namespace Cult.Extensions
@@ -28,22 +31,30 @@ namespace Cult.Extensions
                 ".png", new List<byte[]>
                 {
                     new byte[] {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A},
-                    // new byte[] {0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D}, // PNG screenshot files on mac
+                    new byte[] {0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D}, // PNG screenshot files on mac
                 }
             },
         };
+        
+        public static string GetMimeType(this byte[] byteArray)
+        {
+            return byteArray.IsJpeg() ? "image/jpeg" : string.Empty;
+        }
 
         public static bool IsJpeg(this byte[] byteArray)
         {
-            return false;
+            var jpegSignatures = _fileSignature[".jpeg"];
+            var jpgSignatures = _fileSignature[".jpg"];
+            var headerBytes = byteArray.Take(jpegSignatures.Max(m => m.Length));
+
+            return jpegSignatures.Any(signature =>
+                       headerBytes.Take(signature.Length).SequenceEqual(signature))
+                   || jpgSignatures.Any(signature =>
+                       headerBytes.Take(signature.Length).SequenceEqual(signature));
         }
         public static bool IsJpeg(this Stream stream)
-        {
-            return false;
-        }
-        public static bool IsJpeg(this FileStream fileStream)
-        {
-            return false;
-        }
+         =>  stream.ToByteArray().IsJpeg();
+            
+        
     }
 }
