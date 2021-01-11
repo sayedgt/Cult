@@ -10,6 +10,18 @@ namespace Cult.Extensions
 {
     public static class ObjectExtensions
     {
+        public static IEnumerable<T> ConvertToList<T>(this T obj)
+        {
+            return new List<T> { obj };
+        }
+        public static T[] ConvertToArray<T>(this T obj)
+        {
+            return obj.ConvertToList().ToArray();
+        }
+        public static ICollection<T> ConvertToCollection<T>(this T obj)
+        {
+            return obj.ConvertToList().ToCollection();
+        }
         public static T As<T>(this object @this)
         {
             return (T)@this;
