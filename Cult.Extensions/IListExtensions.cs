@@ -7,6 +7,10 @@ namespace Cult.Extensions.ExtraIList
 {
     public static class IListExtensions
     {
+        public static void AddToFront<T>(this IList<T> list, T item)
+        {
+            list.Insert(0, item);
+        }
         public static void AddDistinct<T>(this IList<T> list, T item) where T : class
         {
             if (!list.Contains(item))
@@ -191,6 +195,29 @@ namespace Cult.Extensions.ExtraIList
             {
                 yield return list[i];
             }
+        }
+        public static bool All<T>(this IList<T> list, Func<T, bool> predicate)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (!predicate(list[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool Any<T>(this IList<T> list, Func<T, bool> predicate)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (predicate(list[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

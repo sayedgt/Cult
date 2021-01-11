@@ -10,6 +10,20 @@ namespace Cult.Extensions.ExtraObject
 {
     public static class ObjectExtensions
     {
+        public static void IfType<T>(this object item, Action<T> action) where T : class
+        {
+            if (item is T)
+            {
+                action(item as T);
+            }
+        }
+        public static void IfNotType<T>(this object item, Action<T> action) where T : class
+        {
+            if (!(item is T))
+            {
+                action(item as T);
+            }
+        }
         public static bool Any<T>(this T obj, params T[] values)
         {
             return Array.IndexOf(values, obj) != -1;
@@ -197,15 +211,19 @@ namespace Cult.Extensions.ExtraObject
         }
         public static T[] ConvertToArray<T>(this T obj)
         {
-            return obj.ConvertToList().ToArray();
+            return obj.ConvertToEnumerable().ToArray();
         }
         public static ICollection<T> ConvertToCollection<T>(this T obj)
         {
-            return obj.ConvertToList().ToCollection();
+            return obj.ConvertToEnumerable().ToCollection();
         }
-        public static IEnumerable<T> ConvertToList<T>(this T obj)
+        public static IList<T> ConvertToList<T>(this T obj)
         {
-            return new List<T> { obj };
+            return obj.ConvertToEnumerable().ToList();
+        }
+        public static IEnumerable<T> ConvertToEnumerable<T>(this T obj)
+        {
+            yield return obj;
         }
         public static T DeepClone<T>(this T @this)
         {

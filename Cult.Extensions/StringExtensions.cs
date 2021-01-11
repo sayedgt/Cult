@@ -17,6 +17,18 @@ namespace Cult.Extensions.ExtraString
 {
     public static class StringExtensions
     {
+        public static bool Like(this string value, string search)
+        {
+            return value.Contains(search) || value.StartsWith(search) || value.EndsWith(search);
+        }
+        public static string IfNullOrWhiteSpaceElse(this string input, string nullAlternateValue)
+        {
+            return (!string.IsNullOrWhiteSpace(input)) ? input : nullAlternateValue;
+        }
+        public static string IfNullOrWhiteSpaceElse(this string input, Func<string> nullAlternateAction)
+        {
+            return (!string.IsNullOrWhiteSpace(input)) ? input : nullAlternateAction();
+        }
         public static string BreakLineToNewLine(this string @this)
         {
             return @this.Replace("<br />", "\r\n").Replace("<br>", "\r\n").Replace("<br/>", "\r\n");

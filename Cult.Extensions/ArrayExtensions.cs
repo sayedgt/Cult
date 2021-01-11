@@ -12,6 +12,28 @@ namespace Cult.Extensions.ExtraArray
 {
     public static class ArrayExtensions
     {
+        public static bool All<T>(this T[] array, Func<T, bool> predicate)
+        {
+            foreach (var item in array)
+            {
+                if (!predicate(item))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public static bool Any<T>(this T[] array, Func<T, bool> predicate)
+        {
+            foreach (var item in array)
+            {
+                if (predicate(item))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public static ReadOnlyCollection<T> AsReadOnly<T>(this T[] array)
         {
             return Array.AsReadOnly(array);
