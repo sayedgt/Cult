@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Cult.Extensions.ExtraExpression;
+using Cult.Extensions.ExtraObject;
+using Cult.Extensions.ExtraString;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraIDataReader
 {
     public static class IDataReaderExtensions
     {

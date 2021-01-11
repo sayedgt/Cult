@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Cult.Extensions.ExtraStream;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 // ReSharper disable All 
 
-namespace Cult.Extensions
+namespace Cult.Extensions.FileSignature
 {
     public static class FileSignatureExtensions
     {

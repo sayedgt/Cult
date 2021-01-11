@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraAssembly
 {
     public static class AssemblyExtensions
     {

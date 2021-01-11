@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraStringBuilder
 {
     public static class StringBuilderExtensions
     {

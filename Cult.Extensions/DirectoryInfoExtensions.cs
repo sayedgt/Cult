@@ -1,9 +1,10 @@
+using Cult.Extensions.ExtraIEnumerable;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraDirectoryInfo
 {
     public static class DirectoryInfoExtensions
     {

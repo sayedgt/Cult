@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraRandom
 {
     public static class RandomExtensions
     {

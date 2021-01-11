@@ -5,15 +5,10 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
-
-// ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraIEnumerable
 {
     public static class IEnumerableExtensions
     {
-        public static IEnumerable<(int index, T item)> WithIndex<T>(this IEnumerable<T> set) =>
-            set.Select((value, index) => (index, value));
-        
         public static bool ContainsAll<T>(this IEnumerable<T> @this, params T[] values)
         {
             T[] list = @this.ToArray();
@@ -171,7 +166,6 @@ namespace Cult.Extensions
             return source.Count(query) == 1;
         }
         public static bool IsEmpty<T>(this IEnumerable<T> @this) => !@this.Any();
-        
         public static bool IsEqual<T>(this IEnumerable<T> source, IEnumerable<T> toCompareWith)
         {
             if ((source == null) || (toCompareWith == null))
@@ -181,7 +175,7 @@ namespace Cult.Extensions
             return source.IsEqual(toCompareWith, null);
         }
         public static bool IsEqual<T>(this IEnumerable<T> source, IEnumerable<T> toCompareWith,
-                                IEqualityComparer<T> comparer)
+                                        IEqualityComparer<T> comparer)
         {
             if ((source == null) || (toCompareWith == null))
             {
@@ -298,5 +292,7 @@ namespace Cult.Extensions
             }
             return new ReadOnlyCollection<TDestination>(sourceAsDestination);
         }
+        public static IEnumerable<(int index, T item)> WithIndex<T>(this IEnumerable<T> set) =>
+                    set.Select((value, index) => (index, value));
     }
 }

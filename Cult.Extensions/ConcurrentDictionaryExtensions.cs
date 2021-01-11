@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraConcurrentDictionary
 {
     public static class ConcurrentDictionaryExtensions
     {

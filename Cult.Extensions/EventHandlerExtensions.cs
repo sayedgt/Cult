@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraEventHandler
 {
     public static class EventHandlerExtensions
     {

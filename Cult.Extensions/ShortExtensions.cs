@@ -2,7 +2,7 @@ using System;
 using System.Data;
 using System.Net;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraShort
 {
     public static class ShortExtensions
     {

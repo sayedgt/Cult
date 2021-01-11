@@ -1,3 +1,5 @@
+using Cult.Extensions.ExtraInt;
+using Cult.Extensions.ExtraObject;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraArray
 {
     public static class ArrayExtensions
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Globalization;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraChar
 {
     public static class CharExtensions
     {

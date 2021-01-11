@@ -3,9 +3,9 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraIDbConnection
 {
-    public static class DbConnectionExtensions
+    public static class IDbConnectionExtensions
     {
         public static void EnsureOpen(this IDbConnection @this)
         {

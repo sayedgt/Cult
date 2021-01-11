@@ -1,7 +1,8 @@
+using Cult.Extensions.ExtraInt;
 using System;
 using System.Globalization;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraDateTime
 {
     public static class DateTimeExtensions
     {

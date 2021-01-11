@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraXml
 {
     public static class XmlExtensions
     {

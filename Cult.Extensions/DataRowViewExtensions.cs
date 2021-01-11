@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Cult.Extensions.ExtraObject;
+using Cult.Extensions.ExtraString;
+using System;
 using System.Data;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraDataRowView
 {
     public static class DataRowViewExtensions
     {

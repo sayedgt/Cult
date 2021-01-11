@@ -1,6 +1,6 @@
 using System;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraDelegate
 {
     public static class DelegateExtensions
     {

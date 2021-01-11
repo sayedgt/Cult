@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraIList
 {
     public static class IListExtensions
     {

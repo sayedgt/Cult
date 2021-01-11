@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraByteArray
 {
     public static class ByteArrayExtensions
     {

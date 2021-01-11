@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraHashSet
 {
     public static class HashSetExtensions
     {

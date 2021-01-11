@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraSocket
 {
     public static class SocketExtensions
     {

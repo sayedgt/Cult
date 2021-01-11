@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraFileInfo
 {
     public static class FileInfoExtensions
     {

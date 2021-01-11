@@ -1,6 +1,7 @@
-﻿using System.Data;
+﻿using Cult.Extensions.ExtraArray;
+using System.Data;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraConnectionState
 {
     public static class ConnectionStateExtensions
     {

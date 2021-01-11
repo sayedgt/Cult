@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraExpression
 {
     public static class ExpressionExtensions
     {

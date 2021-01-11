@@ -1,19 +1,14 @@
-﻿using System;
+﻿using Cult.Extensions.ExtraObject;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-
-// ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraType
 {
     public static class TypeExtensions
     {
-        public static bool Any<T>(this T obj, params T[] values)
-        {
-            return Array.IndexOf(values, obj) != -1;
-        }
         public static object CreateInstance(this Type type, params object[] constructorParameters)
         {
             return CreateInstance<object>(type, constructorParameters);

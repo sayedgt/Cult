@@ -1,3 +1,4 @@
+using Cult.Extensions.ExtraIEnumerable;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -5,22 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
-// ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraObject
 {
     public static class ObjectExtensions
     {
-        public static IEnumerable<T> ConvertToList<T>(this T obj)
+        public static bool Any<T>(this T obj, params T[] values)
         {
-            return new List<T> { obj };
-        }
-        public static T[] ConvertToArray<T>(this T obj)
-        {
-            return obj.ConvertToList().ToArray();
-        }
-        public static ICollection<T> ConvertToCollection<T>(this T obj)
-        {
-            return obj.ConvertToList().ToCollection();
+            return Array.IndexOf(values, obj) != -1;
         }
         public static T As<T>(this object @this)
         {
@@ -202,6 +194,18 @@ namespace Cult.Extensions
         public static T ConvertToAndIgnoreException<T>(this object value, T defaultValue)
         {
             return value.ConvertTo(defaultValue, true);
+        }
+        public static T[] ConvertToArray<T>(this T obj)
+        {
+            return obj.ConvertToList().ToArray();
+        }
+        public static ICollection<T> ConvertToCollection<T>(this T obj)
+        {
+            return obj.ConvertToList().ToCollection();
+        }
+        public static IEnumerable<T> ConvertToList<T>(this T obj)
+        {
+            return new List<T> { obj };
         }
         public static T DeepClone<T>(this T @this)
         {
@@ -541,6 +545,14 @@ namespace Cult.Extensions
                 catchAction(@this);
                 return false;
             }
+        }
+        public static bool TryDispose(this object toDispose)
+        {
+            if (!(toDispose is IDisposable disposable))
+                return false;
+
+            disposable.Dispose();
+            return true;
         }
     }
 }

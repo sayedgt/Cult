@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraICollection
 {
     public static class ICollectionExtensions
     {

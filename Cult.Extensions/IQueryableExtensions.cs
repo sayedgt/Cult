@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraIQueryable
 {
     public static class IQueryableExtensions
     {
@@ -8,7 +8,8 @@ namespace Cult.Extensions
         {
             return query
                 .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize);
+                .Take(pageSize)
+                ;
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraTextReader
 {
     public static class TextReaderExtensions
     {

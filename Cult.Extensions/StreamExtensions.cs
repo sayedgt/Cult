@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraStream
 {
     public static class StreamExtensions
     {

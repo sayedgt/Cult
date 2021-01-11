@@ -1,3 +1,4 @@
+using Cult.Extensions.ExtraIEnumerable;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -12,7 +13,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Extensions.ExtraString
 {
     public static class StringExtensions
     {
