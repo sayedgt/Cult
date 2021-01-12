@@ -6,6 +6,15 @@ namespace Cult.Extensions.ExtraByteArray
 {
     public static class ByteArrayExtensions
     {
+        public static string ByteArrayToHexString(this byte[] byteArray)
+        {
+            string result = string.Empty;
+            foreach (byte outputByte in byteArray)
+            {
+                result += outputByte.ToString("x2");
+            }
+            return result;
+        }
         public static int FindArrayInArray(this byte[] array1, byte[] array2)
         {
             if (array2 == null)

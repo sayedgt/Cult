@@ -110,5 +110,6 @@ namespace Cult.Cryptography
                 return builder.ToString();
             }
         }
+
     }
 }

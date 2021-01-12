@@ -17,6 +17,16 @@ namespace Cult.Extensions.ExtraString
 {
     public static class StringExtensions
     {
+        public static byte[] HexStringToByteArray(this string hexString)
+        {
+            int stringLength = hexString.Length;
+            byte[] bytes = new byte[stringLength / 2];
+            for (int i = 0; i < stringLength; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
+            }
+            return bytes;
+        }
         public static bool Like(this string value, string search)
         {
             return value.Contains(search) || value.StartsWith(search) || value.EndsWith(search);
