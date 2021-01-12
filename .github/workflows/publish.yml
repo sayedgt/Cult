@@ -171,11 +171,11 @@ jobs:
           NUGET_KEY: ${secrets.NUGET_API_KEY}
           NUGET_SOURCE: https://api.nuget.org
           INCLUDE_SYMBOLS: true
-      - name: publish on version change of cult.range
-        id: publish_nuget_cult_range
+      - name: publish on version change of cult.enumerator
+        id: publish_nuget_cult_enumerator
         uses: rohith/publish-nuget@v2
         with:
-          PROJECT_FILE_PATH: Cult.Range/Cult.Range.csproj
+          PROJECT_FILE_PATH: Cult.Enumerator/Cult.Enumerator.csproj
           VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
           NUGET_KEY: ${secrets.NUGET_API_KEY}
           NUGET_SOURCE: https://api.nuget.org
