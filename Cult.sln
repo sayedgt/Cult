@@ -47,8 +47,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.PersianDataset", "Cult
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Configuration", "Cult.Configuration\Cult.Configuration.csproj", "{505E3E08-0590-46B2-B663-1F342E61B0F4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Range", "Cult.Range\Cult.Range.csproj", "{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DryIoc", "Cult.DryIoc\Cult.DryIoc.csproj", "{8DF5A181-AB2D-47A9-BB43-F5B4403B346A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Cryptography", "Cult.Cryptography\Cult.Cryptography.csproj", "{CA986426-1C11-43DB-8440-DF8EB53A7587}"
@@ -56,6 +54,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Pagination", "Cult.Pagination\Cult.Pagination.csproj", "{7704964C-5660-44EB-99A7-421DA25339F4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.TypeScript", "Cult.TypeScript\Cult.TypeScript.csproj", "{18AE1808-783C-4C48-8DBE-26114370DB75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Enumerator", "Cult.Enumerator\Cult.Enumerator.csproj", "{49692F97-6AD3-4F1D-8D56-198AA4050C26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -151,10 +151,6 @@ Global
 		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BEAFBEED-ECED-4BCC-BE16-1F02E735BC3B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DF5A181-AB2D-47A9-BB43-F5B4403B346A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8DF5A181-AB2D-47A9-BB43-F5B4403B346A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DF5A181-AB2D-47A9-BB43-F5B4403B346A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -171,6 +167,10 @@ Global
 		{18AE1808-783C-4C48-8DBE-26114370DB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18AE1808-783C-4C48-8DBE-26114370DB75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18AE1808-783C-4C48-8DBE-26114370DB75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49692F97-6AD3-4F1D-8D56-198AA4050C26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49692F97-6AD3-4F1D-8D56-198AA4050C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49692F97-6AD3-4F1D-8D56-198AA4050C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49692F97-6AD3-4F1D-8D56-198AA4050C26}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

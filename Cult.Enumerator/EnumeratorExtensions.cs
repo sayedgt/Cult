@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+// ReSharper disable All
 
-namespace Cult.Range
+namespace Cult.Enumerator
 {
     public static class EnumeratorExtensions
     {

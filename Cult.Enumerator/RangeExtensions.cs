@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 // ReSharper disable All
 
-namespace Cult.Range
+namespace Cult.Enumerator
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public static class RangeExtensions
