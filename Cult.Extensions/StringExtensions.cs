@@ -651,13 +651,13 @@ namespace Cult.Extensions.ExtraString
         {
             return new string(@this.ToCharArray().Where(x => !predicate(x)).ToArray());
         }
-        public static string RemoveBefore(this string @this, char c)
+        public static string RemoveBefore(this string @this, char c, bool removeChar = true)
         {
-            return @this.Substring(@this.IndexOf(c) + 1);
+            return @this.Substring(removeChar ? (@this.IndexOf(c) + 1) : @this.IndexOf(c));
         }
-        public static string RemoveBeforeLastIndex(this string @this, char c)
+        public static string RemoveBeforeLastIndex(this string @this, char c, bool removeChar = true)
         {
-            return @this.Substring(@this.LastIndexOf(c) + 1);
+            return @this.Substring(removeChar ? (@this.LastIndexOf(c) + 1) : @this.LastIndexOf(c));
         }
         public static string RemoveWhiteSpaces(this string input)
         {
