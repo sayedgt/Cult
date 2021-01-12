@@ -651,6 +651,14 @@ namespace Cult.Extensions.ExtraString
         {
             return new string(@this.ToCharArray().Where(x => !predicate(x)).ToArray());
         }
+        public static string RemoveBefore(this string @this, char c)
+        {
+            return @this.Substring(@this.IndexOf(c) + 1);
+        }
+        public static string RemoveBeforeLastIndex(this string @this, char c)
+        {
+            return @this.Substring(@this.LastIndexOf(c) + 1);
+        }
         public static string RemoveWhiteSpaces(this string input)
         {
             return Regex.Replace(input, @"\s+", "");
