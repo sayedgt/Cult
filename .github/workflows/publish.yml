@@ -9,11 +9,245 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: publish on version change of cult.configuration
+        id: publish_nuget_cult_configuration
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Configuration/Cult.Configuration.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.cryptography
+        id: publish_nuget_cult_cryptography
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Cryptography/Cult.Cryptography.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
       - name: publish on version change of cult.datastructure
         id: publish_nuget_cult_datastructure
         uses: rohith/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: Cult.DataStructure/Cult.DataStructure.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.dotliquid
+        id: publish_nuget_cult_dotliquid
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.DotLiquid/Cult.DotLiquid.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.drawing
+        id: publish_nuget_cult_drawing
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Drawing/Cult.Drawing.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.dryioc
+        id: publish_nuget_cult_dryioc
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.DryIoc/Cult.DryIoc.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.dynamicproxy
+        id: publish_nuget_cult_dynamicproxy
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.DynamicProxy/Cult.DynamicProxy.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.extensions
+        id: publish_nuget_cult_extensions
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Extensions/Cult.Extensions.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.memorycache
+        id: publish_nuget_cult_memorycache
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.MemoryCache/Cult.MemoryCache.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.mustachesharp
+        id: publish_nuget_cult_mustachesharp
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.MustacheSharp/Cult.MustacheSharp.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.mvc
+        id: publish_nuget_cult_mvc
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Mvc/Cult.Mvc.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.netdiff
+        id: publish_nuget_cult_netdiff
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.NetDiff/Cult.NetDiff.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.pagination
+        id: publish_nuget_cult_pagination
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Pagination/Cult.Pagination.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.parserkit
+        id: publish_nuget_cult_parserkit
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.ParserKit/Cult.ParserKit.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.persian
+        id: publish_nuget_cult_persian
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Persian/Cult.Persian.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.persiandataset
+        id: publish_nuget_cult_persiandataset
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.PersianDataset/Cult.PersianDataset.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.persiandatetime
+        id: publish_nuget_cult_persiandatetime
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.PersianDateTime/Cult.PersianDateTime.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.quartz
+        id: publish_nuget_cult_quartz
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Quartz/Cult.Quartz.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.range
+        id: publish_nuget_cult_range
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Range/Cult.Range.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.rawprint
+        id: publish_nuget_cult_rawprint
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.RawPrint/Cult.RawPrint.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.roslyn
+        id: publish_nuget_cult_roslyn
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Roslyn/Cult.Roslyn.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.sharp2js
+        id: publish_nuget_cult_sharp2js
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Sharp2Js/Cult.Sharp2Js.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.simmetrics
+        id: publish_nuget_cult_simmetrics
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.SimMetrics/Cult.SimMetrics.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.typescript
+        id: publish_nuget_cult_typescript
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.TypeScript/Cult.TypeScript.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.utilities
+        id: publish_nuget_cult_utilities
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Utilities/Cult.Utilities.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.valuetask
+        id: publish_nuget_cult_valuetask
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.ValueTask/Cult.ValueTask.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.xbehave
+        id: publish_nuget_cult_xbehave
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.Xbehave/Cult.Xbehave.csproj
           VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
           NUGET_KEY: ${secrets.NUGET_API_KEY}
           NUGET_SOURCE: https://api.nuget.org
