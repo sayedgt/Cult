@@ -72,6 +72,15 @@ jobs:
           NUGET_KEY: ${secrets.NUGET_API_KEY}
           NUGET_SOURCE: https://api.nuget.org
           INCLUDE_SYMBOLS: true
+      - name: publish on version change of cult.dynamicquery
+        id: publish_nuget_cult_dynamicquery
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: Cult.DynamicQuery/Cult.DynamicQuery.csproj
+          VERSION_REGEX: ^\s*<Version>(.*)<\/Version>\s*$
+          NUGET_KEY: ${secrets.NUGET_API_KEY}
+          NUGET_SOURCE: https://api.nuget.org
+          INCLUDE_SYMBOLS: true
       - name: publish on version change of cult.extensions
         id: publish_nuget_cult_extensions
         uses: rohith/publish-nuget@v2

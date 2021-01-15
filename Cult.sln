@@ -55,7 +55,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Pagination", "Cult.Pag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.TypeScript", "Cult.TypeScript\Cult.TypeScript.csproj", "{18AE1808-783C-4C48-8DBE-26114370DB75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Enumerator", "Cult.Enumerator\Cult.Enumerator.csproj", "{49692F97-6AD3-4F1D-8D56-198AA4050C26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Enumerator", "Cult.Enumerator\Cult.Enumerator.csproj", "{49692F97-6AD3-4F1D-8D56-198AA4050C26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.DynamicQuery", "Cult.DynamicQuery\Cult.DynamicQuery.csproj", "{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +173,10 @@ Global
 		{49692F97-6AD3-4F1D-8D56-198AA4050C26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49692F97-6AD3-4F1D-8D56-198AA4050C26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49692F97-6AD3-4F1D-8D56-198AA4050C26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
