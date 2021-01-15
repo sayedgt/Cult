@@ -21,6 +21,10 @@ namespace Cult.DynamicQuery
         {
             return collection.AsQueryable().DynamicWhere(dynamicFilter);
         }
+        public static IQueryable<T> DynamicWhere<T>(this T[] array, IEnumerable<DynamicFilter> dynamicFilter)
+        {
+            return array.AsQueryable().DynamicWhere(dynamicFilter);
+        }
         private static Expression<Func<T, bool>> Filter<T>(IEnumerable<DynamicFilter> dynamicFilter)
         {
             Expression<Func<T, bool>> result = _ => true;
