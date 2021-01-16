@@ -32,9 +32,5 @@ namespace Cult.Extensions.ExtraExpression
 
             return expr.Member.Name;
         }
-        public static string ToReadableString(this Expression expression, bool trimLongArgumentList = false)
-        {
-            return ExpressionStringBuilder.ToString(expression, trimLongArgumentList);
-        }
     }
 }
