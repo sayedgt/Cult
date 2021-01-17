@@ -1641,7 +1641,8 @@ namespace Cult.Utilities
                                                                pars[2].ParameterType == typeof(Func<,>).MakeGenericType(args[0], args[2]) &&
                                                                pars[3].ParameterType == typeof(IEqualityComparer<>).MakeGenericType(args[1])
                                                            select x).Single();
-        /*
+
+#if NETSTANDARD2_1
         public static readonly MethodInfo ToHashSet1 = (from x in typeof(Enumerable).GetMethods(BindingFlags.Static | BindingFlags.Public)
                                                         where x.Name == nameof(Enumerable.ToHashSet)
                                                         let args = x.GetGenericArguments()
@@ -1660,7 +1661,8 @@ namespace Cult.Utilities
                                                             pars[0].ParameterType == typeof(IEnumerable<>).MakeGenericType(args[0]) &&
                                                             pars[1].ParameterType == typeof(IEqualityComparer<>).MakeGenericType(args[0])
                                                         select x).Single();
-        */
+#endif
+
         public static readonly MethodInfo ToList = (from x in typeof(Enumerable).GetMethods(BindingFlags.Static | BindingFlags.Public)
                                                     where x.Name == nameof(Enumerable.ToList)
                                                     let args = x.GetGenericArguments()

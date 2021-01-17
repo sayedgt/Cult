@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 // ReSharper disable All 
-namespace Cult.Extensions
+namespace Cult.Utilities
 {
     public static class PredicateBuilder
     {
