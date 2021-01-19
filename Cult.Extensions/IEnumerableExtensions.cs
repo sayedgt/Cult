@@ -9,6 +9,10 @@ namespace Cult.Extensions.ExtraIEnumerable
 {
     public static class IEnumerableExtensions
     {
+        public static Dictionary<TKey, List<TValue>> ToDictionary<TKey, TValue>(this IEnumerable<IGrouping<TKey, TValue>> groupings)
+        {
+            return groupings.ToDictionary(group => group.Key, group => group.ToList());
+        }
         public static List<List<T>> Split<T>(this IEnumerable<T> source, int chunkSize)
         {
             return source
