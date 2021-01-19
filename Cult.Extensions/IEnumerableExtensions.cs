@@ -9,6 +9,14 @@ namespace Cult.Extensions.ExtraIEnumerable
 {
     public static class IEnumerableExtensions
     {
+        public static List<List<T>> Split<T>(this IEnumerable<T> source, int chunkSize)
+        {
+            return source
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / chunkSize)
+                .Select(x => x.Select(v => v.Value).ToList())
+                .ToList();
+        }
         public static Dictionary<TFirstKey, Dictionary<TSecondKey, TValue>> Pivot<TSource, TFirstKey, TSecondKey, TValue>(this IEnumerable<TSource> source, Func<TSource, TFirstKey> firstKeySelector, Func<TSource, TSecondKey> secondKeySelector, Func<IEnumerable<TSource>, TValue> aggregate)
         {
             var retVal = new Dictionary<TFirstKey, Dictionary<TSecondKey, TValue>>();

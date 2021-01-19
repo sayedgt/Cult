@@ -12,6 +12,14 @@ namespace Cult.Extensions.ExtraArray
 {
     public static class ArrayExtensions
     {
+        public static List<List<T>> Split<T>(this T[] source, int chunkSize)
+        {
+            return source
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / chunkSize)
+                .Select(x => x.Select(v => v.Value).ToList())
+                .ToList();
+        }
         public static bool All<T>(this T[] array, Func<T, bool> predicate)
         {
             foreach (var item in array)

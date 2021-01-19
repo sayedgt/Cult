@@ -8,6 +8,14 @@ namespace Cult.Extensions.ExtraICollection
 {
     public static class ICollectionExtensions
     {
+        public static List<List<T>> Split<T>(this ICollection<T> source, int chunkSize)
+        {
+            return source
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / chunkSize)
+                .Select(x => x.Select(v => v.Value).ToList())
+                .ToList();
+        }
         public static bool AddDistinctRange<T>(this ICollection<T> collection, T value)
         {
             var alreadyHas = collection.Contains(value);

@@ -1,12 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 // ReSharper disable All 
 namespace Cult.Extensions.ExtraIList
 {
     public static class IListExtensions
     {
+        public static List<List<T>> Split<T>(this IList<T> source, int chunkSize)
+        {
+            return source
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / chunkSize)
+                .Select(x => x.Select(v => v.Value).ToList())
+                .ToList();
+        }
         public static void AddToFront<T>(this IList<T> list, T item)
         {
             list.Insert(0, item);
