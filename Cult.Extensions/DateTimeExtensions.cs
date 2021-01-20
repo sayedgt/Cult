@@ -6,6 +6,12 @@ namespace Cult.Extensions.ExtraDateTime
 {
     public static class DateTimeExtensions
     {
+        private static readonly string UtcDateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'";
+
+        public static string ToUtcFormatString(this DateTime date)
+        {
+            return date.ToUniversalTime().ToString(UtcDateFormat);
+        }
         public static DateTime AddWeeks(this DateTime date, int value)
         {
             return date.AddDays(value * 7);

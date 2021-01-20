@@ -8,6 +8,13 @@ namespace Cult.Extensions.ExtraIList
 {
     public static class IListExtensions
     {
+        public static void RemoveLast<T>(this IList<T> source, int n = 1)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                source.RemoveAt(source.Count - 1);
+            }
+        }
         public static List<List<T>> Split<T>(this IList<T> source, int chunkSize)
         {
             return source

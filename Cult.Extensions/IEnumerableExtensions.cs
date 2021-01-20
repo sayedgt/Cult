@@ -4,22 +4,45 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Numerics;
+
+// ReSharper disable All
 namespace Cult.Extensions.ExtraIEnumerable
 {
     public static class IEnumerableExtensions
     {
+        public static BigInteger BigIntCount<T>(this IEnumerable<T> source)
+        {
+            BigInteger count = 0;
+            foreach (var item in source)
+            {
+                count++;
+            }
+            return count;
+        }
+        public static IEnumerable<IEnumerable<T>> Split<T>(this IEnumerable<T> source, int chunkSize)
+        {
+            var count = 0;
+            var chunk = new List<T>(chunkSize);
+            foreach (var item in source)
+            {
+                chunk.Add(item);
+                count++;
+                if (count == chunkSize)
+                {
+                    yield return chunk.AsEnumerable();
+                    chunk = new List<T>(chunkSize);
+                    count = 0;
+                }
+            }
+            if (count > 0)
+            {
+                yield return chunk.AsEnumerable();
+            }
+        }
         public static Dictionary<TKey, List<TValue>> ToDictionary<TKey, TValue>(this IEnumerable<IGrouping<TKey, TValue>> groupings)
         {
             return groupings.ToDictionary(group => group.Key, group => group.ToList());
-        }
-        public static List<List<T>> Split<T>(this IEnumerable<T> source, int chunkSize)
-        {
-            return source
-                .Select((x, i) => new { Index = i, Value = x })
-                .GroupBy(x => x.Index / chunkSize)
-                .Select(x => x.Select(v => v.Value).ToList())
-                .ToList();
         }
         public static Dictionary<TFirstKey, Dictionary<TSecondKey, TValue>> Pivot<TSource, TFirstKey, TSecondKey, TValue>(this IEnumerable<TSource> source, Func<TSource, TFirstKey> firstKeySelector, Func<TSource, TSecondKey> secondKeySelector, Func<IEnumerable<TSource>, TValue> aggregate)
         {
@@ -55,6 +78,7 @@ namespace Cult.Extensions.ExtraIEnumerable
                 yield return item;
             }
         }
+
         public static bool ContainsAll<T>(this IEnumerable<T> @this, params T[] values)
         {
             T[] list = @this.ToArray();

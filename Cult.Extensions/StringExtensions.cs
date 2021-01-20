@@ -9,35 +9,30 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web;
 using System.Xml;
 using System.Xml.Linq;
-// ReSharper disable All 
+// ReSharper disable All
+
 namespace Cult.Extensions.ExtraString
 {
     public static class StringExtensions
     {
-        public static byte[] HexStringToByteArray(this string hexString)
+        public static bool TryParseEnum<T>(this string name, out T result, bool ignoreCase = false)
+            where T : struct, Enum
         {
-            int stringLength = hexString.Length;
-            byte[] bytes = new byte[stringLength / 2];
-            for (int i = 0; i < stringLength; i += 2)
-            {
-                bytes[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
-            }
-            return bytes;
+            return Enum.TryParse<T>(name, ignoreCase, out result);
         }
-        public static bool Like(this string value, string search)
+
+        public static T ParseEnum<T>(this string name, bool ignoreCase = false)
+            where T : struct, Enum
         {
-            return value.Contains(search) || value.StartsWith(search) || value.EndsWith(search);
+            return (T)Enum.Parse(typeof(T), name, ignoreCase);
         }
-        public static string IfNullOrWhiteSpaceElse(this string input, string nullAlternateValue)
+        public static DateTime ParseAsUtc(this string str)
         {
-            return (!string.IsNullOrWhiteSpace(input)) ? input : nullAlternateValue;
-        }
-        public static string IfNullOrWhiteSpaceElse(this string input, Func<string> nullAlternateAction)
-        {
-            return (!string.IsNullOrWhiteSpace(input)) ? input : nullAlternateAction();
+            return DateTimeOffset.Parse(str).UtcDateTime;
         }
         public static string BreakLineToNewLine(this string @this)
         {
@@ -88,13 +83,10 @@ namespace Cult.Extensions.ExtraString
         {
             return string.Concat(@this, string.Concat(values));
         }
-        public static bool Contains(this string @this, string value)
-        {
-            return @this.IndexOf(value, StringComparison.Ordinal) != -1;
-        }
+        
         public static bool Contains(this string @this, string value, StringComparison comparisonType)
         {
-            return @this.IndexOf(value, comparisonType) != -1;
+            return @this?.IndexOf(value, comparisonType) != -1;
         }
         public static bool ContainsAll(this string @this, params string[] values)
         {
@@ -296,6 +288,16 @@ namespace Cult.Extensions.ExtraString
                 if (match.Success) yield return match.Value;
             }
         }
+        public static byte[] HexStringToByteArray(this string hexString)
+        {
+            int stringLength = hexString.Length;
+            byte[] bytes = new byte[stringLength / 2];
+            for (int i = 0; i < stringLength; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
+            }
+            return bytes;
+        }
         public static string HtmlDecode(this string s)
         {
             return HttpUtility.HtmlDecode(s);
@@ -315,6 +317,14 @@ namespace Cult.Extensions.ExtraString
         public static string IfEmpty(this string value, string defaultValue)
         {
             return (value.IsNotEmpty() ? value : defaultValue);
+        }
+        public static string IfNullOrWhiteSpaceElse(this string input, string nullAlternateValue)
+        {
+            return (!string.IsNullOrWhiteSpace(input)) ? input : nullAlternateValue;
+        }
+        public static string IfNullOrWhiteSpaceElse(this string input, Func<string> nullAlternateAction)
+        {
+            return (!string.IsNullOrWhiteSpace(input)) ? input : nullAlternateAction();
         }
         public static bool In(this string @this, params string[] values)
         {
@@ -521,6 +531,10 @@ namespace Cult.Extensions.ExtraString
         {
             return @this.Substring(0, Math.Min(length, @this.Length));
         }
+        public static bool Like(this string value, string search)
+        {
+            return value.Contains(search) || value.StartsWith(search) || value.EndsWith(search);
+        }
         public static Match Match(this string input, string pattern)
         {
             return Regex.Match(input, pattern);
@@ -592,6 +606,14 @@ namespace Cult.Extensions.ExtraString
                 sb.Append(c);
             return sb.ToString();
         }
+        public static string RemoveBefore(this string @this, char c, bool removeChar = true)
+        {
+            return @this.Substring(removeChar ? (@this.IndexOf(c) + 1) : @this.IndexOf(c));
+        }
+        public static string RemoveBeforeLastIndex(this string @this, char c, bool removeChar = true)
+        {
+            return @this.Substring(removeChar ? (@this.LastIndexOf(c) + 1) : @this.LastIndexOf(c));
+        }
         public static string RemoveControlCharacters(this string input)
         {
             return
@@ -651,14 +673,6 @@ namespace Cult.Extensions.ExtraString
         {
             return new string(@this.ToCharArray().Where(x => !predicate(x)).ToArray());
         }
-        public static string RemoveBefore(this string @this, char c, bool removeChar = true)
-        {
-            return @this.Substring(removeChar ? (@this.IndexOf(c) + 1) : @this.IndexOf(c));
-        }
-        public static string RemoveBeforeLastIndex(this string @this, char c, bool removeChar = true)
-        {
-            return @this.Substring(removeChar ? (@this.LastIndexOf(c) + 1) : @this.LastIndexOf(c));
-        }
         public static string RemoveWhiteSpaces(this string input)
         {
             return Regex.Replace(input, @"\s+", "");
@@ -685,7 +699,7 @@ namespace Cult.Extensions.ExtraString
             return @this;
         }
         public static string ReplaceAll(this string value, IEnumerable<string> oldValues,
-                    Func<string, string> replacePredicate)
+                            Func<string, string> replacePredicate)
         {
             var sbStr = new StringBuilder(value);
             foreach (var oldValue in oldValues)
@@ -818,7 +832,7 @@ namespace Cult.Extensions.ExtraString
             return ReplaceWith(value, regexPattern, replaceValue, RegexOptions.None);
         }
         public static string ReplaceWith(this string value, string regexPattern, string replaceValue,
-                    RegexOptions options)
+                            RegexOptions options)
         {
             return Regex.Replace(value, regexPattern, replaceValue, options);
         }
@@ -827,7 +841,7 @@ namespace Cult.Extensions.ExtraString
             return ReplaceWith(value, regexPattern, RegexOptions.None, evaluator);
         }
         public static string ReplaceWith(this string value, string regexPattern, RegexOptions options,
-                    MatchEvaluator evaluator)
+                            MatchEvaluator evaluator)
         {
             return Regex.Replace(value, regexPattern, evaluator, options);
         }
@@ -864,6 +878,22 @@ namespace Cult.Extensions.ExtraString
                 tw.Write(@this);
             }
         }
+
+
+        public static string SubstringTillEnd(this string source, int n)
+        {
+            if (n >= source.Length)
+            {
+                return source;
+            }
+            return source.Substring(source.Length - n);
+        }
+
+        public static string SubstringByIndex(this string source, int startIndex, int endIndex)
+        {
+            return source.Substring(startIndex, endIndex - startIndex);
+        }
+
         public static string Slice(this string source, int start, int end)
         {
             if (end < 0) // Keep this for negative end support
@@ -1059,7 +1089,7 @@ namespace Cult.Extensions.ExtraString
         }
         public static string ToTitleCase(this string @this)
         {
-            return new CultureInfo("en-US").TextInfo.ToTitleCase(@this);
+            return Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(@this);
         }
         public static string ToUnicodeString(this string text, bool ignoreWhiteSpaces = false)
         {
@@ -1096,18 +1126,18 @@ namespace Cult.Extensions.ExtraString
             var ws = wordSeparators.IsNullOrEmpty() ? new[] { " " } : wordSeparators;
             return str.Split(ws, StringSplitOptions.RemoveEmptyEntries);
         }
-        public static XDocument ToXDocument(this string @this)
+        public static XDocument ToXDocument(this string xml)
         {
-            Encoding encoding = Activator.CreateInstance<ASCIIEncoding>();
-            using (var ms = new MemoryStream(encoding.GetBytes(@this)))
+            Encoding encoding = Activator.CreateInstance<UTF8Encoding>();
+            using (var ms = new MemoryStream(encoding.GetBytes(xml)))
             {
                 return XDocument.Load(ms);
             }
         }
-        public static XDocument ToXDocument<TEncoding>(this string @this) where TEncoding : Encoding
+        public static XDocument ToXDocument<TEncoding>(this string xml) where TEncoding : Encoding
         {
             Encoding encoding = Activator.CreateInstance<TEncoding>();
-            using (var ms = new MemoryStream(encoding.GetBytes(@this)))
+            using (var ms = new MemoryStream(encoding.GetBytes(xml)))
             {
                 return XDocument.Load(ms);
             }
@@ -1116,16 +1146,16 @@ namespace Cult.Extensions.ExtraString
         {
             return XElement.Parse(xml);
         }
-        public static XmlDocument ToXmlDocument(this string @this)
+        public static XmlDocument ToXmlDocument(this string xml)
         {
             var doc = new XmlDocument();
-            doc.LoadXml(@this);
+            doc.LoadXml(xml);
             return doc;
         }
-        public static XmlElement ToXmlElement(this string xmlText)
+        public static XmlElement ToXmlElement(this string xml)
         {
             var doc = new XmlDocument();
-            doc.LoadXml(xmlText);
+            doc.LoadXml(xml);
             return doc.DocumentElement;
         }
         public static string TrimToMaxLength(this string value, int maxLength)

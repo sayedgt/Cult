@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+// ReSharper disable All
 
 namespace Cult.Extensions.ExtraException
 {
     public static class ExceptionExtensions
     {
-        public static string GetFullMessage(this Exception exception)
-        {
-            return exception.InnerException == null
-                 ? exception.Message
-                 : exception.Message + " --> " + exception.InnerException.GetFullMessage();
-        }
-
         public static string ToFormattedString(this Exception exception)
         {
             IEnumerable<string> messages = exception
@@ -42,7 +36,7 @@ namespace Cult.Extensions.ExtraException
             }
         }
 
-        public static bool ThrowIfTrue(this bool value)
+        public static bool ThrowNullExceptionIfTrue(this bool value)
         {
             if (value)
                 throw new ArgumentNullException();
@@ -50,23 +44,25 @@ namespace Cult.Extensions.ExtraException
             return value;
         }
 
-        public static object ThrowIfFalse(this bool value)
+        public static object ThrowNullExceptionIfFalse(this bool value)
         {
-            return (!value).ThrowIfTrue();
+            return (!value).ThrowNullExceptionIfTrue();
         }
 
-        public static object ThrowIfNull(this object o)
+        public static object ThrowExceptionIfNull(this object o)
         {
-            (o is null).ThrowIfTrue();
+            (o is null).ThrowNullExceptionIfTrue();
 
             return o;
         }
 
-        public static object ThrowIfNotNull(this object o)
+        public static object ThrowExceptionIfNotNull(this object o)
         {
-            (o is null).ThrowIfFalse();
+            (o is null).ThrowNullExceptionIfFalse();
 
             return o;
         }
+
+
     }
 }

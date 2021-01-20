@@ -1,11 +1,32 @@
 using System;
 using System.Data;
 using System.Net;
+using System.Numerics;
+
 // ReSharper disable All 
 namespace Cult.Extensions.ExtraInt
 {
     public static class IntExtensions
     {
+        public static BigInteger Permutation(this int n, int r)
+        {
+            return n.Factorial() / (n - r).Factorial();
+        }
+
+        public static BigInteger Combination(this int n, int r)
+        {
+            return n.Factorial() / ((n - r).Factorial() * r.Factorial());
+        }
+
+        public static BigInteger Factorial(this int n)
+        {
+            BigInteger product = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                product *= i;
+            }
+            return product;
+        }
         public static int Abs(this int value)
         {
             return Math.Abs(value);

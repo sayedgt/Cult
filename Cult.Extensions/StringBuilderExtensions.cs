@@ -7,6 +7,20 @@ namespace Cult.Extensions.ExtraStringBuilder
 {
     public static class StringBuilderExtensions
     {
+        public static StringBuilder Reverse(this StringBuilder sb)
+        {
+            var start = 0;
+            var end = sb.Length - 1;
+            while (start < end)
+            {
+                var temp = sb[start];
+                sb[start] = sb[end];
+                sb[end] = temp;
+                start++;
+                end--;
+            }
+            return sb;
+        }
         public static void Append(this StringBuilder builder, string value, params object[] parameters)
         {
             builder.Append(Format(value, parameters));
