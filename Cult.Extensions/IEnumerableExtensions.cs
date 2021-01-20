@@ -176,38 +176,47 @@ namespace Cult.Extensions.ExtraIEnumerable
         {
             if (length == 1) return list.Select(t => new[] { t });
             return GetPermutationsWithRepetition(list, length - 1)
-                .SelectMany(t => list,
+                .SelectMany(_ => list,
                     (t1, t2) => t1.Concat(new[] { t2 }));
         }
-        public static bool HasCountOf<T>(this IEnumerable<T> source, int count)
+        public static IEnumerable<T> TakeUntil<T>(this IEnumerable<T> collection, Func<T, bool> endCondition)
+        {
+            return collection.TakeWhile(item => !endCondition(item));
+        }
+        public static IEnumerable<T> Concat<T>(IEnumerable<T> target, T element)
+        {
+            foreach (T e in target) yield return e;
+            yield return element;
+        }
+        public static bool XOf<T>(this IEnumerable<T> source, int count)
         {
             return source.Count() == count;
         }
-        public static bool HasCountOf<T>(this IEnumerable<T> source, Func<T, bool> query, int count)
+        public static bool XOf<T>(this IEnumerable<T> source, Func<T, bool> query, int count)
         {
             return source.Count(query) == count;
         }
-        public static bool HasMany<T>(this IEnumerable<T> source)
+        public static bool Many<T>(this IEnumerable<T> source)
         {
             return source.Count() > 1;
         }
-        public static bool HasMany<T>(this IEnumerable<T> source, Func<T, bool> query)
+        public static bool Many<T>(this IEnumerable<T> source, Func<T, bool> query)
         {
             return source.Count(query) > 1;
         }
-        public static bool HasNone<T>(this IEnumerable<T> source)
+        public static bool None<T>(this IEnumerable<T> source)
         {
-            return source.Any() == false;
+            return !source.Any();
         }
-        public static bool HasNone<T>(this IEnumerable<T> source, Func<T, bool> query)
+        public static bool None<T>(this IEnumerable<T> source, Func<T, bool> query)
         {
-            return source.Any(query) == false;
+            return !source.Any(query);
         }
-        public static bool HasOnlyOne<T>(this IEnumerable<T> source)
+        public static bool OneOf<T>(this IEnumerable<T> source)
         {
             return source.Count() == 1;
         }
-        public static bool HasOnlyOne<T>(this IEnumerable<T> source, Func<T, bool> query)
+        public static bool OneOf<T>(this IEnumerable<T> source, Func<T, bool> query)
         {
             return source.Count(query) == 1;
         }
@@ -303,18 +312,10 @@ namespace Cult.Extensions.ExtraIEnumerable
                 collection.Add(i);
             return collection;
         }
-        public static string ToCsv<T>(this IEnumerable<T> source, char separator)
+        public static string ToCsv<T>(this IEnumerable<T> items, char separator = ',', bool trim = true)
         {
-            if (source == null)
-                return string.Empty;
-
-            var csv = new StringBuilder();
-            source.ForEach(value => csv.AppendFormat("{0}{1}", value, separator));
-            return csv.ToString(0, csv.Length - 1);
-        }
-        public static string ToCSV<T>(this IEnumerable<T> source)
-        {
-            return source.ToCsv(',');
+            var list = trim ? items.Select(x => x.ToString().Trim()) : items.Select(x => x.ToString());
+            return list.Aggregate((a, b) => a + separator + b);
         }
         public static HashSet<TDestination> ToHashSet<TDestination>(this IEnumerable<TDestination> source)
         {
@@ -324,7 +325,8 @@ namespace Cult.Extensions.ExtraIEnumerable
         {
             return query
                 .Skip((pageIndex - 1) * pageSize)
-                .Take(pageSize);
+                .Take(pageSize)
+                ;
         }
         public static ReadOnlyCollection<TDestination> ToReadOnlyCollection<TDestination>(this IEnumerable source)
         {
@@ -340,5 +342,29 @@ namespace Cult.Extensions.ExtraIEnumerable
         }
         public static IEnumerable<(int index, T item)> WithIndex<T>(this IEnumerable<T> set) =>
                     set.Select((value, index) => (index, value));
+
+        public static bool AreAllSame<T>(this IEnumerable<T> enumerable)
+        {
+            if (enumerable == null) throw new ArgumentNullException(nameof(enumerable));
+
+            using (var enumerator = enumerable.GetEnumerator())
+            {
+                var toCompare = default(T);
+                if (enumerator.MoveNext())
+                {
+                    toCompare = enumerator.Current;
+                }
+
+                while (enumerator.MoveNext())
+                {
+                    if (toCompare != null && !toCompare.Equals(enumerator.Current))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }
