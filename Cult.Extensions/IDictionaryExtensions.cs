@@ -89,7 +89,7 @@ namespace Cult.Extensions.ExtraIDictionary
 
             return @this[key];
         }
-        public static void AddRange<TKey, TValue>(this Dictionary<TKey, TValue> container,
+        public static void AddRange<TKey, TValue>(this IDictionary<TKey, TValue> container,
                         Func<TValue, TKey> keyProducerFunc, IEnumerable<TValue> rangeToAdd)
         {
             if ((container == null) || (rangeToAdd == null))
@@ -159,7 +159,7 @@ namespace Cult.Extensions.ExtraIDictionary
 
             return @this[key];
         }
-        public static TValue GetValue<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key)
+        public static TValue GetValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
         {
             TValue toReturn;
             if ((key == null) || !dictionary.TryGetValue(key, out toReturn))
