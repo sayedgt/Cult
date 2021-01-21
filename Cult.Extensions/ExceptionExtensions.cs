@@ -35,34 +35,5 @@ namespace Cult.Extensions.ExtraException
                 }
             }
         }
-
-        public static bool ThrowNullExceptionIfTrue(this bool value)
-        {
-            if (value)
-                throw new ArgumentNullException();
-
-            return value;
-        }
-
-        public static object ThrowNullExceptionIfFalse(this bool value)
-        {
-            return (!value).ThrowNullExceptionIfTrue();
-        }
-
-        public static object ThrowExceptionIfNull(this object o)
-        {
-            (o is null).ThrowNullExceptionIfTrue();
-
-            return o;
-        }
-
-        public static object ThrowExceptionIfNotNull(this object o)
-        {
-            (o is null).ThrowNullExceptionIfFalse();
-
-            return o;
-        }
-
-
     }
 }
