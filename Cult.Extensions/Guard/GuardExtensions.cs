@@ -1,4 +1,5 @@
 ﻿using System;
+// ReSharper disable All
 
 namespace Cult.Extensions.Guard
 {
@@ -6,21 +7,18 @@ namespace Cult.Extensions.Guard
     {
         private static void Self(this IGuard guard, string parameterName)
         {
-            if (guard is null)
-                throw new ArgumentNullException(nameof(guard));
-
-            if (parameterName is null)
-                throw new ArgumentNullException(nameof(parameterName));
+            if (guard == null) throw new ArgumentNullException(nameof(guard));
+            if (parameterName == null) throw new ArgumentNullException(nameof(parameterName));
         }
 
-        public static T Null<T>(this IGuard guard, T input, string parameterName)
+        public static IGuard Null<T>(this IGuard guard, T input, string parameterName)
         {
             Self(guard, parameterName);
 
             if (input == null)
                 throw new ArgumentNullException(parameterName);
 
-            return input;
+            return guard;
         }
     }
 }

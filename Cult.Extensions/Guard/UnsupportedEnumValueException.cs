@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+// ReSharper disable All
 
 namespace Cult.Extensions.Guard
 {
