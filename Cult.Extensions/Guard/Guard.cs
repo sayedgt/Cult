@@ -3,7 +3,7 @@ namespace Cult.Extensions.Guard
 {
     public sealed class Guard : IGuard
     {
-        public static IGuard Against { get; } = new Guard();
+        public static IGuard That { get; } = new Guard();
 
         private Guard() { }
     }

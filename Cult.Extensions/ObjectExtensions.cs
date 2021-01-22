@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+// ReSharper disable All
 namespace Cult.Extensions.ExtraObject
 {
     public static class ObjectExtensions
@@ -377,11 +378,7 @@ namespace Cult.Extensions.ExtraObject
         }
         public static bool IsDefault<T>(this T source)
         {
-            return source.Equals(default(T));
-        }
-        public static bool IsEmpty<T>(this T value) where T : struct
-        {
-            return value.Equals(default(T));
+            return EqualityComparer<T>.Default.Equals(source, default) || source == null;
         }
         public static bool IsNotNull<T>(this T @this) where T : class
         {
