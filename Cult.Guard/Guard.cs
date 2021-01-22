@@ -1,5 +1,4 @@
-﻿// ReSharper disable All
-namespace Cult.Extensions.Guard
+﻿namespace Cult.Guard
 {
     public sealed class Guard : IGuard
     {

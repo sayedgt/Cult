@@ -1,4 +1,4 @@
-﻿namespace Cult.Extensions.Guard
+﻿namespace Cult.Guard
 {
     public interface IGuard
     {

@@ -59,7 +59,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Enumerator", "Cult.Enu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DynamicQuery", "Cult.DynamicQuery\Cult.DynamicQuery.csproj", "{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Json", "Cult.Json\Cult.Json.csproj", "{5FC18849-3492-4259-B35A-3EC66E708EF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Json", "Cult.Json\Cult.Json.csproj", "{5FC18849-3492-4259-B35A-3EC66E708EF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Guard", "Cult.Guard\Cult.Guard.csproj", "{77173074-821F-4C4C-9EFA-C941C2990A31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -183,6 +185,10 @@ Global
 		{5FC18849-3492-4259-B35A-3EC66E708EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FC18849-3492-4259-B35A-3EC66E708EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FC18849-3492-4259-B35A-3EC66E708EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77173074-821F-4C4C-9EFA-C941C2990A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77173074-821F-4C4C-9EFA-C941C2990A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77173074-821F-4C4C-9EFA-C941C2990A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77173074-821F-4C4C-9EFA-C941C2990A31}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 // ReSharper disable All
 
-namespace Cult.Extensions.Guard
+namespace Cult.Guard.Exceptions
 {
     public class UnsupportedEnumValueException<TEnum> : Exception
         where TEnum : Enum
@@ -15,7 +15,7 @@ namespace Cult.Extensions.Guard
             : base(info, context) { }
 
         public UnsupportedEnumValueException(TEnum enumValue)
-            : base($"Value {enumValue} of enum {typeof(TEnum).Name} is not supported.")
+            : base($"The value {enumValue} of enum {typeof(TEnum).Name} is not supported.")
         { }
         public UnsupportedEnumValueException()
         { }
