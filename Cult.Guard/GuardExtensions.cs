@@ -22,7 +22,7 @@ namespace Cult.Guard
     // https://github.com/george-pancescu/Guard
     // https://github.com/pmcilreavy/GuardThat
     // https://github.com/BoasE/FluentGuard
-    public static class GuardClauseExtensions
+    public static class GuardExtensions
     {
         private static void IsSafe([NotNull, JetBrainsNotNull] this IGuard guard, [NotNull, JetBrainsNotNull] string parameterName)
         {
