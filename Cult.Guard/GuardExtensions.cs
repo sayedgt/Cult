@@ -12,6 +12,16 @@ using JetBrainsNotNullAttribute = JetBrains.Annotations.NotNullAttribute;
 
 namespace Cult.Guard
 {
+    // https://github.com/safakgur/guard
+    // https://github.com/danielwertheim/Ensure.That
+    // https://github.com/3komma14/Guard
+    // https://github.com/adamralph/liteguard
+    // https://github.com/feO2x/Light.GuardClauses
+    // https://github.com/haacked/NullGuard
+    // https://github.com/dustindavis/FluentGuard
+    // https://github.com/george-pancescu/Guard
+    // https://github.com/pmcilreavy/GuardThat
+    // https://github.com/BoasE/FluentGuard
     public static class GuardClauseExtensions
     {
         private static void IsSafe([NotNull, JetBrainsNotNull] this IGuard guard, [NotNull, JetBrainsNotNull] string parameterName)
@@ -20,7 +30,7 @@ namespace Cult.Guard
             if (parameterName == null) throw new ArgumentNullException(nameof(parameterName));
         }
 
-        public static IGuard Null<T>([NotNull, JetBrainsNotNull] this IGuard guard, [NotNull, JetBrainsNotNull] T? input, [NotNull, JetBrainsNotNull] string parameterName)
+        public static IGuard IsNull<T>([NotNull, JetBrainsNotNull] this IGuard guard, [NotNull, JetBrainsNotNull] T? input, [NotNull, JetBrainsNotNull] string parameterName)
         {
             IsSafe(guard, parameterName);
 
@@ -32,8 +42,8 @@ namespace Cult.Guard
 
         public static IGuard NullOrEmpty([NotNull, JetBrainsNotNull] this IGuard guard, [NotNull, JetBrainsNotNull] string? input, [NotNull, JetBrainsNotNull] string parameterName)
         {
-            Guard.That.Null(input, parameterName);
-            if (input == string.Empty)
+            Guard.That.IsNull(input, parameterName);
+            if (input.Length == 0)
                 throw new ArgumentException($"Required input {parameterName} was empty.", parameterName);
 
             return guard;
@@ -41,7 +51,7 @@ namespace Cult.Guard
 
         public static IGuard NullOrEmpty([NotNull, JetBrainsNotNull] this IGuard guard, [NotNull, JetBrainsNotNull] Guid? input, [NotNull, JetBrainsNotNull] string parameterName)
         {
-            Guard.That.Null(input, parameterName);
+            Guard.That.IsNull(input, parameterName);
             if (input == Guid.Empty)
                 throw new ArgumentException($"Required input {parameterName} was empty.", parameterName);
 
@@ -50,7 +60,7 @@ namespace Cult.Guard
 
         public static IGuard NullOrEmpty<T>([NotNull, JetBrainsNotNull] this IGuard guard, [NotNull, JetBrainsNotNull] IEnumerable<T>? input, [NotNull, JetBrainsNotNull] string parameterName)
         {
-            Guard.That.Null(input, parameterName);
+            Guard.That.IsNull(input, parameterName);
             if (!input.Any())
                 throw new ArgumentException($"Required input {parameterName} was empty.", parameterName);
 
@@ -212,8 +222,10 @@ namespace Cult.Guard
         private static IGuard NegativeOrZero<T>([NotNull, JetBrainsNotNull] this IGuard guard, T input, [NotNull, JetBrainsNotNull] string parameterName) where T : struct, IComparable
         {
             if (input.CompareTo(default(T)) <= 0)
+            {
                 throw new ArgumentException($"Required input {parameterName} cannot be zero or negative.",
                     parameterName);
+            }
 
             return guard;
         }
@@ -239,8 +251,10 @@ namespace Cult.Guard
         public static IGuard Default<T>([NotNull, JetBrainsNotNull] this IGuard guard, [AllowNull, NotNull, JetBrainsNotNull] T input, [NotNull, JetBrainsNotNull] string parameterName)
         {
             if (input is null || EqualityComparer<T>.Default.Equals(input, default!))
+            {
                 throw new ArgumentException($"Parameter [{parameterName}] is default value for type {typeof(T).Name}",
                     parameterName);
+            }
 
             return guard;
         }
@@ -248,7 +262,7 @@ namespace Cult.Guard
         public static IGuard InvalidFormat([NotNull, JetBrainsNotNull] this IGuard guard, [NotNull, JetBrainsNotNull] string input, [NotNull, JetBrainsNotNull] string parameterName, [NotNull, JetBrainsNotNull] string regexPattern)
         {
             if (input != Regex.Match(input, regexPattern).Value)
-                throw new ArgumentException($"Input {parameterName} was not in required format", parameterName);
+                throw new ArgumentException($"Input {parameterName} was not in required format.", parameterName);
 
             return guard;
         }
@@ -256,7 +270,7 @@ namespace Cult.Guard
         public static IGuard InvalidInput<T>([NotNull, JetBrainsNotNull] this IGuard guard, [JetBrainsNotNull] T input, [NotNull, JetBrainsNotNull] string parameterName, Func<T, bool> predicate)
         {
             if (!predicate(input))
-                throw new ArgumentException($"Input {parameterName} did not satisfy the options", parameterName);
+                throw new ArgumentException($"Input {parameterName} did not satisfy the options.", parameterName);
 
             return guard;
         }
@@ -268,12 +282,12 @@ namespace Cult.Guard
 
             if (comparer.Compare(rangeFrom, rangeTo) > 0)
             {
-                throw new ArgumentException($"{nameof(rangeFrom)} should be less or equal than {nameof(rangeTo)}");
+                throw new ArgumentException($"{nameof(rangeFrom)} should be less or equal than {nameof(rangeTo)}.");
             }
 
             if (input.Any(x => comparer.Compare(x, rangeFrom) < 0 || comparer.Compare(x, rangeTo) > 0))
             {
-                throw new ArgumentOutOfRangeException(parameterName, $"Input {parameterName} had out of range item(s)");
+                throw new ArgumentOutOfRangeException(parameterName, $"Input {parameterName} had out of range item(s).");
             }
 
             return guard;
