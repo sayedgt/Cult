@@ -2,7 +2,7 @@
 {
     public sealed class Guard : IGuard
     {
-        public static IGuard That { get; } = new Guard();
+        public static IGuard Against { get; } = new Guard();
 
         private Guard() { }
     }

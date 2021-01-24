@@ -13,6 +13,16 @@
     <Nullable>enable</Nullable>
     <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="GuardExtensions.Invalid.cs" />
+    <Compile Remove="GuardExtensions.Numbers.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="GuardExtensions.Invalid.cs" />
+    <None Include="GuardExtensions.Numbers.cs" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" />
   </ItemGroup>
