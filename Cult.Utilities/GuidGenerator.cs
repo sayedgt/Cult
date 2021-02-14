@@ -7,8 +7,8 @@ namespace Cult.Utilities
         Guid NewGuid();
     }
 
-    public  class GuidGenerator
+    public class GuidGenerator
     {
-        public Guid NewGuid => Guid.NewGuid();
+        public Guid NewGuid() => Guid.NewGuid();
     }
 }
