@@ -1,11 +1,12 @@
-﻿using Cult.Extensions.ExtraObject;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-namespace Cult.Extensions.ExtraType
+using Cult.Extensions.ExtraObject;
+
+namespace Cult.Extensions
 {
     public static class TypeExtensions
     {
