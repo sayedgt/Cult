@@ -7,6 +7,7 @@ using System.Xml.Serialization;
 using Cult.TrxParser.Models;
 // ReSharper disable All
 
+// dotnet test --logger trx;LogFileName=mytests.trx --results-directory ./somefolder/subfolder
 namespace Cult.TrxParser
 {
     /// <summary>
