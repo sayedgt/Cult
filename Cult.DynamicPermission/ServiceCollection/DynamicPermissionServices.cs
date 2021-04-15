@@ -8,7 +8,7 @@ namespace Cult.DynamicPermission.ServiceCollection
 {
     public static class DynamicPermissionServices
     {
-        public static IServiceCollection AddDynamicPermissionServices(this IServiceCollection services)
+        public static IServiceCollection AddDynamicPermission(this IServiceCollection services)
         {
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddScoped<IAuthorizationHandler, PermissionRequirementHandler>();
