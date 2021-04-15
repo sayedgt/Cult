@@ -22,8 +22,8 @@ namespace Cult.Mvc.Utilities
                     ControllerName = x.DeclaringType?.Name,
                     ActionName = x.Name,
                     ActionReturnType = x.ReturnType,
-                    ActionAttributes = x.GetCustomAttributes(),
-                    ControllerAttributes = x.DeclaringType?.GetCustomAttributes()
+                    ActionAttributes = x.GetCustomAttributes().ToList(),
+                    ControllerAttributes = x.DeclaringType?.GetCustomAttributes().ToList()
                 })
                 .OrderBy(x => x.ControllerName).ThenBy(x => x.ActionName).ToList()
                 ;
