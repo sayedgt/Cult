@@ -10,7 +10,7 @@ namespace Cult.Mvc.Utilities
         internal string ControllerName { get; set; }
         internal string ActionName { get; set; }
         internal Type ActionReturnType { get; set; }
-        internal IEnumerable<Attribute> ActionAttributes { get; set; }
-        internal IEnumerable<Attribute> ControllerAttributes { get; set; }
+        internal ICollection<Attribute> ActionAttributes { get; set; }
+        internal ICollection<Attribute> ControllerAttributes { get; set; }
     }
 }

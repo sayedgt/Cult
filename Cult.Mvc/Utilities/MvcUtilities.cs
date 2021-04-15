@@ -42,7 +42,7 @@ namespace Cult.Mvc.Utilities
                 {
                     if (current.Actions.Any())
                     {
-                        current.Actions.Add(new()
+                        current.Actions.Add(new ActionInfo()
                         {
                             Attributes = item.ActionAttributes.ToList(),
                             ActionReturnType = item.ActionReturnType,
@@ -53,7 +53,7 @@ namespace Cult.Mvc.Utilities
                     {
                         var actions = new List<ActionInfo>
                         {
-                            new()
+                            new ActionInfo()
                             {
                                 Attributes = item.ActionAttributes.ToList(),
                                 ActionReturnType = item.ActionReturnType,
@@ -75,7 +75,7 @@ namespace Cult.Mvc.Utilities
 
                     var actions = new List<ActionInfo>
                     {
-                        new()
+                        new ActionInfo()
                         {
                             Attributes = item.ActionAttributes.ToList(),
                             ActionReturnType = item.ActionReturnType,

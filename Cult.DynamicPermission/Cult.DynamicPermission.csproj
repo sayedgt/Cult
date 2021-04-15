@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
 	  <Authors>Hamed Fathi</Authors>
 	  <Company />
 	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -16,5 +16,8 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Razor" Version="2.2.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Cult.Mvc\Cult.Mvc.csproj" />
 	</ItemGroup>
 </Project>
