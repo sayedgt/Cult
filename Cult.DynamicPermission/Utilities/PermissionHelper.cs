@@ -11,7 +11,7 @@ namespace Cult.DynamicPermission.Utilities
 {
     public static class PermissionHelper
     {
-        public static IEnumerable<ControllerPermissionInfo> GetPermissions(Assembly assembly = null)
+        public static IEnumerable<ControllerPermissionInfo> GetPermissions(Assembly assembly)
         {
             var result = new List<ControllerPermissionInfo>();
 

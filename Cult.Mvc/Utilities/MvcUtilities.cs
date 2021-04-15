@@ -8,10 +8,9 @@ namespace Cult.Mvc.Utilities
 {
     public static class MvcUtilities
     {
-        public static IEnumerable<ControllerInfo> GetControllersInfo(Assembly assembly = null)
+        public static IEnumerable<ControllerInfo> GetControllersInfo(Assembly assembly)
         {
-            var asm = assembly ?? Assembly.GetExecutingAssembly();
-            var info = asm.GetTypes()
+            var info = assembly.GetTypes()
                 .Where(type => typeof(Controller).IsAssignableFrom(type))
                 .SelectMany(type => type.GetMethods(BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public))
                 .Where(m => !m.GetCustomAttributes(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), true).Any())
