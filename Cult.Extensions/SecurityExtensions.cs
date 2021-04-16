@@ -7,6 +7,10 @@ namespace Cult.Extensions.ExtraSecurity
 {
     public static class SecurityExtensions
     {
+        public static bool IsAuthenticated(this ClaimsPrincipal claimsPrincipal)
+        {
+            return claimsPrincipal != null && claimsPrincipal.Identity != null && claimsPrincipal.Identity.IsAuthenticated;
+        }
         public static string GetUserId(this ClaimsPrincipal claimsPrincipal)
         {
             var claim = claimsPrincipal?.FindFirst(ClaimTypes.NameIdentifier);
