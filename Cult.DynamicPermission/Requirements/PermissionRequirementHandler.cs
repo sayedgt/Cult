@@ -12,7 +12,7 @@ namespace DynamicPermission.Requirements
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
             var permissions = context.User.Claims.Where(
-                x => x.Type == Constants.PolicyType
+                x => x.Type == DynamicPermissionConstants.PolicyType
                 &&
                 x.Value == requirement.Permission);
 
