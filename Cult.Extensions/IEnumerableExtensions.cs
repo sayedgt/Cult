@@ -119,13 +119,9 @@ namespace Cult.Extensions.ExtraIEnumerable
                 t.Delete();
             }
         }
-        public static IEnumerable<T> DistinctBy<T>(this IEnumerable<T> list, Func<T, object> propertySelector)
+        public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> items, Func<T, TKey> property)
         {
-            return list.GroupBy(propertySelector).Select(x => x.First());
-        }
-        public static IEnumerable<TKey> DistinctBy<T, TKey>(this IEnumerable<T> list, Func<T, TKey> selector)
-        {
-            return list.GroupBy(selector).Select(x => x.Key);
+            return items.GroupBy(property).Select(x => x.First());
         }
         public static IEnumerable<FileInfo> ForEach(this IEnumerable<FileInfo> @this, Action<FileInfo> action)
         {
