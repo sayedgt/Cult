@@ -33,5 +33,6 @@ namespace Cult.SimpleCacheManager
         void Set(string key, object value);
 
         IEnumerable<object> Values();
+        void RemoveAll();
     }
 }

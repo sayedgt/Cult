@@ -19,7 +19,7 @@ namespace Cult.SimpleCacheManager
 
         public int Count() => _cache.Count;
 
-        public T Get<T>(string key) => !_cache.ContainsKey(key) ? default (T) : (T) _cache[key];
+        public T Get<T>(string key) => !_cache.ContainsKey(key) ? default : (T) _cache[key];
 
         public object Get(string key) => !_cache.ContainsKey(key) ? null : _cache[key];
 
@@ -35,13 +35,17 @@ namespace Cult.SimpleCacheManager
 
         public IEnumerable<string> Keys() => _cache.Keys;
 
-        public bool Remove(string key) => _cache.TryRemove(key, out var _);
+        public bool Remove(string key) => _cache.TryRemove(key, out _);
 
         public bool Remove(string key, out object value) => _cache.TryRemove(key, out value);
 
         public void Set(string key, object value) => _cache.AddOrUpdate(key, value, (newKey, newValue) => value);
 
         public IEnumerable<object> Values() => _cache.Values;
+        public void RemoveAll()
+        {
+            _cache.Clear();
+        }
 
         public Dictionary<string, object> CacheData() => _cache.ToDictionary(entry => entry.Key, entry => entry.Value);
 
