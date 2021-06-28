@@ -1,3 +1,4 @@
+using Cult.Extensions.Enums;
 using Cult.Extensions.ExtraIEnumerable;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,6 @@ using System.Xml.Linq;
 
 namespace Cult.Extensions.ExtraString
 {
-    public enum ReplaceMode
-    {
-        On,
-        Before,
-        After
-    }
     public static class StringExtensions
     {
         public static bool TryParseEnum<T>(this string name, out T result, bool ignoreCase = false)

@@ -1,6 +1,8 @@
+using Cult.Extensions.Enums;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 // ReSharper disable All 
 namespace Cult.Extensions.ExtraByteArray
 {
@@ -52,7 +54,7 @@ namespace Cult.Extensions.ExtraByteArray
         }
         public static string ToAsciiString(this byte[] @this)
         {
-            return System.Text.Encoding.ASCII.GetString(@this, 0, @this.Length);
+            return Encoding.ASCII.GetString(@this, 0, @this.Length);
         }
         public static int ToBase64CharArray(this byte[] inArray, int offsetIn, int length, char[] outArray, int offsetOut)
         {
@@ -88,7 +90,36 @@ namespace Cult.Extensions.ExtraByteArray
         }
         public static string ToUtf8String(this byte[] @this)
         {
-            return System.Text.Encoding.UTF8.GetString(@this, 0, @this.Length);
+            return Encoding.UTF8.GetString(@this, 0, @this.Length);
+        }
+
+        public static string ToString(this byte[] bytes, EncodingType encodingType)
+        {
+            return encodingType switch
+            {
+                EncodingType.UTF7 => Encoding.UTF7.GetString(bytes),
+                EncodingType.BigEndianUnicode => Encoding.BigEndianUnicode.GetString(bytes),
+                EncodingType.Unicode => Encoding.Unicode.GetString(bytes),
+                EncodingType.ASCII => Encoding.ASCII.GetString(bytes),
+                EncodingType.UTF8 => Encoding.UTF8.GetString(bytes),
+                EncodingType.UTF32 => Encoding.UTF32.GetString(bytes),
+                EncodingType.Default => Encoding.Default.GetString(bytes),
+                _ => Encoding.Default.GetString(bytes),
+            };
+        }
+        public static string ToString(this byte[] bytes, EncodingType encodingType, int index, int count)
+        {
+            return encodingType switch
+            {
+                EncodingType.UTF7 => Encoding.UTF7.GetString(bytes, index, count),
+                EncodingType.BigEndianUnicode => Encoding.BigEndianUnicode.GetString(bytes, index, count),
+                EncodingType.Unicode => Encoding.Unicode.GetString(bytes, index, count),
+                EncodingType.ASCII => Encoding.ASCII.GetString(bytes, index, count),
+                EncodingType.UTF8 => Encoding.UTF8.GetString(bytes, index, count),
+                EncodingType.UTF32 => Encoding.UTF32.GetString(bytes, index, count),
+                EncodingType.Default => Encoding.Default.GetString(bytes, index, count),
+                _ => Encoding.Default.GetString(bytes, index, count),
+            };
         }
     }
 }
