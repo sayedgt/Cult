@@ -8,7 +8,7 @@ namespace Cult.SimpleCacheManager.DependencyInjection
         public static IServiceCollection AddSimpleCacheManager(
             this IServiceCollection serviceCollection)
         {
-            return serviceCollection.AddSingleton<ICacheManager, CacheManager>();
+            return serviceCollection.AddSingleton(typeof(ICacheManager<,>), typeof(CacheManager<,>));
         }
     }
 }

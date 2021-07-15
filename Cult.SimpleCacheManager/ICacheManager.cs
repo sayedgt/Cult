@@ -1,38 +1,34 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Cult.SimpleCacheManager
 {
-    public interface ICacheManager
+    public interface ICacheManager<TKey,TValue> : IEnumerable
     {
-        object this[string key] { get; set; }
-        Dictionary<string, object> CacheData();
+        TValue this[TKey key] { get; set; }
+        Dictionary<TKey, TValue> CacheData();
 
-        bool Contains(string key);
+        bool Contains(TKey key);
 
         int Count();
 
-        object Get(string key);
+        TValue Get(TKey key);
 
-        T Get<T>(string key);
+        TValue GetOrSet(TKey key, Func<TValue> value);
 
-        object GetOrSet(string key, Func<object> value);
+        TValue GetOrSet(TKey key, TValue value);
 
-        object GetOrSet(string key, object value);
+        IEnumerable<TKey> Keys();
 
-        T GetOrSet<T>(string key, Func<T> value);
+        bool Remove(TKey key);
 
-        T GetOrSet<T>(string key, object value);
+        bool Remove(TKey key, out TValue value);
 
-        IEnumerable<string> Keys();
+        void Set(TKey key, TValue value);
 
-        bool Remove(string key);
+        IEnumerable<TValue> Values();
 
-        bool Remove(string key, out object value);
-
-        void Set(string key, object value);
-
-        IEnumerable<object> Values();
         void RemoveAll();
     }
 }

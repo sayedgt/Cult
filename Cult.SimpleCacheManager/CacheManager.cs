@@ -1,56 +1,56 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Cult.SimpleCacheManager
 {
-    public class CacheManager : ICacheManager
+    public class CacheManager<TKey,TValue> : ICacheManager<TKey, TValue>
     {
-        private readonly ConcurrentDictionary<string, object> _cache = new ConcurrentDictionary<string, object>();
+        private readonly ConcurrentDictionary<TKey, TValue> _cache = new ConcurrentDictionary<TKey, TValue>();
 
-        public object this[string key]
+        public TValue this[TKey key]
         {
             get => _cache[key];
             set => _cache[key] = value;
         }
 
-        public bool Contains(string key) => _cache.ContainsKey(key);
+        public bool Contains(TKey key) => _cache.ContainsKey(key);
 
         public int Count() => _cache.Count;
 
-        public T Get<T>(string key) => !_cache.ContainsKey(key) ? default : (T) _cache[key];
+        public TValue Get(TKey key) => !_cache.ContainsKey(key) ? default : _cache[key];
 
-        public object Get(string key) => !_cache.ContainsKey(key) ? null : _cache[key];
-
-        public T GetOrSet<T>(string key, object value)
+        public TValue GetOrSet(TKey key, TValue value)
         {
             if (_cache.ContainsKey(key))
-                return Get<T>(key);
+                return Get(key);
             Set(key, value);
-            return (T) value;
+            return value;
         }
 
-        public T GetOrSet<T>(string key, Func<T> value) => GetOrSet<T>(key, value());
+        public TValue GetOrSet(TKey key, Func<TValue> value) => GetOrSet(key, value());
 
-        public IEnumerable<string> Keys() => _cache.Keys;
+        public IEnumerable<TKey> Keys() => _cache.Keys;
 
-        public bool Remove(string key) => _cache.TryRemove(key, out _);
+        public bool Remove(TKey key) => _cache.TryRemove(key, out _);
 
-        public bool Remove(string key, out object value) => _cache.TryRemove(key, out value);
+        public bool Remove(TKey key, out TValue value) => _cache.TryRemove(key, out value);
 
-        public void Set(string key, object value) => _cache.AddOrUpdate(key, value, (newKey, newValue) => value);
+        public void Set(TKey key, TValue value) => _cache.AddOrUpdate(key, value, (newKey, newValue) => value);
 
-        public IEnumerable<object> Values() => _cache.Values;
+        public IEnumerable<TValue> Values() => _cache.Values;
         public void RemoveAll()
         {
             _cache.Clear();
         }
 
-        public Dictionary<string, object> CacheData() => _cache.ToDictionary(entry => entry.Key, entry => entry.Value);
+        public Dictionary<TKey, TValue> CacheData() => _cache.ToDictionary(entry => entry.Key, entry => entry.Value);
 
-        public object GetOrSet(string key, Func<object> value) => GetOrSet<object>(key, value);
-
-        public object GetOrSet(string key, object value) => GetOrSet<object>(key, value);
+        public IEnumerator GetEnumerator()
+        {
+            return _cache.GetEnumerator();
+        }
     }
 }
