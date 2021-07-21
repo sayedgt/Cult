@@ -65,11 +65,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Guard", "Cult.Guard\Cu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.TrxParser", "Cult.TrxParser\Cult.TrxParser.csproj", "{82D39BF7-2EDA-439B-B7E9-5717F875DCC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.DynamicPermission", "Cult.DynamicPermission\Cult.DynamicPermission.csproj", "{C5239E14-A105-4CB6-8095-E9D5DF1CA554}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DynamicPermission", "Cult.DynamicPermission\Cult.DynamicPermission.csproj", "{C5239E14-A105-4CB6-8095-E9D5DF1CA554}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.SimpleCacheManager", "Cult.SimpleCacheManager\Cult.SimpleCacheManager.csproj", "{508090D9-7C23-4516-B801-F83885A72F7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.SimpleCacheManager", "Cult.SimpleCacheManager\Cult.SimpleCacheManager.csproj", "{508090D9-7C23-4516-B801-F83885A72F7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.SimpleCacheManager.DependencyInjection", "Cult.SimpleCacheManager.DependencyInjection\Cult.SimpleCacheManager.DependencyInjection.csproj", "{CA1A1C01-CA00-41A9-890F-4E1A6E41A5DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.SimpleCacheManager.DependencyInjection", "Cult.SimpleCacheManager.DependencyInjection\Cult.SimpleCacheManager.DependencyInjection.csproj", "{CA1A1C01-CA00-41A9-890F-4E1A6E41A5DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.NSubstitute", "Cult.NSubstitute\Cult.NSubstitute.csproj", "{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -213,6 +215,10 @@ Global
 		{CA1A1C01-CA00-41A9-890F-4E1A6E41A5DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA1A1C01-CA00-41A9-890F-4E1A6E41A5DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA1A1C01-CA00-41A9-890F-4E1A6E41A5DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
