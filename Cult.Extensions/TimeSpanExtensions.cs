@@ -20,5 +20,9 @@ namespace Cult.Extensions.ExtraTimeSpan
         {
             return DateTime.UtcNow.Add(@this);
         }
+        public static string ToFormattedString(this TimeSpan timeSpan)
+        {
+            return string.Format("{0:00}:{1:00}:{2:00}:{3:00}:{4:000}", timeSpan.Days, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
+        }
     }
 }

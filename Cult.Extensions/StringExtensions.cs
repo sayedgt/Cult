@@ -1124,7 +1124,7 @@ namespace Cult.Extensions.ExtraString
         }
         public static IEnumerable<string> ToWords(this string str, string[] wordSeparators = null)
         {
-            var ws = wordSeparators.IsNullOrEmpty() ? new[] { " " } : wordSeparators;
+            var ws = wordSeparators.IsNullOrEmpty() ? new[] { " ", "\r\n", "\n", Environment.NewLine } : wordSeparators;
             return str.Split(ws, StringSplitOptions.RemoveEmptyEntries);
         }
         public static XDocument ToXDocument(this string xml)
