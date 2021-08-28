@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -7,7 +8,7 @@ namespace Cult.Extensions.DataShaping
 {
     public static class DataShapingExtensions
     {
-        public static IDictionary<string, object> ShapeData<T>(this T dataToshape, string fields, bool ignoreCase = true)
+        public static IDictionary<string, object> ShapeData<T>(this T dataToshape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null)
         {
             var result = new Dictionary<string, object>();
             if (dataToshape == null)
@@ -17,12 +18,12 @@ namespace Cult.Extensions.DataShaping
 
             var propertyInfoList = GetPropertyInfos<T>(fields, ignoreCase);
 
-            result.FillDictionary(dataToshape, propertyInfoList);
+            result.FillDictionary(dataToshape, propertyInfoList, converter);
 
             return result;
         }
 
-        public static IDictionary<string, object> ShapeData<T>(this IEnumerable<T> dataToshape, string fields, bool ignoreCase = true, string jsonListName = "values")
+        public static IDictionary<string, object> ShapeData<T>(this IEnumerable<T> dataToshape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null, string jsonListName = "values")
         {
             var result = new Dictionary<string, object>();
             if (dataToshape == null)
@@ -35,7 +36,7 @@ namespace Cult.Extensions.DataShaping
             var list = dataToshape.Select(line =>
             {
                 var data = new Dictionary<string, object>();
-                data.FillDictionary(line, propertyInfoList);
+                data.FillDictionary(line, propertyInfoList, converter);
                 return data;
             }).Where(d => d.Keys.Any()).ToList();
 
@@ -44,23 +45,26 @@ namespace Cult.Extensions.DataShaping
             return result;
         }
 
-        public static string ToShapedData<T>(this T dataToshape, string fields, bool ignoreCase = true)
+        public static string ToShapedData<T>(this T dataToshape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null)
         {
-            return JsonSerializer.Serialize(ShapeData(dataToshape, fields, ignoreCase));
+            return JsonSerializer.Serialize(ShapeData(dataToshape, fields, ignoreCase, converter));
         }
 
-        public static string ToShapedData<T>(this IEnumerable<T> dataToshape, string fields, bool ignoreCase = true, string jsonListName = "values")
+        public static string ToShapedData<T>(this IEnumerable<T> dataToshape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null, string jsonListName = "values")
         {
-            return JsonSerializer.Serialize(ShapeData(dataToshape, fields, ignoreCase, jsonListName));
+            return JsonSerializer.Serialize(ShapeData(dataToshape, fields, ignoreCase, converter, jsonListName));
         }
 
-        private static void FillDictionary<T>(this IDictionary<string, object> dictionary, T source, IEnumerable<PropertyInfo> fields)
+        private static void FillDictionary<T>(this IDictionary<string, object> dictionary, T source, IEnumerable<PropertyInfo> fields, Func<T, string, object, object> converter = null)
         {
             foreach (var propertyInfo in fields)
             {
                 var propertyValue = propertyInfo.GetValue(source);
 
-                dictionary.Add(propertyInfo.Name, propertyValue);
+                var value = converter != null ? converter(source, propertyInfo.Name, propertyValue) : propertyValue;
+
+
+                dictionary.Add(propertyInfo.Name, value);
             }
         }
 
