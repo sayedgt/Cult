@@ -49,7 +49,7 @@ namespace Cult.Extensions.DataShaping
             return JsonSerializer.Serialize(ShapeData(dataToshape, fields, ignoreCase));
         }
 
-        public static string ToShapedData<T>(this IEnumerable<T> dataToshape, string fields, string jsonListName = "values", bool ignoreCase = true)
+        public static string ToShapedData<T>(this IEnumerable<T> dataToshape, string fields, bool ignoreCase = true, string jsonListName = "values")
         {
             return JsonSerializer.Serialize(ShapeData(dataToshape, fields, ignoreCase, jsonListName));
         }
