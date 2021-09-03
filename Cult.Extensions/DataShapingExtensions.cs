@@ -39,7 +39,7 @@ namespace Cult.Extensions.DataShaping
                 var data = new Dictionary<string, object>();
                 data.FillDictionary(line, propertyInfoList, converter);
                 return data;
-            }).Where(d => d.Keys.Any()).ToList();
+            }).Where(d => d.Keys.Count > 0).ToList();
 
             result[jsonListName] = list;
 
