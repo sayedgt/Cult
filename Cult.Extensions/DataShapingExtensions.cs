@@ -3,37 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-
+// ReSharper disable UnusedMember.Global
+// ReSharper disable once CheckNamespace
 namespace Cult.Extensions.DataShaping
 {
     public static class DataShapingExtensions
     {
-        public static IDictionary<string, object> ShapeData<T>(this T dataToshape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null)
+        public static IDictionary<string, object> ShapeData<T>(this T dataToShape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null)
         {
             var result = new Dictionary<string, object>();
-            if (dataToshape == null)
+            if (dataToShape == null)
             {
                 return result;
             }
 
             var propertyInfoList = GetPropertyInfos<T>(fields, ignoreCase);
 
-            result.FillDictionary(dataToshape, propertyInfoList, converter);
+            result.FillDictionary(dataToShape, propertyInfoList, converter);
 
             return result;
         }
 
-        public static IDictionary<string, object> ShapeData<T>(this IEnumerable<T> dataToshape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null, string jsonListName = "values")
+        public static IDictionary<string, object> ShapeData<T>(this IEnumerable<T> dataToShape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null, string jsonListName = "values")
         {
             var result = new Dictionary<string, object>();
-            if (dataToshape == null)
+            if (dataToShape == null)
             {
                 return result;
             }
 
             var propertyInfoList = GetPropertyInfos<T>(fields, ignoreCase);
 
-            var list = dataToshape.Select(line =>
+            var list = dataToShape.Select(line =>
             {
                 var data = new Dictionary<string, object>();
                 data.FillDictionary(line, propertyInfoList, converter);
@@ -45,14 +46,14 @@ namespace Cult.Extensions.DataShaping
             return result;
         }
 
-        public static string ToShapedData<T>(this T dataToshape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null)
+        public static string ToShapedData<T>(this T dataToShape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null)
         {
-            return JsonSerializer.Serialize(ShapeData(dataToshape, fields, ignoreCase, converter));
+            return JsonSerializer.Serialize(ShapeData(dataToShape, fields, ignoreCase, converter));
         }
 
-        public static string ToShapedData<T>(this IEnumerable<T> dataToshape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null, string jsonListName = "values")
+        public static string ToShapedData<T>(this IEnumerable<T> dataToShape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null, string jsonListName = "values")
         {
-            return JsonSerializer.Serialize(ShapeData(dataToshape, fields, ignoreCase, converter, jsonListName));
+            return JsonSerializer.Serialize(ShapeData(dataToShape, fields, ignoreCase, converter, jsonListName));
         }
 
         private static void FillDictionary<T>(this IDictionary<string, object> dictionary, T source, IEnumerable<PropertyInfo> fields, Func<T, string, object, object> converter = null)
