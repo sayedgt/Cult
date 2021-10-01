@@ -46,5 +46,21 @@ namespace Cult.Toolkit
         {
             return Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
         }
+
+        public static bool RenameDirectory(string directoryPath, string newName)
+        {
+            var path = Path.GetDirectoryName(directoryPath);
+            if (path == null)
+                return false;
+            try
+            {
+                Directory.Move(directoryPath, Path.Combine(path, newName));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

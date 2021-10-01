@@ -1,6 +1,6 @@
 ﻿using System;
 // ReSharper disable All 
-namespace Cult.ValueTask
+namespace Cult.Toolkit.ExtraValueTask
 {
     public static class ValueTaskExtensions
     {

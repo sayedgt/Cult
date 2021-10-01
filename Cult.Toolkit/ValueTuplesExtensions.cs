@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 // ReSharper disable All
 #if NETSTANDARD2_1
-namespace Cult.Toolkit.ExtraEnumerator
+namespace Cult.Toolkit.ExtraValueTuple
 {
 
     public static class ValueTuplesExtensions

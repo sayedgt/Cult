@@ -82,7 +82,7 @@ namespace Cult.Toolkit.ExtraStream
             {
                 var count = stream.Read(buffer, 0, bufferSize);
                 if (count == 0) break;
-                sb.Append(buffer.ToString(encoding).ToCharArray(), 0, count);
+                sb.Append(buffer.ConvertByteArrayToString(encoding).ToCharArray(), 0, count);
             }
             var text = sb.ToString();
             return text;
@@ -96,7 +96,7 @@ namespace Cult.Toolkit.ExtraStream
             {
                 var count = await stream.ReadAsync(buffer, 0, bufferSize);
                 if (count == 0) break;
-                sb.Append(buffer.ToString(encoding).ToCharArray(), 0, count);
+                sb.Append(buffer.ConvertByteArrayToString(encoding).ToCharArray(), 0, count);
             }
             var text = sb.ToString();
             return text;
@@ -109,7 +109,7 @@ namespace Cult.Toolkit.ExtraStream
             {
                 var count = stream.Read(buffer, 0, bufferSize);
                 if (count == 0) break;
-                var text = buffer.ToString(encoding, 0, count);
+                var text = buffer.ConvertByteArrayToString(encoding, 0, count);
                 action(text);
             }
         }
@@ -121,7 +121,7 @@ namespace Cult.Toolkit.ExtraStream
             {
                 var count = stream.Read(buffer, 0, bufferSize);
                 if (count == 0) break;
-                var text = buffer.ToString(encoding, 0, count);
+                var text = buffer.ConvertByteArrayToString(encoding, 0, count);
                 yield return text;
             }
         }
@@ -144,7 +144,7 @@ namespace Cult.Toolkit.ExtraStream
             {
                 var count = await stream.ReadAsync(buffer, 0, bufferSize);
                 if (count == 0) break;
-                var text = buffer.ToString(encoding, 0, count);
+                var text = buffer.ConvertByteArrayToString(encoding, 0, count);
                 action(text);
             }
         }
@@ -167,7 +167,7 @@ namespace Cult.Toolkit.ExtraStream
             {
                 var count = await stream.ReadAsync(buffer, 0, bufferSize);
                 if (count == 0) break;
-                var text = buffer.ToString(encoding, 0, count);
+                var text = buffer.ConvertByteArrayToString(encoding, 0, count);
                 yield return text;
             }
         }

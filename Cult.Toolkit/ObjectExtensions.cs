@@ -224,6 +224,12 @@ namespace Cult.Toolkit.ExtraObject
         {
             return obj.ConvertToEnumerable().ToList();
         }
+        public static IDictionary<TKey, TValue> ConvertToDictionary<TKey, TValue>(this TValue value, TKey key)
+        {
+            var dictionary = new Dictionary<TKey, TValue>();
+            dictionary.Add(key, value);
+            return dictionary;
+        }
         public static IEnumerable<T> ConvertToEnumerable<T>(this T obj)
         {
             yield return obj;
@@ -572,11 +578,16 @@ namespace Cult.Toolkit.ExtraObject
             return true;
         }
 
-        public static string ToJson<T>(this T obj, bool indented = false)
+        public static string ToJson<T>(this T obj, JsonSerializerOptions options = null)
+        {
+            return JsonSerializer.Serialize<T>(obj, options);
+        }
+
+        public static string ToFormattedJson<T>(this T obj)
         {
             return JsonSerializer.Serialize<T>(obj, new JsonSerializerOptions()
             {
-                WriteIndented = indented
+                WriteIndented = true
             });
         }
     }

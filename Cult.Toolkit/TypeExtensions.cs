@@ -5,8 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Cult.Toolkit.ExtraObject;
+// ReSharper disable CheckNamespace
+// ReSharper disable UnusedMember.Global
 
-namespace Cult.Toolkit
+namespace Cult.Toolkit.ExtraType
 {
     public static class TypeExtensions
     {
@@ -33,7 +35,7 @@ namespace Cult.Toolkit
         }
         private static IEnumerable<Type> GetAllInterfaces(Type type, HashSet<Type> types = null)
         {
-            types = types ?? new HashSet<Type>();
+            types ??= new HashSet<Type>();
             var interfaces = type.GetInterfaces();
             foreach (var it in interfaces)
             {

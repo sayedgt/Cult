@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 // ReSharper disable All
 
-namespace Cult.Toolkit.ExtraSecurity
+namespace Cult.Toolkit.Security
 {
     public static class SecurityExtensions
     {

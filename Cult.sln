@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Xbehave", "Cult.Xbehave\Cult.Xbehave.csproj", "{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.ValueTask", "Cult.ValueTask\Cult.ValueTask.csproj", "{05135E81-40CB-4F90-B9D5-AC1DE155968B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Sharp2Js", "Cult.Sharp2Js\Cult.Sharp2Js.csproj", "{2A34E508-34AA-4D9B-A58E-46577E175EBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.RawPrint", "Cult.RawPrint\Cult.RawPrint.csproj", "{FB8D0CEE-0BF1-42CF-AE5A-65CFE1A74DC1}"
@@ -77,10 +75,6 @@ Global
 		{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05135E81-40CB-4F90-B9D5-AC1DE155968B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05135E81-40CB-4F90-B9D5-AC1DE155968B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05135E81-40CB-4F90-B9D5-AC1DE155968B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05135E81-40CB-4F90-B9D5-AC1DE155968B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2A34E508-34AA-4D9B-A58E-46577E175EBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2A34E508-34AA-4D9B-A58E-46577E175EBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A34E508-34AA-4D9B-A58E-46577E175EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU

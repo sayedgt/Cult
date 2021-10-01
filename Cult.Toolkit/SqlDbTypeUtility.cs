@@ -6,7 +6,7 @@ namespace Cult.Toolkit
     public static class SqlDbTypeUtility
     {
         private static Dictionary<string, Type> _mappings;
-        public static Type GetType(string sqlDataType)
+        public static Type ToType(string sqlDataType)
         {
             sqlDataType = sqlDataType.ToLower().Trim();
             _mappings = new Dictionary<string, Type>
@@ -43,7 +43,7 @@ namespace Cult.Toolkit
             };
             return _mappings[sqlDataType];
         }
-        public static string GetTypeAsString(string sqlDataType)
+        public static string FromString(string sqlDataType)
         {
             sqlDataType = sqlDataType.ToLower().Trim();
             _mappings = new Dictionary<string, Type>

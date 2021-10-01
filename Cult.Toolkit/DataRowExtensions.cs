@@ -2,6 +2,8 @@
 using Cult.Toolkit.ExtraString;
 using System;
 using System.Data;
+using Cult.Toolkit.ExtraType;
+
 // ReSharper disable All 
 namespace Cult.Toolkit.ExtraDataRow
 {

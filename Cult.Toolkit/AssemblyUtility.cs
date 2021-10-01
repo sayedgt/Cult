@@ -6,7 +6,7 @@ namespace Cult.Toolkit
 {
     public static class AssemblyUtility
     {
-        private static IEnumerable<Assembly> GetEntryAssemblyWithReferences()
+        public static IEnumerable<Assembly> GetEntryAssemblyWithReferences()
         {
             var listOfAssemblies = new List<Assembly>();
             var mainAsm = Assembly.GetEntryAssembly();

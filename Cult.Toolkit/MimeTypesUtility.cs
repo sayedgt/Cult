@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+// ReSharper disable StringLiteralTypo
+// ReSharper disable All
 
 namespace Cult.Toolkit
 {
@@ -10,7 +12,7 @@ namespace Cult.Toolkit
         private static readonly string _defaultMimeType = "application/octet-stream";
 
         // http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
-        private static readonly Lazy<Dictionary<string, string>> _mimeTypeMap = new Lazy<Dictionary<string, string>>(()
+        private static readonly Lazy<Dictionary<string, string>> MimeTypeMap = new(()
             => new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 ["ez"] = "application/andrew-inset",
@@ -1000,7 +1002,7 @@ namespace Cult.Toolkit
 
         public static string GetExtension(string mime)
         {
-            var ext = _mimeTypeMap.Value.FirstOrDefault(x => x.Value.Contains(mime)).Key;
+            var ext = MimeTypeMap.Value.FirstOrDefault(x => x.Value.Contains(mime)).Key;
             return ext ?? _defaultExtension;
         }
 
@@ -1012,12 +1014,12 @@ namespace Cult.Toolkit
             {
                 ext = fileName.Substring(ind + 1).ToLower();
             }
-            return _mimeTypeMap.Value.TryGetValue(ext, out string result) ? result : _defaultMimeType;
+            return MimeTypeMap.Value.TryGetValue(ext, out string result) ? result : _defaultMimeType;
         }
 
         public static void AddOrUpdate(string mime, string extension)
         {
-            _mimeTypeMap.Value[extension] = mime;
+            MimeTypeMap.Value[extension] = mime;
         }
     }
 }

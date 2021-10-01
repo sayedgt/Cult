@@ -1,4 +1,5 @@
 ﻿using System;
+// ReSharper disable All
 
 namespace Cult.Toolkit
 {
@@ -24,19 +25,13 @@ namespace Cult.Toolkit
         private const int DatacenterIdShift = SequenceBits + WorkerIdBits;
 
         public const int TimestampLeftShift = SequenceBits + WorkerIdBits + DatacenterIdBits;
-
-        private long _sequence = 0L;
         private long _lastTimestamp = -1L;
 
         public long WorkerId { get; protected set; }
 
         public long DatacenterId { get; protected set; }
 
-        public long Sequence
-        {
-            get { return _sequence; }
-            internal set { _sequence = value; }
-        }
+        public long Sequence { get; internal set; } = 0L;
 
         public SnowflakeIdGenerator(long workerId, long datacenterId, long sequence = 0L)
         {
@@ -52,7 +47,7 @@ namespace Cult.Toolkit
 
             WorkerId = workerId;
             DatacenterId = datacenterId;
-            _sequence = sequence;
+            Sequence = sequence;
         }
 
         private readonly object _lock = new object();
@@ -69,20 +64,20 @@ namespace Cult.Toolkit
 
                 if (_lastTimestamp == timestamp)
                 {
-                    _sequence = (_sequence + 1) & SequenceMask;
+                    Sequence = (Sequence + 1) & SequenceMask;
 
-                    if (_sequence == 0)
+                    if (Sequence == 0)
                     {
                         timestamp = TilNextMillis(_lastTimestamp);
                     }
                 }
                 else
                 {
-                    _sequence = 0;
+                    Sequence = 0;
                 }
 
                 _lastTimestamp = timestamp;
-                return ((timestamp - Twepoch) << TimestampLeftShift) | (DatacenterId << DatacenterIdShift) | (WorkerId << WorkerIdShift) | _sequence;
+                return ((timestamp - Twepoch) << TimestampLeftShift) | (DatacenterId << DatacenterIdShift) | (WorkerId << WorkerIdShift) | Sequence;
             }
         }
 

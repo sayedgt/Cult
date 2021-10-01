@@ -20,9 +20,9 @@ namespace Cult.Toolkit.ExtraString
 {
     public static class StringExtensions
     {
-        public static T FromJson<T>(this string jsonText)
+        public static T FromJson<T>(this string jsonText, JsonSerializerOptions options = null)
         {
-            return JsonSerializer.Deserialize<T>(jsonText);
+            return JsonSerializer.Deserialize<T>(jsonText, options);
         }
         public static Position GetPosition(this string text, int position)
         {
@@ -123,7 +123,7 @@ namespace Cult.Toolkit.ExtraString
         {
             return string.Concat(@this, string.Concat(values));
         }
-        
+
         public static bool Contains(this string @this, string value, StringComparison comparisonType)
         {
             return @this?.IndexOf(value, comparisonType) != -1;

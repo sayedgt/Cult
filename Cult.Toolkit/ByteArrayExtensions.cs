@@ -7,7 +7,7 @@ namespace Cult.Toolkit.ExtraByteArray
 {
     public static class ByteArrayExtensions
     {
-        public static string ByteArrayToHexString(this byte[] byteArray)
+        public static string ToHexString(this byte[] byteArray)
         {
             string result = string.Empty;
             foreach (byte outputByte in byteArray)
@@ -40,7 +40,7 @@ namespace Cult.Toolkit.ExtraByteArray
             }
             return -1;
         }
-        public static T FromByteArray<T>(this byte[] data)
+        public static T ConvertFromByteArray<T>(this byte[] data)
         {
             if (data == null)
                 return default(T);
@@ -91,8 +91,7 @@ namespace Cult.Toolkit.ExtraByteArray
         {
             return Encoding.UTF8.GetString(@this, 0, @this.Length);
         }
-
-        public static string ToString(this byte[] bytes, EncodingType encodingType)
+        public static string ConvertByteArrayToString(this byte[] bytes, EncodingType encodingType)
         {
             return encodingType switch
             {
@@ -106,7 +105,7 @@ namespace Cult.Toolkit.ExtraByteArray
                 _ => Encoding.Default.GetString(bytes),
             };
         }
-        public static string ToString(this byte[] bytes, EncodingType encodingType, int index, int count)
+        public static string ConvertByteArrayToString(this byte[] bytes, EncodingType encodingType, int index, int count)
         {
             return encodingType switch
             {

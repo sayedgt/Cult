@@ -79,14 +79,14 @@ namespace Cult.Toolkit.ExtraRandom
             bytes[7] = (byte)(bytes[7] & 0x7f);
             return BitConverter.ToInt64(bytes, 0);
         }
-        public static T OneOf<T>(this Random @this, params T[] values)
+        public static T PickOneOf<T>(this Random @this, params T[] values)
         {
             return values[@this.Next(values.Length)];
         }
-        public static T OneOf<T>(this Random @this, IEnumerable<T> values)
+        public static T PickOneOf<T>(this Random @this, IEnumerable<T> values)
         {
             var arr = values.ToArray();
-            return @this.OneOf(arr);
+            return @this.PickOneOf(arr);
         }
     }
 }

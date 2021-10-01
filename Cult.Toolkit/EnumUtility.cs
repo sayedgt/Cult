@@ -21,11 +21,11 @@ namespace Cult.Toolkit
         {
             return GetValues<TEnum>().Select(e => e.ToString());
         }
-        public static bool IsDefined<TEnum>(string name) where TEnum : Enum
+        public static bool IsDefined<TEnum>(this string name) where TEnum : Enum
         {
             return Enum.IsDefined(typeof(TEnum), name);
         }
-        public static bool IsDefined<TEnum>(TEnum value) where TEnum : Enum
+        public static bool IsDefined<TEnum>(this TEnum value) where TEnum : Enum
         {
             return Enum.IsDefined(typeof(TEnum), value);
         }
@@ -62,16 +62,16 @@ namespace Cult.Toolkit
             return GetValues<TEnum>().Select(e => e.GetDescription(replaceNullWithEnumName)).Where(e => e != null);
         }
 
-        public static bool IsInEnum<TEnum>(this string input, bool ignoreCase = false) where TEnum : Enum
+        public static bool IsInEnum<TEnum>(this string value, bool ignoreCase = false) where TEnum : Enum
         {
             var enums = GetValuesAsString<TEnum>().Select(e => ignoreCase ? e.ToLower() : e);
-            return enums.Contains(ignoreCase ? input.ToLower() : input);
+            return enums.Contains(ignoreCase ? value.ToLower() : value);
         }
 
-        public static bool IsInEnumDescription<TEnum>(this string input, bool ignoreCase = false) where TEnum : Enum
+        public static bool IsInEnumDescription<TEnum>(this string value, bool ignoreCase = false) where TEnum : Enum
         {
             var enums = GetDescriptions<TEnum>().Select(e => ignoreCase ? e.ToLower() : e);
-            return enums.Contains(ignoreCase ? input.ToLower() : input);
+            return enums.Contains(ignoreCase ? value.ToLower() : value);
         }
     }
 }
