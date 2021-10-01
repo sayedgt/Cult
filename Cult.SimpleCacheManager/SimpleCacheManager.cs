@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+// ReSharper disable All
 
-namespace Cult.SimpleCacheManager.DependencyInjection
+namespace Cult.SimpleCacheManager
 {
     public static class SimpleCacheManager
     {
