@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
@@ -19,6 +20,10 @@ namespace Cult.Toolkit.ExtraString
 {
     public static class StringExtensions
     {
+        public static T FromJson<T>(this string jsonText)
+        {
+            return JsonSerializer.Deserialize<T>(jsonText);
+        }
         public static Position GetPosition(this string text, int position)
         {
             var line = 1;

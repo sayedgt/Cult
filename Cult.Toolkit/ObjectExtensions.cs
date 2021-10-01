@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
+
 // ReSharper disable All
 namespace Cult.Toolkit.ExtraObject
 {
@@ -568,6 +570,14 @@ namespace Cult.Toolkit.ExtraObject
 
             disposable.Dispose();
             return true;
+        }
+
+        public static string ToJson<T>(this T obj, bool indented = false)
+        {
+            return JsonSerializer.Serialize<T>(obj, new JsonSerializerOptions()
+            {
+                WriteIndented = indented
+            });
         }
     }
 }
