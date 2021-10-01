@@ -1,6 +1,4 @@
-﻿// ReSharper disable All
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +9,35 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
 
-// ReSharper disable All 
+// ReSharper disable All
+// ReSharper disable InvalidXmlDocComment
+
 namespace RoslynQuoter
 {
+    /// <summary>
+    /// A tool that for a given C# program constructs Roslyn API calls to create a syntax tree that
+    /// describes this program. As opposed to SyntaxTree.ParseText() that creates the syntax tree object
+    /// graph in runtime, Quoter returns the C# source code that will construct such syntax tree object
+    /// graph when compiled and executed.
+    /// </summary>
+    /// <example>
+    /// new Quoter().Quote("class C{}") returns:
+    /// 
+    /// CompilationUnit()
+    /// .WithMembers(
+    ///     List&lt;MemberDeclarationSyntax&gt;
+    ///         ClassDeclaration(
+    ///             Identifier(
+    ///                 "C"))
+    ///         .WithKeyword(
+    ///             Token(
+    ///                 ClassKeyword,
+    ///                 TriviaList(
+    ///                     Space)))
+    /// .WithEndOfFileToken(
+    ///     Syntax.Token(
+    ///         SyntaxKind.EndOfFileToken))
+    /// </example>
     public class Quoter
     {
         public bool OpenParenthesisOnNewLine { get; set; }
@@ -40,6 +64,13 @@ namespace RoslynQuoter
             RemoveRedundantModifyingCalls = true;
         }
 
+        /// <summary>
+        /// Given the input C# program <paramref name="sourceText"/> returns the C# source code of
+        /// Roslyn API calls that recreate the syntax tree for the input program.
+        /// </summary>
+        /// <param name="sourceText">A C# program (one compilation unit)</param>
+        /// <returns>A C# expression that describes calls to the Roslyn syntax API necessary to recreate
+        /// the syntax tree for the source program.</returns>
         public ApiCall Quote(string sourceText)
         {
             return Quote(sourceText, NodeKind.CompilationUnit);
@@ -56,6 +87,14 @@ namespace RoslynQuoter
             return Print(node);
         }
 
+        /// <summary>
+        /// Given the input C# code <paramref name="sourceText"/> returns the C# source code of
+        /// Roslyn API calls that recreate the syntax tree for the input code.
+        /// </summary>
+        /// <param name="sourceText">A C# souce text</param>
+        /// <param name="nodeKind">What kind of C# syntax node should the input be parsed as</param>
+        /// <returns>A C# expression that describes calls to the Roslyn syntax API necessary to recreate
+        /// the syntax tree for the source text.</returns>
         public ApiCall Quote(string sourceText, NodeKind nodeKind)
         {
             var node = Parse(sourceText, nodeKind);
@@ -67,23 +106,41 @@ namespace RoslynQuoter
             return Quote(node);
         }
 
+        /// <summary>
+        /// Given the input C# code <paramref name="sourceText"/> returns
+        /// the syntax tree for the input code.
+        /// </summary>
+        /// <param name="sourceText">A C# souce text</param>
+        /// <param name="nodeKind">What kind of C# syntax node should the input be parsed as</param>
         private static SyntaxNode Parse(string sourceText, NodeKind nodeKind)
         {
+            var regularParseOptions = new CSharpParseOptions(LanguageVersion.Preview, kind: SourceCodeKind.Regular);
             switch (nodeKind)
             {
+                case NodeKind.Script:
+                    return SyntaxFactory.ParseCompilationUnit(sourceText,
+                        options: new CSharpParseOptions(LanguageVersion.Preview, kind: SourceCodeKind.Script));
                 case NodeKind.CompilationUnit:
-                    return SyntaxFactory.ParseCompilationUnit(sourceText, options: new CSharpParseOptions(LanguageVersion.Preview));
+                    return SyntaxFactory.ParseCompilationUnit(sourceText,
+                        options: regularParseOptions);
                 case NodeKind.MemberDeclaration:
-                    return SyntaxFactory.ParseMemberDeclaration(sourceText);
+                    return SyntaxFactory.ParseMemberDeclaration(sourceText, options: regularParseOptions);
                 case NodeKind.Statement:
-                    return SyntaxFactory.ParseStatement(sourceText);
+                    return SyntaxFactory.ParseStatement(sourceText, options: regularParseOptions);
                 case NodeKind.Expression:
-                    return SyntaxFactory.ParseExpression(sourceText);
+                    return SyntaxFactory.ParseExpression(sourceText, options: regularParseOptions);
                 default:
                     throw new InvalidOperationException();
             }
         }
 
+        /// <summary>
+        /// Given the input C# syntax node <paramref name="node"/> returns the C# source code of
+        /// Roslyn API calls that recreate the syntax node.
+        /// </summary>
+        /// <param name="node">A C# syntax node</param>
+        /// <returns>A C# expression that describes calls to the Roslyn syntax API necessary to recreate
+        /// the input syntax node.</returns>
         internal ApiCall Quote(SyntaxNode node)
         {
             ApiCall rootApiCall = Quote(node, name: null);
@@ -95,6 +152,10 @@ namespace RoslynQuoter
             return rootApiCall;
         }
 
+        /// <summary>
+        /// Recursive method that "quotes" a SyntaxNode, SyntaxToken, SyntaxTrivia or other objects.
+        /// </summary>
+        /// <returns>A description of Roslyn API calls necessary to recreate the input object.</returns>
         private ApiCall Quote(object treeElement, string name = null)
         {
             if (treeElement is SyntaxTrivia)
@@ -123,6 +184,9 @@ namespace RoslynQuoter
             return QuoteNode((SyntaxNode)treeElement, name);
         }
 
+        /// <summary>
+        /// The main recursive method that given a SyntaxNode recursively quotes the entire subtree.
+        /// </summary>
         private ApiCall QuoteNode(SyntaxNode node, string name)
         {
             List<ApiCall> quotedPropertyValues = QuotePropertyValues(node);
@@ -147,6 +211,11 @@ namespace RoslynQuoter
             return codeBlock;
         }
 
+        /// <summary>
+        /// Inspects the property values of the <paramref name="node"/> object using Reflection and
+        /// creates API call descriptions for the property values recursively. Properties that are not
+        /// essential to the shape of the syntax tree (such as Span) are ignored.
+        /// </summary>
         private List<ApiCall> QuotePropertyValues(SyntaxNode node)
         {
             var result = new List<ApiCall>();
@@ -166,6 +235,7 @@ namespace RoslynQuoter
             if (node is AccessorDeclarationSyntax ||
                 node is AssignmentExpressionSyntax ||
                 node is BinaryExpressionSyntax ||
+                node is BinaryPatternSyntax ||
                 node is ClassOrStructConstraintSyntax ||
                 node is CheckedExpressionSyntax ||
                 node is CheckedStatementSyntax ||
@@ -186,6 +256,10 @@ namespace RoslynQuoter
             return result;
         }
 
+        /// <summary>
+        /// Quote the value of the property <paramref name="property"/> of object <paramref
+        /// name="node"/>
+        /// </summary>
         private ApiCall QuotePropertyValue(SyntaxNode node, PropertyInfo property)
         {
             var value = property.GetValue(node, null);
@@ -314,26 +388,42 @@ namespace RoslynQuoter
             };
             }
 
-            return new ApiCall(name, methodName, elements);
+            var codeBlock = new ApiCall(name, methodName, elements);
+            return codeBlock;
         }
 
-        private ApiCall QuoteToken(SyntaxToken value, string name)
+        private ApiCall QuoteToken(SyntaxToken token, string name)
         {
-            if (value == default(SyntaxToken) || value.Kind() == SyntaxKind.None)
+            var tokenKind = token.Kind();
+            var tokenText = token.Text;
+            var tokenValueText = token.ValueText;
+            bool tokenIsMissing = token.IsMissing;
+
+            if (token == default || tokenKind == SyntaxKind.None)
             {
                 return null;
             }
 
             var arguments = new List<object>();
             string methodName = SyntaxFactoryMethod("Token");
-            bool verbatim =
-                value.Text.StartsWith("@") ||
-                value.Text.Contains("\r") ||
-                value.Text.Contains("\n");
-            string escapedTokenValueText = EscapeAndQuote(value.ToString(), verbatim);
-            object leading = GetLeadingTrivia(value);
-            object actualValue;
-            object trailing = GetTrailingTrivia(value);
+
+            bool verbatimText =
+                (tokenKind == SyntaxKind.StringLiteralToken ||
+                 tokenKind == SyntaxKind.InterpolatedStringTextToken) &&
+                (tokenText.StartsWith("@") ||
+                tokenText.StartsWith("$@") ||
+                tokenText.Contains("\r") ||
+                tokenText.Contains("\n"));
+            bool verbatimLiteralText =
+                (tokenKind == SyntaxKind.StringLiteralToken ||
+                 tokenKind == SyntaxKind.InterpolatedStringTextToken) &&
+                (tokenValueText.Contains("\r") ||
+                 tokenValueText.Contains("\n"));
+
+            string escapedTokenText = EscapeAndQuote(tokenText, verbatimText);
+            string escapedTokenValueText = EscapeAndQuote(tokenValueText, verbatimLiteralText);
+            object leading = GetLeadingTrivia(token);
+            object trailing = GetTrailingTrivia(token);
 
             if (leading != null || trailing != null)
             {
@@ -341,65 +431,71 @@ namespace RoslynQuoter
                 trailing = trailing ?? GetEmptyTrivia("TrailingTrivia");
             }
 
-            if (value.Kind() == SyntaxKind.IdentifierToken && !value.IsMissing)
+            if (tokenKind == SyntaxKind.IdentifierToken && !tokenIsMissing)
             {
                 methodName = SyntaxFactoryMethod("Identifier");
-                if (value.IsMissing)
-                {
-                    methodName = SyntaxFactoryMethod("MissingToken");
-                }
 
-                if (value.IsMissing)
+                if (verbatimText)
                 {
-                    actualValue = value.Kind();
+                    leading = leading ?? GetEmptyTrivia("LeadingTrivia");
+                    trailing = trailing ?? GetEmptyTrivia("TrailingTrivia");
+
+                    arguments.Add(leading);
+                    arguments.Add(tokenKind);
+                    arguments.Add(escapedTokenText);
+                    arguments.Add(escapedTokenValueText);
+                    arguments.Add(trailing);
+                }
+                else if (SyntaxFacts.GetContextualKeywordKind(tokenValueText) is var contextualKeyWord
+                    && contextualKeyWord != SyntaxKind.None)
+                {
+                    leading = leading ?? GetEmptyTrivia("LeadingTrivia");
+                    trailing = trailing ?? GetEmptyTrivia("TrailingTrivia");
+
+                    arguments.Add(leading);
+                    arguments.Add(contextualKeyWord);
+                    arguments.Add(escapedTokenText);
+                    arguments.Add(escapedTokenValueText);
+                    arguments.Add(trailing);
                 }
                 else
                 {
-                    actualValue = escapedTokenValueText;
+                    AddIfNotNull(arguments, leading);
+                    arguments.Add(escapedTokenText);
+                    AddIfNotNull(arguments, trailing);
                 }
-
-                AddIfNotNull(arguments, leading);
-                arguments.Add(actualValue);
-                AddIfNotNull(arguments, trailing);
             }
-            else if (value.Kind() == SyntaxKind.InterpolatedStringTextToken && !value.IsMissing)
+            else if (tokenKind == SyntaxKind.InterpolatedStringTextToken && !tokenIsMissing)
             {
                 leading = leading ?? GetEmptyTrivia("LeadingTrivia");
                 trailing = trailing ?? GetEmptyTrivia("TrailingTrivia");
                 AddIfNotNull(arguments, leading);
-                arguments.Add(value.Kind());
-                arguments.Add(escapedTokenValueText);
+                arguments.Add(tokenKind);
+                arguments.Add(escapedTokenText);
                 arguments.Add(escapedTokenValueText);
                 AddIfNotNull(arguments, trailing);
             }
-            else if ((value.Kind() == SyntaxKind.XmlTextLiteralToken ||
-                value.Kind() == SyntaxKind.XmlTextLiteralNewLineToken ||
-                value.Kind() == SyntaxKind.XmlEntityLiteralToken) && !value.IsMissing)
+            else if ((tokenKind == SyntaxKind.XmlTextLiteralToken ||
+                tokenKind == SyntaxKind.XmlTextLiteralNewLineToken ||
+                tokenKind == SyntaxKind.XmlEntityLiteralToken) && !tokenIsMissing)
             {
                 methodName = SyntaxFactoryMethod("XmlTextLiteral");
-                if (value.Kind() == SyntaxKind.XmlTextLiteralNewLineToken)
+                if (tokenKind == SyntaxKind.XmlTextLiteralNewLineToken)
                 {
                     methodName = SyntaxFactoryMethod("XmlTextNewLine");
                 }
-                else if (value.Kind() == SyntaxKind.XmlEntityLiteralToken)
+                else if (tokenKind == SyntaxKind.XmlEntityLiteralToken)
                 {
                     methodName = SyntaxFactoryMethod("XmlEntity");
                 }
-
                 arguments.Add(leading ?? GetEmptyTrivia("LeadingTrivia"));
-                arguments.Add(escapedTokenValueText);
+                arguments.Add(escapedTokenText);
                 arguments.Add(escapedTokenValueText);
                 arguments.Add(trailing ?? GetEmptyTrivia("TrailingTrivia"));
             }
-            else if ((value.Parent is LiteralExpressionSyntax ||
-                value.Kind() == SyntaxKind.StringLiteralToken ||
-                value.Kind() == SyntaxKind.NumericLiteralToken) &&
-                value.Kind() != SyntaxKind.TrueKeyword &&
-                value.Kind() != SyntaxKind.FalseKeyword &&
-                value.Kind() != SyntaxKind.NullKeyword &&
-                value.Kind() != SyntaxKind.ArgListKeyword &&
-                value.Kind() != SyntaxKind.DefaultKeyword &&
-                !value.IsMissing)
+            else if ((tokenKind == SyntaxKind.CharacterLiteralToken ||
+                tokenKind == SyntaxKind.StringLiteralToken ||
+                tokenKind == SyntaxKind.NumericLiteralToken) && !tokenIsMissing)
             {
                 methodName = SyntaxFactoryMethod("Literal");
                 bool shouldAddTrivia = leading != null || trailing != null;
@@ -408,26 +504,37 @@ namespace RoslynQuoter
                     arguments.Add(leading ?? GetEmptyTrivia("LeadingTrivia"));
                 }
 
-                string escapedText = EscapeAndQuote(value.Text);
-                string escapedValue = EscapeAndQuote(value.ValueText);
+                bool needsFullOverload = shouldAddTrivia;
 
-                if (value.Kind() == SyntaxKind.CharacterLiteralToken)
+                string simpleOverloadText = tokenKind switch
                 {
-                    escapedValue = EscapeAndQuote(value.ValueText, "'");
-                }
-                else if (value.Kind() != SyntaxKind.StringLiteralToken)
+                    SyntaxKind.StringLiteralToken => SyntaxFactory.Literal((string)token.Value).ToString(),
+                    SyntaxKind.CharacterLiteralToken => SyntaxFactory.Literal((char)token.Value).ToString(),
+                    _ => token.ToString()
+                };
+                if (token.ToString() != simpleOverloadText.ToString())
                 {
-                    escapedValue = value.ValueText;
-                }
-
-                if (shouldAddTrivia ||
-                    (value.Kind() == SyntaxKind.StringLiteralToken &&
-                    value.ToString() != Microsoft.CodeAnalysis.CSharp.SyntaxFactory.Literal(value.ValueText).ToString()))
-                {
-                    arguments.Add(escapedText);
+                    needsFullOverload = true;
                 }
 
-                arguments.Add(escapedValue);
+                if (tokenKind == SyntaxKind.CharacterLiteralToken)
+                {
+                    escapedTokenValueText = EscapeAndQuote(tokenValueText, verbatim: false, "'");
+                }
+                else if (tokenKind == SyntaxKind.NumericLiteralToken)
+                {
+                    escapedTokenValueText = tokenText;
+                }
+
+                if (needsFullOverload)
+                {
+                    arguments.Add(escapedTokenText);
+                    arguments.Add(escapedTokenValueText);
+                }
+                else
+                {
+                    arguments.Add(tokenText);
+                }
 
                 if (shouldAddTrivia)
                 {
@@ -436,23 +543,23 @@ namespace RoslynQuoter
             }
             else
             {
-                if (value.IsMissing)
+                if (tokenIsMissing)
                 {
                     methodName = SyntaxFactoryMethod("MissingToken");
                 }
 
-                if (value.Kind() == SyntaxKind.BadToken)
+                if (tokenKind == SyntaxKind.BadToken)
                 {
                     methodName = SyntaxFactoryMethod("BadToken");
                     leading = leading ?? GetEmptyTrivia("LeadingTrivia");
                     trailing = trailing ?? GetEmptyTrivia("TrailingTrivia");
                 }
 
-                object tokenValue = value.Kind();
+                object tokenValue = tokenKind;
 
-                if (value.Kind() == SyntaxKind.BadToken)
+                if (tokenKind == SyntaxKind.BadToken)
                 {
-                    tokenValue = escapedTokenValueText;
+                    tokenValue = escapedTokenText;
                 }
 
                 AddIfNotNull(arguments, leading);
@@ -681,69 +788,56 @@ namespace RoslynQuoter
             }
         }
 
+        /// <summary>
+        /// Helper to quickly create a list from one or several items
+        /// </summary>
         private static List<object> CreateArgumentList(params object[] args)
         {
             return new List<object>(args);
         }
 
-        public static string Escape(string text, bool escapeVerbatim = false)
+        /// <summary>
+        /// Escapes strings to be included within "" using C# escaping rules
+        /// </summary>
+        public static string Escape(string text, bool escapeVerbatim = false, string quoteChar = "\"")
         {
-            var sb = new StringBuilder();
-            for (int i = 0; i < text.Length; i++)
+            if (text.Length == 1 && quoteChar == "'")
             {
-                string toAppend = text[i].ToString();
-                if (text[i] == '"')
-                {
-                    if (escapeVerbatim)
-                    {
-                        toAppend = "\"\"";
-                    }
-                    else
-                    {
-                        toAppend = "\\\"";
-                    }
-                }
-                else if (text[i] == '\\' && !escapeVerbatim)
-                {
-                    toAppend = "\\\\";
-                }
-
-                sb.Append(toAppend);
+                var charLiteralToken = SyntaxFactory.Literal(text[0]);
+                var escapedChar = charLiteralToken.Text;
+                escapedChar = escapedChar.Substring(1, escapedChar.Length - 2);
+                return escapedChar;
             }
 
-            return sb.ToString();
-        }
+            string escaped = text;
 
-        public static string EscapeAndQuote(string text, string quoteChar = "\"")
-        {
-            bool verbatim = text.Contains("\n") || text.Contains("\r");
-            return EscapeAndQuote(text, verbatim, quoteChar);
+            if (escapeVerbatim)
+            {
+                escaped = escaped.Replace("\"", "\"\"");
+            }
+            else
+            {
+                var literalToken = SyntaxFactory.Literal(escaped);
+                escaped = literalToken.Text;
+                escaped = escaped.Substring(1, escaped.Length - 2);
+            }
+
+            return escaped;
         }
 
         public static string ParseStringLiteral(string text)
-        {
-            bool verbatim = false;
-            if (text.StartsWith("@"))
-            {
-                text = text.Substring(1);
-                verbatim = true;
-            }
-
-            if (text.StartsWith("\"") && text.EndsWith("\""))
-            {
-                text = text.Substring(1, text.Length - 2);
-            }
-
-            text = Unescape(text, verbatim);
-            return text;
-        }
-
-        public static string Unescape(string text, bool verbatim)
         {
             if (text == "Environment.NewLine")
             {
                 return Environment.NewLine;
             }
+
+            var token = SyntaxFactory.ParseToken(text);
+            return token.ValueText;
+        }
+
+        public static string Unescape(string text, bool verbatim)
+        {
 
             if (verbatim)
             {
@@ -805,12 +899,7 @@ namespace RoslynQuoter
                 return "Environment.NewLine";
             }
 
-            if (text == "\n")
-            {
-                return "\"\\n\"";
-            }
-
-            text = Escape(text, verbatim);
+            text = Escape(text, verbatim, quoteChar);
             text = SurroundWithQuotes(text, quoteChar);
             if (verbatim)
             {
@@ -826,6 +915,9 @@ namespace RoslynQuoter
             return text;
         }
 
+        /// <summary>
+        /// Finds a value in a list using case-insensitive search
+        /// </summary>
         private ApiCall FindValue(string parameterName, IEnumerable<ApiCall> values)
         {
             return values.FirstOrDefault(
@@ -855,6 +947,10 @@ namespace RoslynQuoter
         "XmlTextAttribute(Microsoft.CodeAnalysis.CSharp.Syntax.XmlNameSyntax, Microsoft.CodeAnalysis.CSharp.SyntaxKind, Microsoft.CodeAnalysis.SyntaxTokenList)"
     };
 
+        /// <summary>
+        /// Static methods on Microsoft.CodeAnalysis.CSharp.SyntaxFactory class that construct SyntaxNodes
+        /// </summary>
+        /// <example>Syntax.ClassDeclaration()</example>
         private static readonly Dictionary<string, IEnumerable<MethodInfo>> factoryMethods = GetFactoryMethods();
 
         private static readonly Dictionary<string, IEnumerable<MethodInfo>> factoryMethodsByName = factoryMethods
@@ -863,6 +959,10 @@ namespace RoslynQuoter
             .GroupBy(m => m.Name)
             .ToDictionary(g => g.Key, g => (IEnumerable<MethodInfo>)g.ToArray());
 
+        /// <summary>
+        /// Five public properties on Microsoft.CodeAnalysis.CSharp.SyntaxFactory that return trivia: CarriageReturn,
+        /// LineFeed, CarriageReturnLineFeed, Space and Tab.
+        /// </summary>
         private static readonly Dictionary<string, PropertyInfo> triviaFactoryProperties = GetTriviaFactoryProperties();
 
         private static readonly Dictionary<string, SyntaxTrivia> triviaFactoryPropertyValues = typeof(SyntaxFactory)
@@ -871,15 +971,25 @@ namespace RoslynQuoter
             .Where(propertyInfo => !propertyInfo.Name.Contains("Elastic"))
             .ToDictionary(p => p.Name, p => ((SyntaxTrivia)p.GetValue(null)));
 
+        /// <summary>
+        /// Gets the five properties on SyntaxFactory that return ready-made trivia: CarriageReturn,
+        /// CarriageReturnLineFeed, LineFeed, Space and Tab.
+        /// </summary>
         private static Dictionary<string, PropertyInfo> GetTriviaFactoryProperties()
         {
-            return typeof(SyntaxFactory)
+            var result = typeof(SyntaxFactory)
                 .GetProperties(BindingFlags.Public | BindingFlags.Static)
                 .Where(propertyInfo => propertyInfo.PropertyType == typeof(SyntaxTrivia))
                 .Where(propertyInfo => !propertyInfo.Name.Contains("Elastic"))
                 .ToDictionary(propertyInfo => ((SyntaxTrivia)propertyInfo.GetValue(null)).ToString());
+
+            return result;
         }
 
+        /// <summary>
+        /// Returns static methods on Microsoft.CodeAnalysis.CSharp.SyntaxFactory that return types derived from
+        /// SyntaxNode and bucketizes them by overloads.
+        /// </summary>
         private static Dictionary<string, IEnumerable<MethodInfo>> GetFactoryMethods()
         {
             var result = new Dictionary<string, IEnumerable<MethodInfo>>();
@@ -906,6 +1016,11 @@ namespace RoslynQuoter
             return result;
         }
 
+        /// <summary>
+        /// Uses Reflection to inspect static factory methods on the Microsoft.CodeAnalysis.CSharp.SyntaxFactory
+        /// class and pick an overload that creates a node of the same type as the input <paramref
+        /// name="node"/>
+        /// </summary>
         private MethodInfo PickFactoryMethodToCreateNode(SyntaxNode node)
         {
             string name = node.GetType().Name;
@@ -986,6 +1101,10 @@ namespace RoslynQuoter
             return factory;
         }
 
+        /// <summary>
+        /// Adds information about subsequent modifying fluent interface style calls on an object (like
+        /// foo.With(...).With(...))
+        /// </summary>
         private void AddModifyingCalls(object treeElement, ApiCall apiCall, List<ApiCall> values)
         {
             var methods = treeElement.GetType()
@@ -1033,6 +1152,12 @@ namespace RoslynQuoter
             apiCall.Add(methodCall);
         }
 
+        /// <summary>
+        /// Calls the Roslyn syntax API to actually create the syntax tree object and return the source
+        /// code generated by the syntax tree.
+        /// </summary>
+        /// <param name="apiCallString">Code that calls Roslyn syntax APIs as a string</param>
+        /// <returns>The string that corresponds to the code of the syntax tree.</returns>
         //public SyntaxNode Evaluate(string apiCallString)
         //{
         //    var generatedNode = CSharpScript.EvaluateAsync<SyntaxNode>(apiCallString, options).Result;
@@ -1051,14 +1176,14 @@ namespace RoslynQuoter
             //var scriptingResult = EvaluateText(apiCallString, normalizeWhitespace);
 
             var node = (SyntaxNode)InterpretApiCall(apiCall);
-            
+            var interpretedResult = GetText(normalizeWhitespace, node);
 
             //if (interpretedResult != scriptingResult)
             //{
             //    throw new Exception("Interpreter is wrong");
             //}
 
-            return GetText(normalizeWhitespace, node);
+            return interpretedResult;
         }
 
         private static string GetText(bool normalizeWhitespace, SyntaxNode node)
@@ -1068,7 +1193,8 @@ namespace RoslynQuoter
                 node = node.NormalizeWhitespace();
             }
 
-            return node.ToFullString();
+            var resultText = node.ToFullString();
+            return resultText;
         }
 
         public object InterpretApiCall(ApiCall apiCall)
@@ -1154,9 +1280,9 @@ namespace RoslynQuoter
                 return methodCall.Arguments.Select(a => InterpretApiCall((ApiCall)a)).ToArray();
             }
 
-            if (instance is CompilationUnitSyntax compilationUnit && name == "NormalizeWhitespace")
+            if (instance is SyntaxNode n && name == "NormalizeWhitespace")
             {
-                return compilationUnit.NormalizeWhitespace();
+                return n.NormalizeWhitespace();
             }
 
             string genericArgument;
@@ -1173,10 +1299,13 @@ namespace RoslynQuoter
                 var (candidate, arguments) = PickCandidateMethod(name, methodCall.Arguments, candidates, genericArgumentType);
                 if (candidate == null)
                 {
-                    throw new Exception("Can't pick a method to call for " + methodCall.Name);
+                    throw new Exception(
+                        $@"Can't pick a method to call for {methodCall.Name}.
+If the first parameter is of type SyntaxKind, please add an exception for this node type in QuotePropertyValues().");
                 }
 
-                return candidate.Invoke(instance, arguments);
+                var node = candidate.Invoke(instance, arguments);
+                return node;
             }
             else
             {
@@ -1202,7 +1331,7 @@ namespace RoslynQuoter
             return Enumerable.Empty<MethodInfo>();
         }
 
-        private readonly Dictionary<string, Type> typeCache = new Dictionary<string, Type>();
+        private Dictionary<string, Type> typeCache = new Dictionary<string, Type>();
 
         private Type GetType(string typeName)
         {
@@ -1424,17 +1553,61 @@ namespace RoslynQuoter
                 {
                     return (ParseStringLiteral(str), true);
                 }
-                else if (parameterType == typeof(int) && int.TryParse(str, out int int32))
+                else if (parameterType == typeof(int))
                 {
-                    return (int32, true);
+                    if (str.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                    {
+                        str = str.Remove(0, 2);
+                    }
+
+                    if (int.TryParse(str, out var int32))
+                    {
+                        return (int32, true);
+                    }
                 }
-                else if (parameterType == typeof(double) && double.TryParse(str, out double dbl))
+                else if (parameterType == typeof(double))
                 {
-                    return (dbl, true);
+                    if (str.EndsWith("d", StringComparison.OrdinalIgnoreCase))
+                    {
+                        str = str.Substring(0, str.Length - 1);
+                    }
+
+                    if (double.TryParse(str, out var dbl))
+                    {
+                        return (dbl, true);
+                    }
                 }
-                else if (parameterType == typeof(char) && str.StartsWith("'") && str.EndsWith("'") && char.TryParse(str.Trim('\''), out char ch))
+                else if (parameterType == typeof(float))
                 {
-                    return (ch, true);
+                    if (str.EndsWith("f", StringComparison.OrdinalIgnoreCase))
+                    {
+                        str = str.Substring(0, str.Length - 1);
+                    }
+
+                    if (float.TryParse(str, out var fl))
+                    {
+                        return (fl, true);
+                    }
+                }
+                else if (parameterType == typeof(decimal))
+                {
+                    if (str.EndsWith("m", StringComparison.OrdinalIgnoreCase))
+                    {
+                        str = str.Substring(0, str.Length - 1);
+                    }
+
+                    if (decimal.TryParse(str, out var d))
+                    {
+                        return (d, true);
+                    }
+                }
+                else if (parameterType == typeof(char))
+                {
+                    var token = SyntaxFactory.ParseToken(str);
+                    if (token.IsKind(SyntaxKind.CharacterLiteralToken))
+                    {
+                        return (token.Value, true);
+                    }
                 }
                 else if (parameterType == typeof(bool))
                 {
@@ -1447,6 +1620,45 @@ namespace RoslynQuoter
                         return (false, true);
                     }
                 }
+                else if (
+                    parameterType == typeof(uint) ||
+                    parameterType == typeof(ulong) ||
+                    parameterType == typeof(long))
+                {
+                    if (str.StartsWith("0x", StringComparison.OrdinalIgnoreCase))
+                    {
+                        str = str.Remove(0, 2);
+                    }
+
+                    if (str.EndsWith("lu", StringComparison.OrdinalIgnoreCase) ||
+                        str.EndsWith("ul", StringComparison.OrdinalIgnoreCase))
+                    {
+                        str = str.Substring(0, str.Length - 2);
+                    }
+                    else if (str.EndsWith("u", StringComparison.OrdinalIgnoreCase))
+                    {
+                        str = str.Substring(0, str.Length - 1);
+                    }
+                    else if (str.EndsWith("l", StringComparison.OrdinalIgnoreCase))
+                    {
+                        str = str.Substring(0, str.Length - 1);
+                    }
+
+                    if (uint.TryParse(str, out var ui))
+                    {
+                        return (ui, true);
+                    }
+
+                    if (ulong.TryParse(str, out var ul))
+                    {
+                        return (ul, true);
+                    }
+
+                    if (long.TryParse(str, out var l))
+                    {
+                        return (l, true);
+                    }
+                }
             }
             else if (argument != null && parameterType.IsAssignableFrom(argument.GetType()))
             {
@@ -1456,11 +1668,15 @@ namespace RoslynQuoter
             return (argument, false);
         }
 
+        /// <summary>
+        /// Flattens a tree of ApiCalls into a single string.
+        /// </summary>
         public string Print(ApiCall root)
         {
             var sb = new StringBuilder();
             Print(root, sb, 0, OpenParenthesisOnNewLine, ClosingParenthesisOnNewLine);
-            return sb.ToString();
+            var generatedCode = sb.ToString();
+            return generatedCode;
         }
 
         private static string PrintWithDefaultFormatting(ApiCall root)
@@ -1472,7 +1688,8 @@ namespace RoslynQuoter
                 0,
                 openParenthesisOnNewLine: false,
                 closingParenthesisOnNewLine: false);
-            return sb.ToString();
+            var generatedCode = sb.ToString();
+            return generatedCode;
         }
 
         private static void Print(
@@ -1652,6 +1869,10 @@ namespace RoslynQuoter
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Enumerates names of properties on SyntaxNode, SyntaxToken and SyntaxTrivia classes that do
+        /// not impact the shape of the syntax tree and are not essential to reconstructing the tree.
+        /// </summary>
         private static readonly string[] nonStructuralProperties =
         {
             "AllowsAnyExpression",
@@ -1687,6 +1908,15 @@ namespace RoslynQuoter
             "SyntaxTree",
         };
 
+        /// <summary>
+        /// "Stringly typed" representation of a C# property or method invocation expression, with a
+        /// string for the property or method name and a list of similarly loosely typed argument
+        /// expressions. Simply speaking, this is a tree of strings.
+        /// </summary>
+        /// <example>
+        /// Data structure to represent code (API calls) of simple hierarchical shape such as:
+        /// A.B(C, D.E(F(G, H), I))
+        /// </example>
         public class ApiCall
         {
             public string Name { get; private set; }
@@ -1755,6 +1985,9 @@ namespace RoslynQuoter
             }
         }
 
+        /// <summary>
+        /// Simple data structure to represent a member call, primarily just the string Name.
+        /// </summary>
         public class MemberCall
         {
             public string Name { get; set; }
@@ -1767,6 +2000,9 @@ namespace RoslynQuoter
             }
         }
 
+        /// <summary>
+        /// Represents a method call that has a Name and an arbitrary list of Arguments.
+        /// </summary>
         public class MethodCall : MemberCall
         {
             public List<object> Arguments { get; set; }
@@ -1783,9 +2019,13 @@ namespace RoslynQuoter
         }
     }
 
+    /// <summary>
+    /// Represents one of basic C# syntax node kinds.
+    /// </summary>
     public enum NodeKind
     {
         CompilationUnit,
+        Script,
         MemberDeclaration,
         Statement,
         Expression
