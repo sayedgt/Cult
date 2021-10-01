@@ -3,7 +3,7 @@ using System.Runtime.Caching;
 using Microsoft.Extensions.Caching.Memory;
 
 // ReSharper disable All 
-namespace Cult.MemoryCache
+namespace Cult.MoreMemoryCache
 {
     public static class MemoryCacheExtensions
     {
