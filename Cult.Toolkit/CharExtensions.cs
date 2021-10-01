@@ -1,5 +1,7 @@
 using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
+
 // ReSharper disable All 
 namespace Cult.Toolkit.ExtraChar
 {
@@ -116,6 +118,16 @@ namespace Cult.Toolkit.ExtraChar
         public static char ToUpperInvariant(this char c)
         {
             return char.ToUpperInvariant(c);
+        }
+
+        public static bool IsRegexMatch(this char c, string regex)
+        {
+            return Regex.Match(c.ToString(), regex, RegexOptions.Compiled).Success;
+        }
+
+        public static bool IsRegexMatch(this char c, Regex regex)
+        {
+            return regex.Match(c.ToString()).Success;
         }
     }
 }
