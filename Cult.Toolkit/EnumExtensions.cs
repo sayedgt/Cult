@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 
 // ReSharper disable All 
-namespace Cult.Extensions.ExtraEnum
+namespace Cult.Toolkit.ExtraEnum
 {
     public static class EnumExtensions
     {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Xbehave", "Cult.Xbehave\Cult.Xbehave.csproj", "{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}"
 EndProject
@@ -71,7 +71,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.SimpleCacheManager", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.SimpleCacheManager.DependencyInjection", "Cult.SimpleCacheManager.DependencyInjection\Cult.SimpleCacheManager.DependencyInjection.csproj", "{CA1A1C01-CA00-41A9-890F-4E1A6E41A5DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.NSubstitute", "Cult.NSubstitute\Cult.NSubstitute.csproj", "{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.NSubstitute", "Cult.NSubstitute\Cult.NSubstitute.csproj", "{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.Toolkit", "Cult.Toolkit\Cult.Toolkit.csproj", "{83255D53-99AA-4799-A7B8-AAFD943A76B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -219,6 +221,10 @@ Global
 		{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{282983EF-6BCB-41AB-AC65-5E3FEE4774EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83255D53-99AA-4799-A7B8-AAFD943A76B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83255D53-99AA-4799-A7B8-AAFD943A76B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83255D53-99AA-4799-A7B8-AAFD943A76B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83255D53-99AA-4799-A7B8-AAFD943A76B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
