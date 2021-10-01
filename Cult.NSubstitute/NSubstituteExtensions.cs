@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
+// ReSharper disable CheckNamespace
+// ReSharper disable UnusedMember.Global
 
 namespace NSubstitute
 {
@@ -17,8 +19,8 @@ namespace NSubstitute
         public static object Protected(this object target, string methodName, params object[] args)
         {
             var type = target.GetType();
-            var method = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
-                             .Where(x => x.Name == methodName).Single();
+            var method = type
+                .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Single(x => x.Name == methodName);
             return method.Invoke(target, args);
         }
     }
