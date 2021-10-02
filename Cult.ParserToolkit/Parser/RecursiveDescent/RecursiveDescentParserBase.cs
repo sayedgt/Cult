@@ -28,7 +28,8 @@ namespace Cult.ParserToolkit.Parser.RecursiveDescent
 
         public ParserResult<TResult> Parse()
         {
-            if (_errors.Count > 0)
+            var result = Process();
+            if (_errors.Any())
             {
                 return new ParserResult<TResult>
                 {
@@ -40,7 +41,7 @@ namespace Cult.ParserToolkit.Parser.RecursiveDescent
             return new ParserResult<TResult>
             {
                 Errors = null,
-                Result = Process()
+                Result = result
             };
         }
 
