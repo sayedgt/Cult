@@ -571,7 +571,8 @@ namespace Cult.Toolkit.ExtraObject
         }
         public static bool TryDispose(this object toDispose)
         {
-            if (!(toDispose is IDisposable disposable))
+            var disposable = toDispose as IDisposable;
+            if (disposable == null)
                 return false;
 
             disposable.Dispose();

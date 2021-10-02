@@ -1,13 +1,8 @@
 ﻿using System;
 // ReSharper disable UnusedMember.Global
 
-namespace Cult.Toolkit
+namespace Cult.TestToolkit
 {
-    public interface IGuidGenerator
-    {
-        Guid NewGuid();
-    }
-
     public class GuidGenerator
     {
         public Guid NewGuid() => Guid.NewGuid();

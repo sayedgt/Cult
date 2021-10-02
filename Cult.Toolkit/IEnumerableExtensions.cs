@@ -388,5 +388,14 @@ namespace Cult.Toolkit.ExtraIEnumerable
 
             return true;
         }
+
+        public static IEnumerable<T> Process<T>(this IEnumerable<T> src, Action<T> action)
+        {
+            foreach (T item in src)
+            {
+                action(item);
+                yield return item;
+            }
+        }
     }
 }

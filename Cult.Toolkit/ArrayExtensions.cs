@@ -364,5 +364,13 @@ namespace Cult.Toolkit.ExtraArray
         {
             return source.Select((item, index) => (item, index));
         }
+        public static IEnumerable<T> Process<T>(this T[] src, Action<T> action)
+        {
+            foreach (T item in src)
+            {
+                action(item);
+                yield return item;
+            }
+        }
     }
 }

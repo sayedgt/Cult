@@ -1,17 +1,8 @@
 ﻿using System;
-// ReSharper disable All 
+// ReSharper disable UnusedMember.Global
 
-
-namespace Cult.Toolkit
+namespace Cult.TestToolkit
 {
-    public interface IClock
-    {
-        DateTime Now { get; }
-        DateTimeOffset OffsetNow { get; }
-        DateTimeOffset OffsetUtcNow { get; }
-        DateTime UtcNow { get; }
-    }
-
     public class Clock : IClock
     {
         public DateTime Now => DateTime.Now;
