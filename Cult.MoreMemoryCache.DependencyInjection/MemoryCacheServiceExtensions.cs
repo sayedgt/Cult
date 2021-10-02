@@ -1,7 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
+
 // ReSharper disable UnusedMember.Global
 
-namespace Cult.MoreMemoryCache
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Cult.MoreMemoryCache.DependencyInjection
 {
     /// <summary>
     /// Memory Cache Service Extensions
