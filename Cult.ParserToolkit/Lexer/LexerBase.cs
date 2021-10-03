@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Cult.Toolkit.ExtraChar;
+using Cult.Toolkit.ExtraString;
 
 // ReSharper disable RedundantDefaultMemberInitializer
 // ReSharper disable UnusedMember.Global
@@ -15,7 +15,8 @@ namespace Cult.ParserToolkit.Lexer
         private readonly StringReader _reader;
         private readonly string _input;
         private readonly List<Token<TToken>> _tokens = new List<Token<TToken>>();
-
+        private readonly IList<string> _errors = new List<string>();
+        
         // = 0
         protected int Position { get; set; }
         protected int Line { get; set; } = 1;
@@ -38,12 +39,39 @@ namespace Cult.ParserToolkit.Lexer
             {
                 ReadToken();
             }
-            return new LexerResult<TToken> { Input = _input, Tokens = _tokens };
+
+            return _errors.Any()
+                ? new LexerResult<TToken> { Input = _input, Tokens = null, Errors = _errors }
+                : new LexerResult<TToken> { Input = _input, Tokens = _tokens, Errors = null };
         }
 
         protected void AddToken(Token<TToken> token)
         {
             _tokens.Add(token);
+        }
+
+        protected void AddError(Token<TToken> currentToken, string expected, string message = "")
+        {
+            if (currentToken == null)
+                throw new ArgumentNullException($"'{nameof(currentToken)}' argument is null.");
+
+
+            if (string.IsNullOrEmpty(expected))
+                throw new ArgumentNullException($"'{nameof(expected)}' argument is null or empty.");
+
+            var error = Error(currentToken, expected, message);
+
+            if (string.IsNullOrEmpty(error))
+                throw new ArgumentNullException($"The 'Error()' function has returned null or empty.");
+
+            _errors.Add(error);
+        }
+
+        protected virtual string Error(Token<TToken> currentToken, string expected, string message = "")
+        {
+            return
+                $"Expecting '{expected}' but got '{currentToken.Value}' ({currentToken.Position.Line}:{currentToken.Position.Column})"
+                + (string.IsNullOrEmpty(message) ? "" : Environment.NewLine + message);
         }
 
         protected bool IsMatch(char ch)
@@ -183,14 +211,14 @@ namespace Cult.ParserToolkit.Lexer
         protected virtual bool IsIdentifierCandidate(char ch, Regex regex = null)
         {
             var re = regex ?? new Regex("^[_a-zA-Z0-9]+$", RegexOptions.Compiled);
-            return ch.IsRegexMatch(re);
+            return ch.ToString().IsRegexMatch(re);
         }
 
         protected virtual bool IsOperator(string value)
         {
             var operators = new[]
             {
-                "+", "-", "/", "*", "%", "<", ">", ">=", "<=", "!=", "=","==", "++", "--", "&", "^", "|", ">>", "<<", "&&",
+                "+", "-", "/", "*", "%", "<", ">", ">=", "<=", "!=", "=","==","===", "++", "--", "&", "^", "|", ">>", "<<", "&&",
                 "||", "??","+=","-=","*=","/=","%=","|=","&=","^=","<<=",">>=","??=","=>","..","~","?.","->"
             };
 

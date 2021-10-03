@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Cult.ParserToolkit.Lexer;
 
+// ReSharper disable NotResolvedInText
+
 // ReSharper disable CollectionNeverQueried.Local
+
 // ReSharper disable UnusedMember.Global
 
 namespace Cult.ParserToolkit.Parser.RecursiveDescent
@@ -17,6 +20,11 @@ namespace Cult.ParserToolkit.Parser.RecursiveDescent
 
         protected RecursiveDescentParserBase(LexerResult<TToken> lexerResult)
         {
+            if (lexerResult.Tokens == null || !lexerResult.Tokens.Any())
+            {
+                throw new Exception("The lexer result has no token.");
+            }
+
             // Iterates through our tokens (collection).
             _tokens = lexerResult.Tokens.GetEnumerator();
 
@@ -43,6 +51,7 @@ namespace Cult.ParserToolkit.Parser.RecursiveDescent
                 Errors = null,
                 Result = result
             };
+
         }
 
         protected void AddError(Token<TToken> currentToken, string expected, string message = "")
@@ -57,7 +66,7 @@ namespace Cult.ParserToolkit.Parser.RecursiveDescent
             var error = Error(currentToken, expected, message);
 
             if (string.IsNullOrEmpty(error))
-                throw new ArgumentNullException($"The 'Error()' function has returned null or empty.");
+                throw new ArgumentNullException("The 'Error()' function has returned null or empty.");
 
             _errors.Add(error);
         }
@@ -92,7 +101,7 @@ namespace Cult.ParserToolkit.Parser.RecursiveDescent
         protected virtual string Error(Token<TToken> currentToken, string expected, string message = "")
         {
             return
-                    $"Expecting '{expected}' but got '{currentToken.Value}' ({currentToken.Position.Line}:{currentToken.Position.Start})"
+                    $"Expecting '{expected}' but got '{currentToken.Value}' ({currentToken.Position.Line}:{currentToken.Position.Column})"
                     + (string.IsNullOrEmpty(message) ? "" : Environment.NewLine + message);
         }
 
