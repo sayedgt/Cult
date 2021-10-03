@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Cult.SimpleCacheManager
 {
-    public interface ICacheManager<TKey,TValue> : IEnumerable
+    public interface ICacheManager<TKey, TValue> : IEnumerable
     {
         TValue this[TKey key] { get; set; }
         Dictionary<TKey, TValue> CacheData();
@@ -15,6 +15,7 @@ namespace Cult.SimpleCacheManager
         int Count();
 
         TValue Get(TKey key);
+        TValue Get(TKey key, out bool hasKey);
 
         TValue GetOrSet(TKey key, Func<TValue> value);
 

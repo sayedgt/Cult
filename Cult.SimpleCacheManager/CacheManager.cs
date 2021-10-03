@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Cult.SimpleCacheManager
 {
-    public class CacheManager<TKey,TValue> : ICacheManager<TKey, TValue>
+    public class CacheManager<TKey, TValue> : ICacheManager<TKey, TValue>
     {
         private readonly ConcurrentDictionary<TKey, TValue> _cache = new ConcurrentDictionary<TKey, TValue>();
 
@@ -21,6 +21,18 @@ namespace Cult.SimpleCacheManager
         public int Count() => _cache.Count;
 
         public TValue Get(TKey key) => !_cache.ContainsKey(key) ? default : _cache[key];
+
+        public TValue Get(TKey key, out bool hasKey)
+        {
+            if (_cache.ContainsKey(key))
+            {
+                hasKey = true;
+                return _cache[key];
+            }
+
+            hasKey = false;
+            return default;
+        }
 
         public TValue GetOrSet(TKey key, TValue value)
         {
