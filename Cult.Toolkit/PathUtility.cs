@@ -20,6 +20,8 @@ namespace Cult.Toolkit
         {
             return Path.Combine(Path.GetDirectoryName(path) ?? string.Empty, Path.GetFileNameWithoutExtension(path));
         }
+
+        // Null means there is no file or directory with this path
         public static bool? IsDirectory(string path)
         {
             if (Directory.Exists(path))
@@ -28,10 +30,12 @@ namespace Cult.Toolkit
                 return false;
             return null;
         }
+
+        // Null means there is no file or directory with this path
         public static bool? IsFile(string path)
         {
             var isDir = IsDirectory(path);
-            return !isDir;
+            return isDir == null ? null : !isDir;
         }
     }
 }
