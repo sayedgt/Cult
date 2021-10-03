@@ -24,6 +24,7 @@ namespace Cult.Toolkit.ExtraString
         {
             return JsonSerializer.Deserialize<T>(jsonText, options);
         }
+
         public static Position GetPosition(this string text, int position)
         {
             var line = 1;
@@ -595,6 +596,16 @@ namespace Cult.Toolkit.ExtraString
         {
             return @this.Replace("\r\n", "<br />").Replace("\n", "<br />");
         }
+        public static string Replace(this string @this, string regexPattren, string replacement)
+        {
+            return Regex.Replace(@this, regexPattren, replacement, RegexOptions.Compiled);
+        }
+
+        public static string Replace(this string @this, string regexPattren, string replacement, RegexOptions regexOptions)
+        {
+            return Regex.Replace(@this, regexPattren, replacement, regexOptions);
+        }
+
         public static bool NotIn(this string @this, params string[] values)
         {
             return Array.IndexOf(values, @this) == -1;
