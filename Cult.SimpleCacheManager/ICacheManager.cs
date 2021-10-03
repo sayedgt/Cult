@@ -15,7 +15,7 @@ namespace Cult.SimpleCacheManager
         int Count();
 
         TValue Get(TKey key);
-        TValue Get(TKey key, out bool hasKey);
+        TValue TryGet(TKey key, out bool hasKey);
 
         TValue GetOrSet(TKey key, Func<TValue> value);
 
@@ -25,7 +25,7 @@ namespace Cult.SimpleCacheManager
 
         bool Remove(TKey key);
 
-        bool Remove(TKey key, out TValue value);
+        bool TryRemove(TKey key, out TValue value);
 
         void Set(TKey key, TValue value);
 

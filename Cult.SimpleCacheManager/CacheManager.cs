@@ -22,7 +22,7 @@ namespace Cult.SimpleCacheManager
 
         public TValue Get(TKey key) => !_cache.ContainsKey(key) ? default : _cache[key];
 
-        public TValue Get(TKey key, out bool hasKey)
+        public TValue TryGet(TKey key, out bool hasKey)
         {
             if (_cache.ContainsKey(key))
             {
@@ -48,7 +48,7 @@ namespace Cult.SimpleCacheManager
 
         public bool Remove(TKey key) => _cache.TryRemove(key, out _);
 
-        public bool Remove(TKey key, out TValue value) => _cache.TryRemove(key, out value);
+        public bool TryRemove(TKey key, out TValue value) => _cache.TryRemove(key, out value);
 
         public void Set(TKey key, TValue value) => _cache.AddOrUpdate(key, value, (newKey, newValue) => value);
 
