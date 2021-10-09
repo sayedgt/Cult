@@ -1,3 +1,4 @@
+using Cult.Toolkit.ExtraString;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,12 +6,21 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Text.RegularExpressions;
 
 // ReSharper disable All
 namespace Cult.Toolkit.ExtraIEnumerable
 {
     public static class IEnumerableExtensions
     {
+        public static IEnumerable<string> ContainsFuzzy(this IEnumerable<string> text, string search)
+        {
+            return text.Where(x => FuzzyMatcher.FuzzyMatch(search, x));
+        }
+        public static IEnumerable<string> IsLike(this IEnumerable<string> @this, string pattern)
+        {
+            return @this.Where(x => x.IsLike(pattern));
+        }
         public static BigInteger BigIntCount<T>(this IEnumerable<T> source)
         {
             BigInteger count = 0;

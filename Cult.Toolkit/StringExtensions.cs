@@ -24,7 +24,6 @@ namespace Cult.Toolkit.ExtraString
         {
             return JsonSerializer.Deserialize<T>(jsonText, options);
         }
-
         public static Position GetPosition(this string text, int position)
         {
             var line = 1;
@@ -1276,6 +1275,10 @@ namespace Cult.Toolkit.ExtraString
         public static string UrlPathEncode(this string str)
         {
             return HttpUtility.UrlPathEncode(str);
+        }
+        public static bool ContainsFuzzy(this string text, string search)
+        {
+            return FuzzyMatcher.FuzzyMatch(search, text);
         }
     }
 }
