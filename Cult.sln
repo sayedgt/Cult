@@ -3,15 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Xbehave", "Cult.Xbehave\Cult.Xbehave.csproj", "{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Sharp2Js", "Cult.Sharp2Js\Cult.Sharp2Js.csproj", "{2A34E508-34AA-4D9B-A58E-46577E175EBF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.RawPrint", "Cult.RawPrint\Cult.RawPrint.csproj", "{FB8D0CEE-0BF1-42CF-AE5A-65CFE1A74DC1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DotLiquid", "Cult.DotLiquid\Cult.DotLiquid.csproj", "{6B8BADBA-5219-4E05-B7D5-1D4A952FC434}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.PersianDateTime", "Cult.PersianDateTime\Cult.PersianDateTime.csproj", "{6F1B8327-0578-4E5B-8B4D-2E934160008F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.NetDiff", "Cult.NetDiff\Cult.NetDiff.csproj", "{190EA0BA-4D6A-4C84-B511-9D1EE1ADE269}"
 EndProject
@@ -30,10 +26,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.MustacheSharp", "Cult.MustacheSharp\Cult.MustacheSharp.csproj", "{D92428B2-7C5F-4A89-9FD9-A533E58156E3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Mvc", "Cult.Mvc\Cult.Mvc.csproj", "{4016DCBA-B198-405C-8094-F95D5DA00432}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Persian", "Cult.Persian\Cult.Persian.csproj", "{354B718F-C126-414C-AAA0-EA12CEC0700A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.PersianDataset", "Cult.PersianDataset\Cult.PersianDataset.csproj", "{D3804595-4703-4A86-A0D2-301D9E8B56DB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Configuration", "Cult.Configuration\Cult.Configuration.csproj", "{505E3E08-0590-46B2-B663-1F342E61B0F4}"
 EndProject
@@ -69,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.TestToolkit.Dependency
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.SimpleCacheManager.DependencyInjection", "Cult.SimpleCacheManager.DependencyInjection\Cult.SimpleCacheManager.DependencyInjection.csproj", "{D5FC8053-FE57-4B49-B28B-34285B8CCF3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cult.MoreMemoryCache.DependencyInjection", "Cult.MoreMemoryCache.DependencyInjection\Cult.MoreMemoryCache.DependencyInjection.csproj", "{094F3519-1212-48BD-81F6-26C2AAFF5592}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.MoreMemoryCache.DependencyInjection", "Cult.MoreMemoryCache.DependencyInjection\Cult.MoreMemoryCache.DependencyInjection.csproj", "{094F3519-1212-48BD-81F6-26C2AAFF5592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,10 +69,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{269C6A0C-3AC6-48B7-90E9-4F6A15BFA888}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2A34E508-34AA-4D9B-A58E-46577E175EBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2A34E508-34AA-4D9B-A58E-46577E175EBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A34E508-34AA-4D9B-A58E-46577E175EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -93,10 +81,6 @@ Global
 		{6B8BADBA-5219-4E05-B7D5-1D4A952FC434}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B8BADBA-5219-4E05-B7D5-1D4A952FC434}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B8BADBA-5219-4E05-B7D5-1D4A952FC434}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F1B8327-0578-4E5B-8B4D-2E934160008F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F1B8327-0578-4E5B-8B4D-2E934160008F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F1B8327-0578-4E5B-8B4D-2E934160008F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F1B8327-0578-4E5B-8B4D-2E934160008F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{190EA0BA-4D6A-4C84-B511-9D1EE1ADE269}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{190EA0BA-4D6A-4C84-B511-9D1EE1ADE269}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{190EA0BA-4D6A-4C84-B511-9D1EE1ADE269}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -133,14 +117,6 @@ Global
 		{4016DCBA-B198-405C-8094-F95D5DA00432}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4016DCBA-B198-405C-8094-F95D5DA00432}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4016DCBA-B198-405C-8094-F95D5DA00432}.Release|Any CPU.Build.0 = Release|Any CPU
-		{354B718F-C126-414C-AAA0-EA12CEC0700A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{354B718F-C126-414C-AAA0-EA12CEC0700A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{354B718F-C126-414C-AAA0-EA12CEC0700A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{354B718F-C126-414C-AAA0-EA12CEC0700A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3804595-4703-4A86-A0D2-301D9E8B56DB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{505E3E08-0590-46B2-B663-1F342E61B0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
