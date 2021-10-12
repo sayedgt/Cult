@@ -12,6 +12,14 @@ namespace Cult.Toolkit.ExtraIEnumerable
 {
     public static class IEnumerableExtensions
     {
+        public static Dictionary<TKey, IEnumerable<TElement>>
+            ToGroupedDictionary<TKey, TElement>(this IEnumerable<IGrouping<TKey, TElement>> items)
+        {
+            return items.ToDictionary<IGrouping<TKey, TElement>, TKey, IEnumerable<TElement>>(
+                item => item.Key,
+                item => item);
+        }
+
         public static IEnumerable<string> RemoveEmptyElements(this IEnumerable<string> strings)
         {
             foreach (var s in strings)

@@ -12,6 +12,12 @@ namespace Cult.Toolkit.ExtraType
 {
     public static class TypeExtensions
     {
+        public static T CreateGenericTypeInstance<T>(this Type genericType, params Type[] typeArguments) where T : class
+        {
+            var constructedType = genericType.MakeGenericType(typeArguments);
+            var instance = Activator.CreateInstance(constructedType);
+            return instance as T;
+        }
         public static Type GetCoreType(this Type input)
         {
             if (input == null)
@@ -155,6 +161,16 @@ namespace Cult.Toolkit.ExtraType
         {
             return type.GetInterface("IEnumerable") != null;
         }
+        public static bool IsNullable(this Type input)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            return !input.IsValueType ||
+                   (input.IsGenericType && input.GetGenericTypeDefinition() == typeof(Nullable<>));
+        }
         public static bool IsNullableValueType(this Type toCheck)
         {
             if ((toCheck == null) || !toCheck.IsValueType)
@@ -228,6 +244,10 @@ namespace Cult.Toolkit.ExtraType
             return typeMap[type];
         }
 
+        public static T? ToNullable<T>(this T value) where T : struct
+        {
+            return value.Equals(default(T)) ? null : value;
+        }
         public static bool IsTuple(this Type type)
         {
             return type.FullName.StartsWith("System.Tuple`", StringComparison.Ordinal);
@@ -246,6 +266,19 @@ namespace Cult.Toolkit.ExtraType
         public static bool IsInstanceOfType(this Type type, object obj)
         {
             return obj != null && type.IsInstanceOfType(obj);
+        }
+
+        public static bool IsNetSystemType(this Type type)
+        {
+            if (type == null)
+            {
+                return false;
+            }
+            var nameToCheck = type.Assembly.GetName();
+            var exceptions = new[] { "Microsoft.SqlServer.Types" };
+            return new[] { "System", "mscorlib", "System.", "Microsoft." }
+                .Any(s => (s.EndsWith(".") && nameToCheck.Name.StartsWith(s)) || (nameToCheck.Name == s)) &&
+                   !exceptions.Any(s => nameToCheck.Name.StartsWith(s));
         }
 
         public static IEnumerable<Type> GetInnerTypes(this Type type, params Type[] simpleTypes)
@@ -377,6 +410,18 @@ namespace Cult.Toolkit.ExtraType
             final.AddRange(enumerables);
 
             return final;
+        }
+
+        public static bool HasInterface<T>(this Type type) => typeof(T).IsAssignableFrom(type);
+
+        public static bool HasInterface(this Type type, Type interfaceType) => interfaceType.IsAssignableFrom(type);
+
+        public static bool HasInterfaces(this Type type, params Type[] interfaceTypes)
+        {
+            foreach (var interfaceType in interfaceTypes)
+                if (!interfaceType.IsAssignableFrom(type))
+                    return false;
+            return true;
         }
     }
 }

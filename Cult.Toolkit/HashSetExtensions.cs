@@ -14,7 +14,8 @@ namespace Cult.Toolkit.ExtraHashSet
             }
             return allAdded;
         }
-        public static bool AddRange<T>(this HashSet<T> @this, T[] items)
+
+        public static bool AddRange<T>(this HashSet<T> @this, params T[] items)
         {
             if (items == null) return false;
             var allAdded = true;
