@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 // ReSharper disable All
 
 namespace Cult.Toolkit.ExtraIQueryable
@@ -12,6 +14,15 @@ namespace Cult.Toolkit.ExtraIQueryable
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize)
                 ;
+        }
+
+        public static bool Any<T>(this IQueryable<T> source)
+        {
+            return source.Count() > 0;
+        }
+        public static bool Any<T>(this IQueryable<T> source, Expression<Func<T, bool>> predicate)
+        {
+            return source.Count(predicate) > 0;
         }
     }
 }
