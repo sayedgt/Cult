@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Cult.Toolkit.Cryptography
 {
+    // Crc32
+    // Rijndael
+    // TripleDES
     public static class HashExtensions
     {
         public static string ComputeMD5Hash(this string data)
