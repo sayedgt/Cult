@@ -246,7 +246,7 @@ namespace Cult.Toolkit.ExtraIDataReader
             }
             catch
             {
-                return default(T);
+                return default;
             }
         }
         public static T GetValueAsOrDefault<T>(this IDataReader @this, int index, T defaultValue)
@@ -279,7 +279,7 @@ namespace Cult.Toolkit.ExtraIDataReader
             }
             catch
             {
-                return default(T);
+                return default;
             }
         }
         public static T GetValueAsOrDefault<T>(this IDataReader @this, string columnName, T defaultValue)
@@ -320,7 +320,7 @@ namespace Cult.Toolkit.ExtraIDataReader
             }
             catch
             {
-                return default(T);
+                return default;
             }
         }
         public static T GetValueToOrDefault<T>(this IDataReader @this, int index, T defaultValue)
@@ -353,7 +353,7 @@ namespace Cult.Toolkit.ExtraIDataReader
             }
             catch
             {
-                return default(T);
+                return default;
             }
         }
         public static T GetValueToOrDefault<T>(this IDataReader @this, string columnName, T defaultValue)

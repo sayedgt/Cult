@@ -1,6 +1,6 @@
-﻿namespace Cult.DynamicQuery
+﻿namespace Cult.Toolkit
 {
-    public enum ComparisonMethod
+    public enum ComparisonFilter
     {
         LessThan,
         LessThanEqual,

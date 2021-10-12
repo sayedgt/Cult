@@ -5,13 +5,13 @@
 	<Authors>Hamed Fathi</Authors>
 	<Company />
 	<PublishRepositoryUrl>true</PublishRepositoryUrl>
-	<Version>1.1.0</Version>
+	<Version>1.1.1</Version>
 	<PackageProjectUrl>https://github.com/HamedFathi/Cult</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/HamedFathi/Cult</RepositoryUrl>
 	<RepositoryUrl>https://github.com/HamedFathi/Cult</RepositoryUrl>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CsToTs" Version="1.3.13" />
+    <PackageReference Include="CsToTs" Version="1.3.16" />
   </ItemGroup>
 </Project>

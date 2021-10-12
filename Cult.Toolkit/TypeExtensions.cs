@@ -156,7 +156,7 @@ namespace Cult.Toolkit.ExtraType
         }
         public static bool IsRecord(this Type type)
         {
-            var isRecord1 = ((TypeInfo)type).DeclaredProperties.Where(x => x.Name == "EqualityContract").FirstOrDefault()?.GetMethod?.GetCustomAttribute(typeof(CompilerGeneratedAttribute)) is object;
+            var isRecord1 = ((TypeInfo)type).DeclaredProperties.FirstOrDefault(x => x.Name == "EqualityContract")?.GetMethod?.GetCustomAttribute(typeof(CompilerGeneratedAttribute)) is object;
             var isRecord2 = type.GetMethod("<Clone>$") is object;
             if (isRecord1 || isRecord2) return true;
             return false;
@@ -207,6 +207,157 @@ namespace Cult.Toolkit.ExtraType
             };
 
             return typeMap[type];
+        }
+
+        public static bool IsTuple(this Type type)
+        {
+            return type.FullName.StartsWith("System.Tuple`", StringComparison.Ordinal);
+        }
+
+        public static bool IsTypeOf<T>(this object obj)
+        {
+            return obj.GetType() == typeof(T);
+        }
+
+        public static bool IsDictionary(this Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>);
+        }
+
+        public static bool IsInstanceOfType(this Type type, object obj)
+        {
+            return obj != null && type.IsInstanceOfType(obj);
+        }
+
+        public static IEnumerable<Type> GetInnerTypes(this Type type, params Type[] simpleTypes)
+        {
+            var isPrimitive = type.IsPrimitive;
+            var status = type.FullName.StartsWith("System.", StringComparison.Ordinal)
+                && !type.IsDictionary()
+                && !type.IsEnumerable()
+                && !type.IsCollection()
+                && !type.IsTuple()
+                && !type.IsArray
+                ;
+            if (isPrimitive
+                || status
+                || type == typeof(string)
+                || type.IsEnum
+                || type.IsValueType
+                || simpleTypes.Contains(type))
+            {
+                return new List<Type>() { type };
+            }
+
+            var list = new List<Type>();
+            if (type.IsGenericType)
+            {
+                if (type.IsDictionary())
+                {
+                    Type keyType = type.GetGenericArguments()[0];
+                    list.Add(keyType);
+                    Type valueType = type.GetGenericArguments()[1];
+                    list.Add(valueType);
+                    list.AddRange(GetInnerTypes(keyType));
+                    list.AddRange(GetInnerTypes(valueType));
+
+                }
+                if (type.IsEnumerable() || type.IsCollection())
+                {
+                    Type itemType = type.GetGenericArguments()[0];
+                    list.Add(itemType);
+                    list.AddRange(GetInnerTypes(itemType));
+
+                }
+                if (type.IsTuple())
+                {
+                    var args = type.GetGenericArguments();
+                    foreach (var arg in args)
+                    {
+                        list.Add(arg);
+                        list.AddRange(GetInnerTypes(arg));
+                    }
+                }
+            }
+            else
+            {
+                if (type.IsArray)
+                {
+                    var t = type.GetElementType();
+                    list.Add(t);
+                    list.AddRange(GetInnerTypes(t));
+
+                }
+                if (type.IsInterface)
+                {
+                    // TODO
+                }
+                if (type.IsClass)
+                {
+                    var ts = type.GetProperties().Select(x => x.PropertyType).ToList();
+                    list.AddRange(ts);
+                    foreach (var ttss in ts)
+                        list.AddRange(GetInnerTypes(ttss));
+                }
+            }
+            var lst = list.Distinct().ToList();
+            return SortInnerTypes(lst, simpleTypes);
+        }
+        private static List<Type> SortInnerTypes(List<Type> types, params Type[] simpleTypes)
+        {
+            var primitives = new List<Type>();
+            var systems = new List<Type>();
+            var enums = new List<Type>();
+            var str = new List<Type>();
+            var simples = new List<Type>();
+            var classes = new List<Type>();
+            var dictionaries = new List<Type>();
+            var enumerables = new List<Type>();
+            var tuples = new List<Type>();
+            var arrays = new List<Type>();
+            var valueTypes = new List<Type>();
+
+            foreach (var item in types)
+            {
+                if (item.IsPrimitive)
+                    primitives.Add(item);
+                if (item.FullName.StartsWith("System.", StringComparison.Ordinal))
+                    systems.Add(item);
+                if (item.IsValueType)
+                    valueTypes.Add(item);
+                if (item.IsEnum)
+                    enums.Add(item);
+                if (item == typeof(string))
+                    str.Add(item);
+                if (simpleTypes.Contains(item))
+                    simples.Add(item);
+                if (item.IsClass)
+                    classes.Add(item);
+                if (item.IsDictionary())
+                    dictionaries.Add(item);
+                if (item.IsEnumerable() || item.IsCollection())
+                    enumerables.Add(item);
+                if (item.IsTuple())
+                    tuples.Add(item);
+                if (item.IsArray)
+                    arrays.Add(item);
+            }
+
+            var final = new List<Type>();
+
+            final.AddRange(primitives);
+            final.AddRange(valueTypes);
+            final.AddRange(enums);
+            final.AddRange(str);
+            final.AddRange(simples);
+            final.AddRange(classes);
+            final.AddRange(systems);
+            final.AddRange(arrays);
+            final.AddRange(tuples);
+            final.AddRange(dictionaries);
+            final.AddRange(enumerables);
+
+            return final;
         }
     }
 }

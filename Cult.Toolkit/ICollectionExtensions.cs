@@ -8,6 +8,39 @@ namespace Cult.Toolkit.ExtraICollection
 {
     public static class ICollectionExtensions
     {
+        public static bool RemoveAll<T>(this ICollection<T> self, Func<T, bool> predicate)
+        {
+            if (self == null)
+                throw new ArgumentNullException(nameof(self));
+            if (predicate == null)
+                throw new ArgumentNullException(nameof(predicate));
+
+            bool found = false;
+
+            IList<T> list = self as IList<T>;
+            if (list != null)
+            {
+                for (int i = list.Count - 1; i >= 0; --i)
+                {
+                    if (predicate(list[i]))
+                    {
+                        list.RemoveAt(i);
+                        found = true;
+                    }
+                }
+            }
+            else
+            {
+                List<T> items = self.Where(predicate).ToList();
+                for (int i = 0; i < items.Count; ++i)
+                {
+                    if (self.Remove(items[i]))
+                        found = true;
+                }
+            }
+
+            return found;
+        }
         public static List<List<T>> Split<T>(this ICollection<T> source, int chunkSize)
         {
             return source

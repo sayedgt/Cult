@@ -358,6 +358,37 @@ namespace Cult.Toolkit.ExtraIEnumerable
                 .Take(pageSize)
                 ;
         }
+
+        public static bool SetEqual<T>(this IEnumerable<T> source, IEnumerable<T> toCompareWith)
+        {
+            if ((source == null) || (toCompareWith == null))
+            {
+                return false;
+            }
+            return source.SetEqual(toCompareWith, null);
+        }
+
+        public static bool SetEqual<T>(this IEnumerable<T> source, IEnumerable<T> toCompareWith, IEqualityComparer<T> comparer)
+        {
+            if ((source == null) || (toCompareWith == null))
+            {
+                return false;
+            }
+            int countSource = source.Count();
+            int countToCompareWith = toCompareWith.Count();
+            if (countSource != countToCompareWith)
+            {
+                return false;
+            }
+            if (countSource == 0)
+            {
+                return true;
+            }
+
+            IEqualityComparer<T> comparerToUse = comparer ?? EqualityComparer<T>.Default;
+            return source.Intersect(toCompareWith, comparerToUse).Count() == countSource;
+        }
+
         public static ReadOnlyCollection<TDestination> ToReadOnlyCollection<TDestination>(this IEnumerable source)
         {
             var sourceAsDestination = new List<TDestination>();

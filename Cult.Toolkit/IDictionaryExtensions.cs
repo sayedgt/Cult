@@ -225,7 +225,7 @@ namespace Cult.Toolkit.ExtraIDictionary
         }
         public static IDictionary<TKey, TValue> SortByValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
         {
-            return (new SortedDictionary<TKey, TValue>(dictionary)).OrderBy(kvp => kvp.Value).ToDictionary(item => item.Key, item => item.Value);
+            return new SortedDictionary<TKey, TValue>(dictionary).OrderBy(kvp => kvp.Value).ToDictionary(item => item.Key, item => item.Value);
         }
         public static ExpandoObject ToExpando(this IDictionary<string, object> @this)
         {
@@ -291,6 +291,15 @@ namespace Cult.Toolkit.ExtraIDictionary
                 return value;
             }
             return defaultValue;
+        }
+        public static bool TryRemove<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, out TValue value)
+        {
+            if (self is null)
+            {
+                throw new ArgumentNullException(nameof(self));
+            }
+
+            return self.TryGetValue(key, out value) && self.Remove(key);
         }
     }
 }

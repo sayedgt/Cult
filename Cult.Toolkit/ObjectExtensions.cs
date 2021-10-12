@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Text.Json;
 
 // ReSharper disable All
@@ -13,6 +14,40 @@ namespace Cult.Toolkit.ExtraObject
 {
     public static class ObjectExtensions
     {
+        public static T IfNull<T>(this T obj, Action action)
+        {
+            if (obj == null)
+            {
+                action();
+            }
+
+            return obj;
+        }
+
+        public static T IfNull<T>(this T obj, Func<T> func)
+        {
+            return obj == null ? func() : obj;
+        }
+
+        public static T IfNotNull<T>(this T obj, Action<T> action)
+        {
+            if (obj != null)
+            {
+                action(obj);
+            }
+
+            return obj;
+        }
+
+        public static T IfNotNull<T>(this T obj, Action action)
+        {
+            if (obj != null)
+            {
+                action();
+            }
+
+            return obj;
+        }
         public static void IfType<T>(this object item, Action<T> action) where T : class
         {
             if (item is T)
@@ -367,10 +402,9 @@ namespace Cult.Toolkit.ExtraObject
                 throw new ArgumentNullException(nameof(comparer));
 
             var minMaxCompare = comparer.Compare(minValue, maxValue);
-            if (minMaxCompare < 0)
-                return comparer.Compare(value, minValue) >= 0 && comparer.Compare(value, maxValue) <= 0;
-
-            return comparer.Compare(value, maxValue) >= 0 && comparer.Compare(value, minValue) <= 0;
+            return minMaxCompare < 0
+                ? comparer.Compare(value, minValue) >= 0 && comparer.Compare(value, maxValue) <= 0
+                : comparer.Compare(value, maxValue) >= 0 && comparer.Compare(value, minValue) <= 0;
         }
         public static bool IsDate(this object obj)
         {
@@ -590,6 +624,11 @@ namespace Cult.Toolkit.ExtraObject
             {
                 WriteIndented = true
             });
+        }
+
+        public static dynamic ToDynamic(this string jsonText)
+        {
+            return JsonSerializer.Deserialize<dynamic>(jsonText);
         }
     }
 }

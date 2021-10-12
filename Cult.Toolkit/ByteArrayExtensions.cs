@@ -43,7 +43,7 @@ namespace Cult.Toolkit.ExtraByteArray
         public static T ConvertFromByteArray<T>(this byte[] data)
         {
             if (data == null)
-                return default(T);
+                return default;
             BinaryFormatter bf = new BinaryFormatter();
             using (MemoryStream ms = new MemoryStream(data))
             {

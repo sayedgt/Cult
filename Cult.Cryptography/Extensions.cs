@@ -3,6 +3,9 @@ using System.Text;
 
 namespace Cult.Cryptography
 {
+    // Crc32
+    // Rijndael
+    // TripleDES
     internal static class Extensions
     {
         internal static byte[] ToByteArray(this string data)

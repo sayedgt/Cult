@@ -20,6 +20,41 @@ namespace Cult.Toolkit.ExtraString
 {
     public static class StringExtensions
     {
+        public static SecureString ToSecureString(this string str)
+        {
+            var secureString = new SecureString();
+            foreach (var c in str)
+                secureString.AppendChar(c);
+            return secureString;
+        }
+        public static string Strip(this string s, char character)
+        {
+            s = s.Replace(character.ToString(), "");
+            return s;
+        }
+        public static string Strip(this string s, params char[] chars)
+        {
+            foreach (char c in chars)
+                s = s.Replace(c.ToString(), "");
+            return s;
+        }
+        public static string Strip(this string s, string subString)
+        {
+            s = s.Replace(subString, "");
+            return s;
+        }
+        public static string ToBase62(this string text, Base62CharacterSet charSet = Base62CharacterSet.Default)
+        {
+            var base62 = new Base62Converter(charSet);
+            return base62.Encode(text);
+        }
+
+        public static string FromBase62(this string base62Text, Base62CharacterSet charSet = Base62CharacterSet.Default)
+        {
+            var base62 = new Base62Converter(charSet);
+            return base62.Decode(base62Text);
+        }
+
         public static T FromJson<T>(this string jsonText, JsonSerializerOptions options = null)
         {
             return JsonSerializer.Deserialize<T>(jsonText, options);
@@ -62,7 +97,7 @@ namespace Cult.Toolkit.ExtraString
         public static bool TryParseEnum<T>(this string name, out T result, bool ignoreCase = false)
             where T : struct, Enum
         {
-            return Enum.TryParse<T>(name, ignoreCase, out result);
+            return Enum.TryParse(name, ignoreCase, out result);
         }
 
         public static T ParseEnum<T>(this string name, bool ignoreCase = false)
@@ -262,7 +297,7 @@ namespace Cult.Toolkit.ExtraString
         public static IEnumerable<int> FindAllIndexOf<T>(this T[] @this, Predicate<T> predicate) where T : class
         {
             var subArray = Array.FindAll(@this, predicate);
-            return (from T item in subArray select Array.IndexOf(@this, item));
+            return from T item in subArray select Array.IndexOf(@this, item);
         }
         public static string Format(this string format, object[] args)
         {
@@ -356,7 +391,7 @@ namespace Cult.Toolkit.ExtraString
         }
         public static string IfEmpty(this string value, string defaultValue)
         {
-            return (value.IsNotEmpty() ? value : defaultValue);
+            return value.IsNotEmpty() ? value : defaultValue;
         }
         public static string IfNullOrWhiteSpaceElse(this string input, string nullAlternateValue)
         {

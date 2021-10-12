@@ -42,7 +42,7 @@ namespace Cult.Toolkit.ExtraArray
             }
             return false;
         }
-        public static ReadOnlyCollection<T> AsReadOnly<T>(this T[] array)
+        public static ReadOnlyCollection<T> ToReadOnlyCollection<T>(this T[] array)
         {
             return Array.AsReadOnly(array);
         }
@@ -54,7 +54,7 @@ namespace Cult.Toolkit.ExtraArray
         {
             if (arrayToClear != null)
                 for (var i = arrayToClear.GetLowerBound(0); i <= arrayToClear.GetUpperBound(0); ++i)
-                    arrayToClear[i] = default(T);
+                    arrayToClear[i] = default;
             return arrayToClear;
         }
         public static void ClearAll(this Array @this)
@@ -77,7 +77,7 @@ namespace Cult.Toolkit.ExtraArray
             {
                 int arrayIndex = at.GetArrayIndex();
                 if (arrayIndex.IsIndexInArray(arrayToClear))
-                    arrayToClear[arrayIndex] = default(T);
+                    arrayToClear[arrayIndex] = default;
             }
             return arrayToClear;
         }

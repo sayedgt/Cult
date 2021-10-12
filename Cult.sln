@@ -37,8 +37,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Pagination", "Cult.Pag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.TypeScript", "Cult.TypeScript\Cult.TypeScript.csproj", "{18AE1808-783C-4C48-8DBE-26114370DB75}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DynamicQuery", "Cult.DynamicQuery\Cult.DynamicQuery.csproj", "{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Guard", "Cult.Guard\Cult.Guard.csproj", "{77173074-821F-4C4C-9EFA-C941C2990A31}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.TrxParser", "Cult.TrxParser\Cult.TrxParser.csproj", "{82D39BF7-2EDA-439B-B7E9-5717F875DCC2}"
@@ -137,10 +135,6 @@ Global
 		{18AE1808-783C-4C48-8DBE-26114370DB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18AE1808-783C-4C48-8DBE-26114370DB75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18AE1808-783C-4C48-8DBE-26114370DB75}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8FB22784-53C4-4B24-93A8-FE9ACA1CE4FF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77173074-821F-4C4C-9EFA-C941C2990A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{77173074-821F-4C4C-9EFA-C941C2990A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77173074-821F-4C4C-9EFA-C941C2990A31}.Release|Any CPU.ActiveCfg = Release|Any CPU

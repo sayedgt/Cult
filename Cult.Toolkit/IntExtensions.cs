@@ -8,6 +8,56 @@ namespace Cult.Toolkit.ExtraInt
 {
     public static class IntExtensions
     {
+        public static int SumOfDigets(this int a)
+        {
+            int sum = 0;
+            while (a / 10 != 0)
+            {
+                sum += (a % 10);
+                a /= 10;
+            }
+            return sum + a;
+        }
+
+        public static bool IsPrime(this int a)
+        {
+            int temp = a;
+            if (a == 0 || a == 1)
+                return false;
+            if (a < 0)
+            {
+                temp = a * (-1);
+            }
+            for (int j = 2; j <= temp / 2; j++)
+            {
+                if (a % j == 0)
+                    return false;
+            }
+            return true;
+        }
+
+        public static bool IsPerfect(this int num)
+        {
+            int sum = 0;
+            if (num == 0 || num == 1)
+                return false;
+            else
+            {
+                for (int i = 2; i <= num / 2; i++)
+                {
+                    if (num % i == 0)
+                    {
+                        sum += i;
+                    }
+                }
+                if (sum + 1 == num)
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
         public static BigInteger Permutation(this int n, int r)
         {
             return n.Factorial() / (n - r).Factorial();
@@ -118,29 +168,6 @@ namespace Cult.Toolkit.ExtraInt
         public static bool IsOdd(this int @this)
         {
             return @this % 2 != 0;
-        }
-        public static bool IsPrime(this int @this)
-        {
-            if (@this == 1 || @this == 2)
-            {
-                return true;
-            }
-
-            if (@this % 2 == 0)
-            {
-                return false;
-            }
-
-            var sqrt = (int)Math.Sqrt(@this);
-            for (long t = 3; t <= sqrt; t = t + 2)
-            {
-                if (@this % t == 0)
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
         public static int Max(this int val1, int val2)
         {

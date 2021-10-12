@@ -6,7 +6,7 @@
     <Company />
     <LangVersion>latest</LangVersion>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <PackageProjectUrl>https://github.com/HamedFathi/Cult</PackageProjectUrl>
     <RepositoryUrl>https://github.com/HamedFathi/Cult</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

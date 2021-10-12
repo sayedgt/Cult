@@ -8,12 +8,92 @@ namespace Cult.Toolkit.ExtraIList
 {
     public static class IListExtensions
     {
+        public static IList<K> Map<T, K>(this IList<T> list, Func<T, K> function)
+        {
+            var newList = new List<K>(list.Count);
+            for (var i = 0; i < list.Count; ++i)
+            {
+                newList.Add(function(list[i]));
+            }
+            return newList;
+        }
+        public static bool IsNullOrEmpty<T>(this IList<T> toCheck)
+        {
+            return (toCheck == null) || (toCheck.Count <= 0);
+        }
         public static void RemoveLast<T>(this IList<T> source, int n = 1)
         {
             for (int i = 0; i < n; i++)
             {
                 source.RemoveAt(source.Count - 1);
             }
+        }
+        public static int BinarySearch<T>(this IList sortedList, T element, IComparer<T> comparer)
+        {
+            if (sortedList is null)
+                throw new ArgumentNullException(nameof(sortedList));
+
+            if (comparer is null)
+                throw new ArgumentNullException(nameof(comparer));
+
+            if (sortedList.Count <= 0)
+                return -1;
+
+            int left = 0;
+            int right = sortedList.Count - 1;
+            while (left <= right)
+            {
+                // determine the index in the list to compare with. This is the middle of the segment we're searching in.
+                int index = left + (right - left) / 2;
+                int compareResult = comparer.Compare((T)sortedList[index], element);
+                if (compareResult == 0)
+                {
+                    // found it, done. Return the index
+                    return index;
+                }
+                if (compareResult < 0)
+                {
+                    // element is bigger than the element at index, so we can skip all elements at the left of index including the element at index.
+                    left = index + 1;
+                }
+                else
+                {
+                    // element is smaller than the element at index, so we can skip all elements at the right of index including the element at index.
+                    right = index - 1;
+                }
+            }
+            return ~left;
+        }
+        public static void AddRange<T>(this IList<T> container, IEnumerable<T> rangeToAdd)
+        {
+            if ((container == null) || (rangeToAdd == null))
+            {
+                return;
+            }
+            foreach (T toAdd in rangeToAdd)
+            {
+                container.Add(toAdd);
+            }
+        }
+        public static void SwapValues<T>(this IList<T> source, int indexA, int indexB)
+        {
+            if ((indexA < 0) || (indexA >= source.Count))
+            {
+                throw new IndexOutOfRangeException("indexA is out of range");
+            }
+            if ((indexB < 0) || (indexB >= source.Count))
+            {
+                throw new IndexOutOfRangeException("indexB is out of range");
+            }
+
+            if (indexA == indexB)
+            {
+                return;
+            }
+
+            T tempValue = source[indexA];
+            source[indexA] = source[indexB];
+            source[indexB] = tempValue;
         }
         public static List<List<T>> Split<T>(this IList<T> source, int chunkSize)
         {

@@ -36,7 +36,7 @@ namespace Cult.Toolkit
 
             for (int i = 0; i < myArray.Length; i++)
             {
-                c = Multiplication[c, Permutation[((i + 1) % 8), myArray[i]]];
+                c = Multiplication[c, Permutation[(i + 1) % 8, myArray[i]]];
             }
 
             return Inverse[c].ToString();
@@ -62,7 +62,7 @@ namespace Cult.Toolkit
 
             for (int i = 0; i < myArray.Length; i++)
             {
-                c = Multiplication[c, Permutation[(i % 8), myArray[i]]];
+                c = Multiplication[c, Permutation[i % 8, myArray[i]]];
             }
 
             return c == 0;

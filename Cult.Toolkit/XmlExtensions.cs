@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 // ReSharper disable All 
 namespace Cult.Toolkit.ExtraXml
 {
@@ -67,11 +68,9 @@ namespace Cult.Toolkit.ExtraXml
         }
         public static XDocument ToXDocument(this XmlDocument xmlDocument)
         {
-            using (var nodeReader = new XmlNodeReader(xmlDocument))
-            {
-                nodeReader.MoveToContent();
-                return XDocument.Load(nodeReader);
-            }
+            using var nodeReader = new XmlNodeReader(xmlDocument);
+            nodeReader.MoveToContent();
+            return XDocument.Load(nodeReader);
         }
         public static XmlDocument ToXmlDocument(this XDocument xDocument)
         {
@@ -93,6 +92,26 @@ namespace Cult.Toolkit.ExtraXml
             var doc = new XmlDocument();
             doc.LoadXml(sb.ToString());
             return doc;
+        }
+
+        public static string XmlSerialize<T>(this T obj) where T : class, new()
+        {
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+
+            var serializer = new XmlSerializer(typeof(T));
+            using var writer = new StringWriter();
+            serializer.Serialize(writer, obj);
+            return writer.ToString();
+        }
+
+        public static T XmlDeserialize<T>(this string xml) where T : class, new()
+        {
+            if (xml == null) throw new ArgumentNullException(nameof(xml));
+
+            var serializer = new XmlSerializer(typeof(T));
+            using var reader = new StringReader(xml);
+            try { return (T)serializer.Deserialize(reader); }
+            catch { return null; }
         }
     }
 }

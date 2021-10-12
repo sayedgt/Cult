@@ -17,7 +17,7 @@ namespace Cult.Sharp2Js
             sb.AppendLine(source);
             return sb.ToString();
         }
-        public static string ToJavaScript(this Type type, bool addModelsVariable = false)
+        public static string ToJavaScript(this Type type, bool defineModelsVariable = false)
         {
             var result = JsGenerator.Generate(new[] { type }, new JsGeneratorOptions
             {
@@ -25,7 +25,7 @@ namespace Cult.Sharp2Js
                 IncludeMergeFunction = false,
                 IncludeEqualsFunction = false
             });
-            return addModelsVariable ? AddModelsVariable(result) : result;
+            return defineModelsVariable ? AddModelsVariable(result) : result;
         }
         public static string ToJavaScript(this Type type, JsGeneratorOptions options, bool addModelsVariable = false)
         {

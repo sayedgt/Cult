@@ -67,11 +67,11 @@ namespace Cult.Toolkit
 
             if (lambda.Body is UnaryExpression expression)
             {
-                memberExpression = (MemberExpression)(expression.Operand);
+                memberExpression = (MemberExpression)expression.Operand;
             }
             else
             {
-                memberExpression = (MemberExpression)(lambda.Body);
+                memberExpression = (MemberExpression)lambda.Body;
             }
 
             return (PropertyInfo)memberExpression.Member;

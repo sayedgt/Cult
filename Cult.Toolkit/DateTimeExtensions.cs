@@ -7,7 +7,79 @@ namespace Cult.Toolkit.ExtraDateTime
     public static class DateTimeExtensions
     {
         private static readonly string UtcDateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'";
+        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
+        public static double ToEpochMilliseconds(this DateTime date)
+        {
+            return date.Subtract(_epoch).TotalMilliseconds;
+        }
+        public static double ToEpochSeconds(this DateTime date)
+        {
+            return date.Subtract(_epoch).TotalSeconds;
+        }
+        /// <summary>
+        /// Gets a DateTime representing the first day in the current month
+        /// </summary>
+        /// <param name="current">The current date</param>
+        /// <returns></returns>
+        public static DateTime First(this DateTime current)
+        {
+            return current.AddDays(1 - current.Day);
+        }
+
+        /// <summary>
+        /// Gets a DateTime representing the first specified day in the current month
+        /// </summary>
+        /// <param name="current">The current day</param>
+        /// <param name="dayOfWeek">The current day of week</param>
+        /// <returns></returns>
+        public static DateTime First(this DateTime current, DayOfWeek dayOfWeek)
+        {
+            DateTime first = current.First();
+            if (first.DayOfWeek != dayOfWeek)
+            {
+                first = first.Next(dayOfWeek);
+            }
+            return first;
+        }
+
+        /// <summary>
+        /// Gets a DateTime representing the last day in the current month
+        /// </summary>
+        /// <param name="current">The current date</param>
+        /// <returns></returns>
+        public static DateTime Last(this DateTime current)
+        {
+            int daysInMonth = DateTime.DaysInMonth(current.Year, current.Month);
+            return current.First().AddDays(daysInMonth - 1);
+        }
+
+        /// <summary>
+        /// Gets a DateTime representing the last specified day in the current month
+        /// </summary>
+        /// <param name="current">The current date</param>
+        /// <param name="dayOfWeek">The current day of week</param>
+        /// <returns></returns>
+        public static DateTime Last(this DateTime current, DayOfWeek dayOfWeek)
+        {
+            DateTime last = current.Last();
+            return last.AddDays(Math.Abs(dayOfWeek - last.DayOfWeek) * -1);
+        }
+
+        /// <summary>
+        /// Gets a DateTime representing the first date following the current date which falls on the given day of the week
+        /// </summary>
+        /// <param name="current">The current date</param>
+        /// <param name="dayOfWeek">The day of week for the next date to get</param>
+        public static DateTime Next(this DateTime current, DayOfWeek dayOfWeek)
+        {
+            int offsetDays = dayOfWeek - current.DayOfWeek;
+            if (offsetDays <= 0)
+            {
+                offsetDays += 7;
+            }
+            return current.AddDays(offsetDays);
+        }
         public static string ToUtcFormatString(this DateTime date)
         {
             return date.ToUniversalTime().ToString(UtcDateFormat);
@@ -138,7 +210,7 @@ namespace Cult.Toolkit.ExtraDateTime
         }
         public static bool IsDateEqual(this DateTime date, DateTime dateToCompare)
         {
-            return (date.Date == dateToCompare.Date);
+            return date.Date == dateToCompare.Date;
         }
         public static bool IsDaylightSavingTime(this DateTime time, DateTime daylightTimes)
         {
@@ -162,7 +234,7 @@ namespace Cult.Toolkit.ExtraDateTime
         }
         public static bool IsTimeEqual(this DateTime time, DateTime timeToCompare)
         {
-            return (time.TimeOfDay == timeToCompare.TimeOfDay);
+            return time.TimeOfDay == timeToCompare.TimeOfDay;
         }
         public static bool IsToday(this DateTime @this)
         {
@@ -174,7 +246,7 @@ namespace Cult.Toolkit.ExtraDateTime
         }
         public static bool IsWeekend(this DateTime @this)
         {
-            return (@this.DayOfWeek == DayOfWeek.Saturday || @this.DayOfWeek == DayOfWeek.Sunday);
+            return @this.DayOfWeek == DayOfWeek.Saturday || @this.DayOfWeek == DayOfWeek.Sunday;
         }
         public static DateTime LastDayOfMonth(this DateTime date)
         {
@@ -595,5 +667,27 @@ namespace Cult.Toolkit.ExtraDateTime
         {
             return @this.AddDays(-1);
         }
+        /// <summary>
+        /// Round Up <see cref="DateTime"/> to nearest timespan.
+        /// </summary>
+        /// <param name="dt">Input object</param>
+        /// <param name="d">Time span unit. Example: TimeSpan.FromMinutes(1) rounded to 1 minute.</param>
+        /// <returns></returns>
+        public static DateTime RoundUp(this DateTime dt, TimeSpan d)
+        {
+            return new DateTime((dt.Ticks + d.Ticks - 1) / d.Ticks * d.Ticks);
+        }
+
+        /// <summary>
+        /// Round Down <see cref="DateTime"/> to nearest timespan.
+        /// </summary>
+        /// <param name="dt">Input object</param>
+        /// <param name="d">Time span unit. Example: TimeSpan.FromMinutes(1) rounded to 1 minute.</param>
+        /// <returns></returns>
+        public static DateTime RoundDown(this DateTime dt, TimeSpan d)
+        {
+            return new DateTime(dt.Ticks / d.Ticks * d.Ticks);
+        }
+
     }
 }
