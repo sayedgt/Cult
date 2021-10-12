@@ -389,18 +389,32 @@ namespace Cult.Toolkit.ExtraObject
         }
         public static bool IsBetween<T>(this T value, T minValue, T maxValue) where T : IComparable<T>
         {
-            return IsBetween(value, minValue, maxValue, Comparer<T>.Default);
+            return minValue.CompareTo(value) == -1 && value.CompareTo(maxValue) == -1;
         }
-        public static bool IsBetween<T>(this T value, T minValue, T maxValue, IComparer<T> comparer) where T : IComparable<T>
-        {
-            if (comparer == null)
-                throw new ArgumentNullException(nameof(comparer));
 
-            var minMaxCompare = comparer.Compare(minValue, maxValue);
-            return minMaxCompare < 0
-                ? comparer.Compare(value, minValue) >= 0 && comparer.Compare(value, maxValue) <= 0
-                : comparer.Compare(value, maxValue) >= 0 && comparer.Compare(value, minValue) <= 0;
+        public static bool IsBetweenInclusive<T>(this T value, T minValue, T maxValue) where T : IComparable<T>
+        {
+            return value.CompareTo(minValue) >= 0 && value.CompareTo(maxValue) <= 0;
         }
+        public static bool IsGreaterThan<T>(this T value, T compareValue) where T : IComparable<T>
+        {
+
+            return value.CompareTo(compareValue) > 0;
+        }
+        public static bool IsGreaterOrEqualsThan<T>(this T value, T compareValue) where T : IComparable<T>
+        {
+            return value.CompareTo(compareValue) >= 0;
+        }
+
+        public static bool IsSmallerThan<T>(this T value, T compareValue) where T : IComparable<T>
+        {
+            return value.CompareTo(compareValue) == -1;
+        }
+        public static bool IsSmallerOrEqualsThan<T>(this T value, T compareValue) where T : IComparable<T>
+        {
+            return value.CompareTo(compareValue) <= 0;
+        }
+
         public static bool IsDate(this object obj)
         {
             return obj.IsTypeOf(typeof(DateTime));
