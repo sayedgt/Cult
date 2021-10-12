@@ -327,13 +327,6 @@ namespace Cult.Toolkit.ExtraObject
                 return defaultValueFactory(@this);
             }
         }
-        public static void IfNotNull<T>(this T @this, Action<T> action) where T : class
-        {
-            if (@this != null)
-            {
-                action(@this);
-            }
-        }
         public static TResult IfNotNull<T, TResult>(this T @this, Func<T, TResult> func) where T : class
         {
             return @this != null ? func(@this) : default;

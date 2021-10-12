@@ -20,13 +20,6 @@ namespace Cult.Toolkit.ExtraString
 {
     public static class StringExtensions
     {
-        public static SecureString ToSecureString(this string str)
-        {
-            var secureString = new SecureString();
-            foreach (var c in str)
-                secureString.AppendChar(c);
-            return secureString;
-        }
         public static string Strip(this string s, char character)
         {
             s = s.Replace(character.ToString(), "");

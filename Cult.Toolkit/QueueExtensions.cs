@@ -30,4 +30,3 @@ namespace Cult.Toolkit.ExtraQueue
 		}
 	}
 }
-}
