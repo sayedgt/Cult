@@ -267,6 +267,12 @@ namespace Cult.Toolkit.ExtraString
         {
             return @this?.IndexOf(value, comparisonType) != -1;
         }
+        public static bool Contains(this string source, string str, bool ignoreCase)
+        {
+            if (string.IsNullOrEmpty(str) || string.IsNullOrEmpty(source))
+                return true;
+            return source.IndexOf(str, ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal) >= 0;
+        }
         public static bool ContainsAll(this string @this, params string[] values)
         {
             foreach (var value in values)
