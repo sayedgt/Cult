@@ -1,9 +1,10 @@
-﻿using System;
+﻿
+// ReSharper disable All
+#if NETSTANDARD2_1
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-// ReSharper disable All
-#if NETSTANDARD2_1
 namespace Cult.Toolkit.ExtraEnumerator
 {
     [EditorBrowsable(EditorBrowsableState.Never)]

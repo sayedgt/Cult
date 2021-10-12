@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 // ReSharper disable All
-#if NETSTANDARD2_1
+
 namespace Cult.Toolkit.ExtraEnumerator
 {
     public static class EnumeratorExtensions
@@ -9,4 +9,3 @@ namespace Cult.Toolkit.ExtraEnumerator
         public static IAsyncEnumerator<T> GetAsyncEnumerator<T>(this IAsyncEnumerator<T> enumerator) => enumerator;
     }
 }
-#endif

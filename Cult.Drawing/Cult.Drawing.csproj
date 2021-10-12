@@ -5,12 +5,12 @@
 		<Authors>Hamed Fathi</Authors>
 		<Company />
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<PackageProjectUrl>https://github.com/HamedFathi/Cult</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/HamedFathi/Cult</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+		<PackageReference Include="System.Drawing.Common" Version="5.0.2" />
 	</ItemGroup>
 </Project>

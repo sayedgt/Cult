@@ -625,5 +625,19 @@ namespace Cult.Toolkit.ExtraObject
         {
             return JsonSerializer.Deserialize<dynamic>(jsonText);
         }
+
+        public static byte[] Serialize<T>(this T o) where T : class
+        {
+            Type type = o.GetType();
+            if ((type.Attributes & TypeAttributes.Serializable) == 0)
+                throw new Exception("The Specified object must have [Serializable] attribute");
+
+            var formatter = new BinaryFormatter();
+            using (var ms = new MemoryStream())
+            {
+                formatter.Serialize(ms, o);
+                return ms.ToArray();
+            }
+        }
     }
 }

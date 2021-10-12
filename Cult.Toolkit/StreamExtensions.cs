@@ -146,7 +146,7 @@ namespace Cult.Toolkit.ExtraStream
             }
         }
 
-        public static void ReadBlock(this Stream stream, Action<byte[]> action, int bufferSize = 1024, EncodingType encoding = EncodingType.UTF8)
+        public static void ReadBlock(this Stream stream, Action<byte[]> action, int bufferSize = 1024)
         {
             var buffer = new byte[bufferSize];
             while (true)
@@ -169,7 +169,7 @@ namespace Cult.Toolkit.ExtraStream
             }
         }
 
-        public static async void ReadBlockAsync(this Stream stream, Action<byte[]> action, int bufferSize = 1024, EncodingType encoding = EncodingType.UTF8)
+        public static async void ReadBlockAsync(this Stream stream, Action<byte[]> action, int bufferSize = 1024)
         {
             var buffer = new byte[bufferSize];
             while (true)
@@ -187,12 +187,11 @@ namespace Cult.Toolkit.ExtraStream
             {
                 var count = await stream.ReadAsync(buffer, 0, bufferSize);
                 if (count == 0) break;
-                var text = buffer.ConvertByteArrayToString(encoding, 0, count);
-                yield return text;
+                yield return buffer.ConvertByteArrayToString(encoding, 0, count);
             }
         }
 
-        public static IEnumerable<byte[]> ReadBlockAsBytes(this Stream stream, int bufferSize = 1024, EncodingType encoding = EncodingType.UTF8)
+        public static IEnumerable<byte[]> ReadBlockAsBytes(this Stream stream, int bufferSize = 1024)
         {
             var buffer = new byte[bufferSize];
             while (true)
@@ -203,7 +202,7 @@ namespace Cult.Toolkit.ExtraStream
             }
         }
 
-        public static async IAsyncEnumerable<byte[]> ReadBlockAsBytesAsync(this Stream stream, int bufferSize = 1024, EncodingType encoding = EncodingType.UTF8)
+        public static async IAsyncEnumerable<byte[]> ReadBlockAsBytesAsync(this Stream stream, int bufferSize = 1024)
         {
             var buffer = new byte[bufferSize];
             while (true)
@@ -212,6 +211,38 @@ namespace Cult.Toolkit.ExtraStream
                 if (count == 0) break;
                 yield return buffer;
             }
+        }
+
+        public static bool IsNullOrEmpty(this Stream stream)
+        {
+            if (stream == null)
+                return true;
+            return stream.Length <= 0;
+        }
+
+        public static bool IsNotNullOrEmpty(this Stream stream)
+        {
+            return !stream.IsNullOrEmpty();
+        }
+
+        public static bool IsNull(this Stream stream)
+        {
+            return stream == null;
+        }
+
+        public static bool IsNotNull(this Stream stream)
+        {
+            return stream != null;
+        }
+
+        public static bool IsEmpty(this Stream stream)
+        {
+            return stream.Length <= 0;
+        }
+
+        public static bool IsNotEmpty(this Stream stream)
+        {
+            return !stream.IsEmpty();
         }
     }
 }

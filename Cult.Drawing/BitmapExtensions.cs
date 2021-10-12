@@ -94,5 +94,12 @@ namespace Cult.Drawing
 
             return scaledBitmap;
         }
+
+        public static bool IsNullOrEmpty(this Bitmap value)
+        {
+            if (value == null)
+                return true;
+            return value.Size.IsEmpty;
+        }
     }
 }

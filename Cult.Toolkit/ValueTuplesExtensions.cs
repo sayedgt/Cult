@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 // ReSharper disable All
-#if NETSTANDARD2_1
+
 namespace Cult.Toolkit.ExtraValueTuple
 {
-
     public static class ValueTuplesExtensions
     {
         public static IEnumerator<object> GetEnumerator<T1>(this ValueTuple<T1> tuple)
@@ -66,4 +65,3 @@ namespace Cult.Toolkit.ExtraValueTuple
         }
     }
 }
-#endif

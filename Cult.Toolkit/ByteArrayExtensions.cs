@@ -7,6 +7,14 @@ namespace Cult.Toolkit.ExtraByteArray
 {
     public static class ByteArrayExtensions
     {
+        public static T Deserialize<T>(this byte[] data) where T : class
+        {
+            var formatter = new BinaryFormatter();
+            using (var ms = new MemoryStream(data))
+            {
+                return formatter.Deserialize(ms) as T;
+            }
+        }
         public static string ToHexString(this byte[] byteArray)
         {
             string result = string.Empty;
