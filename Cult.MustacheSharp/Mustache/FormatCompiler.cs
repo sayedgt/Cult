@@ -47,12 +47,12 @@ namespace Cult.MustacheSharp.Mustache
         {
             if (definition == null)
             {
-                throw new ArgumentNullException("definition");
+                throw new ArgumentNullException(nameof(definition));
             }
             if (_tagLookup.ContainsKey(definition.Name))
             {
                 string message = string.Format(Resources.DuplicateTagDefinition, definition.Name);
-                throw new ArgumentException(message, "definition");
+                throw new ArgumentException(message, nameof(definition));
             }
             _tagLookup.Add(definition.Name, definition);
         }
@@ -61,7 +61,7 @@ namespace Cult.MustacheSharp.Mustache
         {
             if (format == null)
             {
-                throw new ArgumentNullException("format");
+                throw new ArgumentNullException(nameof(format));
             }
             CompoundGenerator generator = new CompoundGenerator(_masterDefinition, new ArgumentCollection());
             List<Context> context = new List<Context>() { new Context(_masterDefinition.Name, new ContextParameter[0]) };

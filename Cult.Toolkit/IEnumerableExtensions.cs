@@ -54,9 +54,38 @@ namespace Cult.Toolkit.ExtraIEnumerable
                 yield return chunk.AsEnumerable();
             }
         }
+        public static IEnumerable<T> Union<T>(this IEnumerable<IEnumerable<T>> enumeration)
+        {
+            // Check to see that enumeration is not null
+            if (enumeration == null)
+                throw new ArgumentNullException(nameof(enumeration));
+
+            IEnumerable<T> returnValue = null;
+
+            foreach (var e in enumeration)
+            {
+                if (returnValue != null)
+                    returnValue = e;
+                else
+                    returnValue = returnValue.Union(e);
+            }
+
+            return returnValue;
+        }
         public static Dictionary<TKey, List<TValue>> ToDictionary<TKey, TValue>(this IEnumerable<IGrouping<TKey, TValue>> groupings)
         {
+            if (groupings == null)
+                throw new ArgumentNullException(nameof(groupings));
+
             return groupings.ToDictionary(group => group.Key, group => group.ToList());
+        }
+        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> enumeration)
+        {
+            // Check to see that enumeration is not null
+            if (enumeration == null)
+                throw new ArgumentNullException(nameof(enumeration));
+
+            return enumeration.ToDictionary(item => item.Key, item => item.Value);
         }
         public static Dictionary<TFirstKey, Dictionary<TSecondKey, TValue>> Pivot<TSource, TFirstKey, TSecondKey, TValue>(this IEnumerable<TSource> source, Func<TSource, TFirstKey> firstKeySelector, Func<TSource, TSecondKey> secondKeySelector, Func<IEnumerable<TSource>, TValue> aggregate)
         {
@@ -152,11 +181,6 @@ namespace Cult.Toolkit.ExtraIEnumerable
                 action(t);
             }
             return @this;
-        }
-        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action, Func<T, bool> predicate)
-        {
-            foreach (var item in source.Where(predicate))
-                action(item);
         }
         public static void ForEachReverse<T>(this IEnumerable<T> source, Action<T> action)
         {
@@ -349,10 +373,69 @@ namespace Cult.Toolkit.ExtraIEnumerable
                 collection.Add(i);
             return collection;
         }
+        public static bool ContainsAtLeast<T>(this IEnumerable<T> enumeration, int count)
+        {
+            // Check to see that enumeration is not null
+            if (enumeration == null)
+                throw new ArgumentNullException(nameof(enumeration));
+
+            return enumeration.Count() >= count;
+        }
+        public static bool ContainsAtLeast<T>(this IEnumerable<T> enumeration, Func<T, bool> predicate, int count)
+        {
+            // Check to see that enumeration is not null
+            if (enumeration == null)
+                throw new ArgumentNullException(nameof(enumeration));
+
+            return enumeration.Count(predicate) >= count;
+        }
+
+        public static bool ContainsAtMost<T>(this IEnumerable<T> enumeration, int count)
+        {
+            // Check to see that enumeration is not null
+            if (enumeration == null)
+                throw new ArgumentNullException(nameof(enumeration));
+
+            return enumeration.Count() <= count;
+        }
+        public static bool ContainsAtMost<T>(this IEnumerable<T> enumeration, Func<T, bool> predicate, int count)
+        {
+            // Check to see that enumeration is not null
+            if (enumeration == null)
+                throw new ArgumentNullException(nameof(enumeration));
+
+            return enumeration.Count(predicate) <= count;
+        }
         public static string ToCsv<T>(this IEnumerable<T> items, char separator = ',', bool trim = true)
         {
             var list = trim ? items.Select(x => x.ToString().Trim()) : items.Select(x => x.ToString());
             return list.Aggregate((a, b) => a + separator + b);
+        }
+        public static string Aggregate(this IEnumerable<string> enumeration, string separator)
+        {
+            // Check to see that enumeration is not null
+            if (enumeration == null)
+                throw new ArgumentNullException(nameof(enumeration));
+
+            // Check to see that separator is not null
+            if (separator == null)
+                throw new ArgumentNullException(nameof(separator));
+
+            string returnValue = string.Join(separator, enumeration.ToArray());
+
+            if (returnValue.Length > separator.Length)
+                return returnValue.Substring(separator.Length);
+
+            return returnValue;
+        }
+
+        public static string Aggregate<T>(this IEnumerable<T> enumeration, Func<T, string> toString, string separator)
+        {
+            // Check to see that toString is not null
+            if (toString == null)
+                throw new ArgumentNullException(nameof(toString));
+
+            return Aggregate(enumeration.Select(toString), separator);
         }
         public static HashSet<TDestination> ToHashSet<TDestination>(this IEnumerable<TDestination> source)
         {
@@ -467,6 +550,22 @@ namespace Cult.Toolkit.ExtraIEnumerable
                 action(item);
             }
         }
+
+        public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action, Func<T, bool> predicate)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+            foreach (var item in collection.Where(predicate))
+            {
+                action(item);
+            }
+        }
         public static void ForEach(this IEnumerable collection, Action<object> action)
         {
             if (collection == null)
@@ -481,6 +580,33 @@ namespace Cult.Toolkit.ExtraIEnumerable
             {
                 action(item);
             }
+        }
+
+        public static bool SequenceEqual<T1, T2>(this IEnumerable<T1> left, IEnumerable<T2> right, Func<T1, T2, bool> comparer)
+        {
+            using (IEnumerator<T1> leftE = left.GetEnumerator())
+            {
+                using (IEnumerator<T2> rightE = right.GetEnumerator())
+                {
+                    bool leftNext = leftE.MoveNext(), rightNext = rightE.MoveNext();
+
+                    while (leftNext && rightNext)
+                    {
+                        // If one of the items isn't the same...
+                        if (!comparer(leftE.Current, rightE.Current))
+                            return false;
+
+                        leftNext = leftE.MoveNext();
+                        rightNext = rightE.MoveNext();
+                    }
+
+                    // If left or right is longer
+                    if (leftNext || rightNext)
+                        return false;
+                }
+            }
+
+            return true;
         }
     }
 }

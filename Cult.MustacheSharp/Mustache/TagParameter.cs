@@ -9,7 +9,7 @@ namespace Cult.MustacheSharp.Mustache
         {
             if (!RegexHelper.IsValidIdentifier(parameterName))
             {
-                throw new ArgumentException(Resources.BlankParameterName, "parameterName");
+                throw new ArgumentException(Resources.BlankParameterName, nameof(parameterName));
             }
             Name = parameterName;
         }

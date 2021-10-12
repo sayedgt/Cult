@@ -136,7 +136,7 @@ namespace Cult.Toolkit.ExtraDecimal
         {
             return Math.Truncate(d);
         }
-        public static decimal TruncateTo(this decimal n, uint digits)
+        public static decimal Truncate(this decimal n, uint digits)
         {
             var factor = (int)Math.Pow(10, digits);
             return Math.Truncate(n * factor) / factor;

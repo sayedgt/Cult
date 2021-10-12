@@ -147,16 +147,6 @@ namespace Cult.Toolkit.ExtraArray
         {
             return Array.FindLastIndex(array, startIndex, count, match);
         }
-        public static void ForEach<T>(this T[] source, Action<T> action)
-        {
-            foreach (var item in source)
-                action(item);
-        }
-        public static void ForEach<T>(this T[] source, Action<T> action, Func<T, bool> predicate)
-        {
-            foreach (var item in source.Where(predicate))
-                action(item);
-        }
         public static void ForEachReverse<T>(this T[] source, Action<T> action)
         {
             var items = source.ToList();
@@ -364,13 +354,51 @@ namespace Cult.Toolkit.ExtraArray
         {
             return source.Select((item, index) => (item, index));
         }
-        public static IEnumerable<T> Process<T>(this T[] src, Action<T> action)
+
+        public static IEnumerable<T> Process<T>(this T[] array, Func<T, T> func)
         {
-            foreach (T item in src)
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
+            foreach (var item in array)
+            {
+                yield return func(item);
+            }
+        }
+
+        public static void ForEach<T>(this T[] array, Action<T> action)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+            foreach (var item in array)
             {
                 action(item);
-                yield return item;
             }
+        }
+
+        public static void ForEach<T>(this T[] array, Action<T> action, Func<T, bool> predicate)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array));
+            }
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+            foreach (var item in array.Where(predicate))
+                action(item);
         }
     }
 }

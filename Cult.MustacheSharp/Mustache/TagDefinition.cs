@@ -16,7 +16,7 @@ namespace Cult.MustacheSharp.Mustache
         {
             if (!isBuiltIn && !RegexHelper.IsValidIdentifier(tagName))
             {
-                throw new ArgumentException(Resources.BlankTagName, "tagName");
+                throw new ArgumentException(Resources.BlankTagName, nameof(tagName));
             }
             Name = tagName;
         }
