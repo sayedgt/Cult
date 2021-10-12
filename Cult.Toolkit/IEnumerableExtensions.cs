@@ -81,6 +81,63 @@ namespace Cult.Toolkit.ExtraIEnumerable
 
             return returnValue;
         }
+        public static IDictionary<TValue, TKey> ConcatToDictionary<TValue, TKey>(this IEnumerable<KeyValuePair<TValue, TKey>> first, IEnumerable<KeyValuePair<TValue, TKey>> second)
+        {
+            if (first is null)
+            {
+                throw new ArgumentNullException(nameof(first));
+            }
+
+            if (second is null)
+            {
+                throw new ArgumentNullException(nameof(second));
+            }
+
+            return first
+                .Concat(second)
+                .ToDictionary(x => x.Key, x => x.Value);
+        }
+
+        public static IDictionary<TValue, TKey> ConcatToDictionarySafe<TValue, TKey>(this IEnumerable<KeyValuePair<TValue, TKey>> first, IEnumerable<KeyValuePair<TValue, TKey>> second)
+        {
+            if (first is null)
+            {
+                throw new ArgumentNullException(nameof(first));
+            }
+
+            if (second is null)
+            {
+                throw new ArgumentNullException(nameof(second));
+            }
+
+            return first
+                .Concat(second)
+                .GroupBy(x => x.Key)
+                .ToDictionary(x => x.Key,
+                               x => x.First()
+                                     .Value);
+        }
+
+        public static string PathCombine(this IEnumerable<string> enumerable)
+        {
+            if (enumerable is null)
+            {
+                throw new ArgumentNullException(nameof(enumerable));
+            }
+
+            return Path.Combine(enumerable.ToArray());
+        }
+
+        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> enumerable)
+        {
+            if (enumerable is null)
+            {
+                throw new ArgumentNullException(nameof(enumerable));
+            }
+
+            return new ObservableCollection<T>(enumerable);
+        }
+
         public static Dictionary<TKey, List<TValue>> ToDictionary<TKey, TValue>(this IEnumerable<IGrouping<TKey, TValue>> groupings)
         {
             if (groupings == null)
@@ -358,10 +415,6 @@ namespace Cult.Toolkit.ExtraIEnumerable
             }
 
             return list;
-        }
-        public static string PathCombine(this IEnumerable<string> @this)
-        {
-            return Path.Combine(@this.ToArray());
         }
         public static string StringJoin<T>(this IEnumerable<T> @this, string separator)
         {

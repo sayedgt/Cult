@@ -301,5 +301,25 @@ namespace Cult.Toolkit.ExtraIDictionary
 
             return self.TryGetValue(key, out value) && self.Remove(key);
         }
+
+        public static IEnumerable<TKey> GetAllKeys<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+        {
+            if (dictionary is null)
+            {
+                throw new ArgumentNullException(nameof(dictionary));
+            }
+
+            return dictionary.Select(x => x.Key);
+        }
+        public static V GetOrLookUp<K, V>(this IDictionary<K, V> dictionary, K key, Func<K, V> lookup)
+        {
+            if (!dictionary.TryGetValue(key, out V value))
+            {
+                value = lookup(key);
+                dictionary.Add(key, value);
+            }
+
+            return value;
+        }
     }
 }

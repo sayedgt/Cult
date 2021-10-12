@@ -18,5 +18,18 @@ namespace Cult.Toolkit.ExtraNameValueCollection
 
             return dict;
         }
+
+        public static IEnumerable<KeyValuePair<string, string>> ToKeyValuePairs(this NameValueCollection collection)
+        {
+            if (collection is null)
+            {
+                throw new System.ArgumentNullException(nameof(collection));
+            }
+
+            foreach (string key in collection.Keys)
+            {
+                yield return new KeyValuePair<string, string>(key, collection[key]);
+            }
+        }
     }
 }
