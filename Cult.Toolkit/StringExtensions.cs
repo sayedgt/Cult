@@ -36,13 +36,13 @@ namespace Cult.Toolkit.ExtraString
             s = s.Replace(subString, "");
             return s;
         }
-        public static string ToBase62(this string text, Base62CharacterSet charSet = Base62CharacterSet.Default)
+        public static string ToBase62String(this string text, Base62CharacterSet charSet = Base62CharacterSet.Default)
         {
             var base62 = new Base62Converter(charSet);
             return base62.Encode(text);
         }
 
-        public static string FromBase62(this string base62Text, Base62CharacterSet charSet = Base62CharacterSet.Default)
+        public static string FromBase62String(this string base62Text, Base62CharacterSet charSet = Base62CharacterSet.Default)
         {
             var base62 = new Base62Converter(charSet);
             return base62.Decode(base62Text);
@@ -208,21 +208,21 @@ namespace Cult.Toolkit.ExtraString
         {
             return string.Copy(str);
         }
-        public static string DecodeBase64(this string encodedValue)
+        public static string FromBase64String(this string encodedValue)
         {
-            return encodedValue.DecodeBase64(null);
+            return encodedValue.FromBase64String(null);
         }
-        public static string DecodeBase64(this string encodedValue, Encoding encoding)
+        public static string FromBase64String(this string encodedValue, Encoding encoding)
         {
             encoding = encoding ?? Encoding.UTF8;
             var bytes = Convert.FromBase64String(encodedValue);
             return encoding.GetString(bytes);
         }
-        public static string EncodeBase64(this string value)
+        public static string ToBase64String(this string value)
         {
-            return value.EncodeBase64(null);
+            return value.ToBase64String(null);
         }
-        public static string EncodeBase64(this string value, Encoding encoding)
+        public static string ToBase64String(this string value, Encoding encoding)
         {
             encoding = encoding ?? Encoding.UTF8;
             var bytes = encoding.GetBytes(value);

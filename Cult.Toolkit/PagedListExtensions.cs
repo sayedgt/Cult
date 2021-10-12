@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 // ReSharper disable All
 
-namespace Cult.Pagination
+namespace Cult.Toolkit.Pagination
 {
     public static class PagedListExtensions
     {

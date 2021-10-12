@@ -13,6 +13,10 @@ namespace Cult.Toolkit.ExtraIEnumerable
 {
     public static class IEnumerableExtensions
     {
+        public static bool Contains<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+        {
+            return collection.Count(predicate) > 0;
+        }
         public static IEnumerable<string> ContainsFuzzy(this IEnumerable<string> text, string search)
         {
             return text.Where(x => FuzzyMatcher.FuzzyMatch(search, x));
@@ -149,11 +153,6 @@ namespace Cult.Toolkit.ExtraIEnumerable
             }
             return @this;
         }
-        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
-        {
-            foreach (var item in source)
-                action(item);
-        }
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action, Func<T, bool> predicate)
         {
             foreach (var item in source.Where(predicate))
@@ -249,6 +248,14 @@ namespace Cult.Toolkit.ExtraIEnumerable
         public static bool OneOf<T>(this IEnumerable<T> source, Func<T, bool> query)
         {
             return source.Count(query) == 1;
+        }
+        public static bool IsEmpty(this IEnumerable collection)
+        {
+            foreach (var _ in collection)
+            {
+                return false;
+            }
+            return true;
         }
         public static bool IsEmpty<T>(this IEnumerable<T> @this) => !@this.Any();
         public static bool IsEqual<T>(this IEnumerable<T> source, IEnumerable<T> toCompareWith)
@@ -430,12 +437,49 @@ namespace Cult.Toolkit.ExtraIEnumerable
             return true;
         }
 
-        public static IEnumerable<T> Process<T>(this IEnumerable<T> src, Action<T> action)
+        public static IEnumerable<T> Process<T>(this IEnumerable<T> collection, Func<T, T> func)
         {
-            foreach (T item in src)
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+            if (func == null)
+            {
+                throw new ArgumentNullException(nameof(func));
+            }
+            foreach (var item in collection)
+            {
+                yield return func(item);
+            }
+        }
+        public static void ForEach<T>(this IEnumerable<T> collection, Action<T> action)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+            foreach (var item in collection)
             {
                 action(item);
-                yield return item;
+            }
+        }
+        public static void ForEach(this IEnumerable collection, Action<object> action)
+        {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+            foreach (var item in collection)
+            {
+                action(item);
             }
         }
     }

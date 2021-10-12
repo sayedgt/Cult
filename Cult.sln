@@ -33,8 +33,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DryIoc", "Cult.DryIoc\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Cryptography", "Cult.Cryptography\Cult.Cryptography.csproj", "{CA986426-1C11-43DB-8440-DF8EB53A7587}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Pagination", "Cult.Pagination\Cult.Pagination.csproj", "{7704964C-5660-44EB-99A7-421DA25339F4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.TypeScript", "Cult.TypeScript\Cult.TypeScript.csproj", "{18AE1808-783C-4C48-8DBE-26114370DB75}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Guard", "Cult.Guard\Cult.Guard.csproj", "{77173074-821F-4C4C-9EFA-C941C2990A31}"
@@ -127,10 +125,6 @@ Global
 		{CA986426-1C11-43DB-8440-DF8EB53A7587}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA986426-1C11-43DB-8440-DF8EB53A7587}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA986426-1C11-43DB-8440-DF8EB53A7587}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7704964C-5660-44EB-99A7-421DA25339F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7704964C-5660-44EB-99A7-421DA25339F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7704964C-5660-44EB-99A7-421DA25339F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7704964C-5660-44EB-99A7-421DA25339F4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{18AE1808-783C-4C48-8DBE-26114370DB75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{18AE1808-783C-4C48-8DBE-26114370DB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18AE1808-783C-4C48-8DBE-26114370DB75}.Release|Any CPU.ActiveCfg = Release|Any CPU

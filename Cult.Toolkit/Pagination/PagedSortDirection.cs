@@ -1,5 +1,5 @@
 // ReSharper disable All 
-namespace Cult.Pagination
+namespace Cult.Toolkit.Pagination
 {
 	public enum PagedSortDirection
 	{

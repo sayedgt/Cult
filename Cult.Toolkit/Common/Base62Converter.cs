@@ -4,7 +4,7 @@ using System.Text;
 // ReSharper disable All 
 namespace Cult.Toolkit
 {
-    internal partial class Base62Converter
+    internal class Base62Converter
     {
         private const string DEFAULT_CHARACTER_SET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         private const string INVERTED_CHARACTER_SET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

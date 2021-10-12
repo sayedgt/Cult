@@ -66,11 +66,11 @@ namespace Cult.Toolkit.ExtraObject
         {
             return Array.IndexOf(values, obj) != -1;
         }
-        public static T As<T>(this object @this)
+        public static T CastAs<T>(this object @this)
         {
             return (T)@this;
         }
-        public static T AsOrDefault<T>(this object @this)
+        public static T CastAsOrDefault<T>(this object @this)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Cult.Toolkit.ExtraObject
                 return default;
             }
         }
-        public static T AsOrDefault<T>(this object @this, T defaultValue)
+        public static T CastAsOrDefault<T>(this object @this, T defaultValue)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace Cult.Toolkit.ExtraObject
                 return defaultValue;
             }
         }
-        public static T AsOrDefault<T>(this object @this, Func<T> defaultValueFactory)
+        public static T CastAsOrDefault<T>(this object @this, Func<T> defaultValueFactory)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace Cult.Toolkit.ExtraObject
                 return defaultValueFactory();
             }
         }
-        public static T AsOrDefault<T>(this object @this, Func<object, T> defaultValueFactory)
+        public static T CastAsOrDefault<T>(this object @this, Func<object, T> defaultValueFactory)
         {
             try
             {
@@ -403,11 +403,11 @@ namespace Cult.Toolkit.ExtraObject
         {
             return obj.IsTypeOf(typeof(DateTime));
         }
-        public static bool IsDbNull<T>(this T value) where T : class
+        public static bool IsDBNull<T>(this T value) where T : class
         {
             return Convert.IsDBNull(value);
         }
-        public static bool IsDbNull(this object obj)
+        public static bool IsDBNull(this object obj)
         {
             return obj.IsTypeOf(typeof(DBNull));
         }
