@@ -6,13 +6,22 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Text.RegularExpressions;
 
 // ReSharper disable All
 namespace Cult.Toolkit.ExtraIEnumerable
 {
     public static class IEnumerableExtensions
     {
+        public static IEnumerable<string> RemoveEmptyElements(this IEnumerable<string> strings)
+        {
+            foreach (var s in strings)
+            {
+                if (!string.IsNullOrEmpty(s))
+                {
+                    yield return s;
+                }
+            }
+        }
         public static bool Contains<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
         {
             return collection.Count(predicate) > 0;

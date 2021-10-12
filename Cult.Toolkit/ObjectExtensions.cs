@@ -247,25 +247,27 @@ namespace Cult.Toolkit.ExtraObject
         {
             return value.ConvertTo(defaultValue, true);
         }
-        public static T[] ConvertToArray<T>(this T obj)
+
+        public static T[] CreateArray<T>(this T obj)
         {
-            return obj.ConvertToEnumerable().ToArray();
+            return new[] { obj };
         }
-        public static ICollection<T> ConvertToCollection<T>(this T obj)
+
+        public static ICollection<T> CreateCollection<T>(this T obj)
         {
-            return obj.ConvertToEnumerable().ToCollection();
+            return CreateList(obj);
         }
-        public static IList<T> ConvertToList<T>(this T obj)
+        public static IList<T> CreateList<T>(this T obj)
         {
-            return obj.ConvertToEnumerable().ToList();
+            return new List<T>() { obj };
         }
-        public static IDictionary<TKey, TValue> ConvertToDictionary<TKey, TValue>(this TValue value, TKey key)
+        public static IDictionary<TKey, TValue> CreateDictionary<TKey, TValue>(this TValue value, TKey key)
         {
             var dictionary = new Dictionary<TKey, TValue>();
             dictionary.Add(key, value);
             return dictionary;
         }
-        public static IEnumerable<T> ConvertToEnumerable<T>(this T obj)
+        public static IEnumerable<T> CreateEnumerable<T>(this T obj)
         {
             yield return obj;
         }

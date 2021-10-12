@@ -262,5 +262,36 @@ namespace Cult.Toolkit.ExtraIList
             }
             return false;
         }
+
+        public static T First<T>(this IList<T> list)
+        {
+            if (list.Count == 0)
+            {
+                return default;
+            }
+            else
+            {
+                return list[0];
+            }
+        }
+
+        public static T Last<T>(this IList<T> list)
+        {
+            if (list.Count == 0)
+            {
+                return default;
+            }
+            else
+            {
+                return list[list.Count - 1];
+            }
+        }
+        public static void RemoveFirst<T>(this IList<T> list)
+        {
+            if (list.Count > 0)
+            {
+                list.RemoveAt(0);
+            }
+        }
     }
 }

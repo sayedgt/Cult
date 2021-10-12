@@ -221,5 +221,31 @@ namespace Cult.Toolkit.ExtraICollection
                 .Skip((pageIndex - 1) * pageSize)
                 .Take(pageSize);
         }
+
+        public static T[] ToArray<T>(this ICollection collection)
+        {
+            T[] array = new T[collection.Count];
+            int index = 0;
+
+            foreach (T item in collection)
+            {
+                array[index++] = item;
+            }
+
+            return array;
+        }
+
+        public static K[] ToArray<T, K>(this ICollection<T> collection, Converter<T, K> converter)
+        {
+            K[] array = new K[collection.Count];
+            int index = 0;
+
+            foreach (T item in collection)
+            {
+                array[index++] = converter(item);
+            }
+
+            return array;
+        }
     }
 }
