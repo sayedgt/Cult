@@ -10,7 +10,7 @@ namespace Cult.Toolkit.ExtraIDictionary
 {
     public static class IDictionaryExtensions
     {
-        public static void AddDistinctRange<TKey, TValue>(this IDictionary<TKey, TValue> source, IDictionary<TKey, TValue> dictionary)
+        public static void AddRangeUnique<TKey, TValue>(this IDictionary<TKey, TValue> source, IDictionary<TKey, TValue> dictionary)
         {
             foreach (var kvp in dictionary)
             {

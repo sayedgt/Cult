@@ -7,6 +7,11 @@ namespace Cult.Toolkit.ExtraByteArray
 {
     public static class ByteArrayExtensions
     {
+        public static byte[] Resize(this byte[] @this, int newSize)
+        {
+            Array.Resize(ref @this, newSize);
+            return @this;
+        }
         public static T Deserialize<T>(this byte[] data) where T : class
         {
             var formatter = new BinaryFormatter();
@@ -33,7 +38,7 @@ namespace Cult.Toolkit.ExtraByteArray
                 throw new ArgumentNullException(nameof(array1));
 
             if (array2.Length == 0)
-                return 0;       // by definition empty sets match immediately
+                return 0;
 
             var j = -1;
             var end = array1.Length - array2.Length;

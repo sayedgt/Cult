@@ -95,13 +95,12 @@ namespace Cult.Toolkit.ExtraIList
             source[indexA] = source[indexB];
             source[indexB] = tempValue;
         }
-        public static List<List<T>> Split<T>(this IList<T> source, int chunkSize)
+        public static IEnumerable<IEnumerable<T>> Split<T>(this IList<T> source, int chunkSize)
         {
             return source
                 .Select((x, i) => new { Index = i, Value = x })
                 .GroupBy(x => x.Index / chunkSize)
-                .Select(x => x.Select(v => v.Value).ToList())
-                .ToList();
+                .Select(x => x.Select(v => v.Value));
         }
         public static void AddToFront<T>(this IList<T> list, T item)
         {
@@ -114,7 +113,7 @@ namespace Cult.Toolkit.ExtraIList
                 list.Add(item);
             }
         }
-        public static void AddDistinctRange<T>(this IList<T> list, T[] items) where T : class
+        public static void AddRangeUnique<T>(this IList<T> list, T[] items) where T : class
         {
             foreach (var item in items)
             {
@@ -124,7 +123,7 @@ namespace Cult.Toolkit.ExtraIList
                 }
             }
         }
-        public static void AddDistinctRange<T>(this IList<T> list, IEnumerable<T> items) where T : class
+        public static void AddRangeUnique<T>(this IList<T> list, IEnumerable<T> items) where T : class
         {
             foreach (var item in items)
             {

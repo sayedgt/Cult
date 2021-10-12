@@ -24,15 +24,14 @@ namespace Cult.Toolkit.ExtraICollection
                     yield return source.ElementAt(i);
             }
         }
-        public static List<List<T>> Split<T>(this ICollection<T> source, int chunkSize)
+        public static IEnumerable<IEnumerable<T>> Split<T>(this ICollection<T> source, int chunkSize)
         {
             return source
                 .Select((x, i) => new { Index = i, Value = x })
                 .GroupBy(x => x.Index / chunkSize)
-                .Select(x => x.Select(v => v.Value).ToList())
-                .ToList();
+                .Select(x => x.Select(v => v.Value));
         }
-        public static bool AddDistinctRange<T>(this ICollection<T> collection, T value)
+        public static bool AddRangeUnique<T>(this ICollection<T> collection, T value)
         {
             var alreadyHas = collection.Contains(value);
             if (!alreadyHas)
@@ -41,7 +40,7 @@ namespace Cult.Toolkit.ExtraICollection
             }
             return alreadyHas;
         }
-        public static bool AddDistinctRangeIf<T>(this ICollection<T> collection, Func<T, bool> predicate, T value)
+        public static bool AddRangeUniqueIf<T>(this ICollection<T> collection, Func<T, bool> predicate, T value)
         {
             var alreadyHas = collection.Contains(value);
             if (!alreadyHas && predicate(value))
@@ -51,12 +50,12 @@ namespace Cult.Toolkit.ExtraICollection
             }
             return false;
         }
-        public static int AddDistinctRange<T>(this ICollection<T> collection, IEnumerable<T> values)
+        public static int AddRangeUnique<T>(this ICollection<T> collection, IEnumerable<T> values)
         {
             var count = 0;
             foreach (var value in values)
             {
-                if (collection.AddDistinctRange(value))
+                if (collection.AddRangeUnique(value))
                     count++;
             }
             return count;
@@ -120,7 +119,31 @@ namespace Cult.Toolkit.ExtraICollection
 
             return true;
         }
+        public static bool ContainsAll<T>(this ICollection<T> @this, IEnumerable<T> values)
+        {
+            foreach (T value in values)
+            {
+                if (!@this.Contains(value))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
         public static bool ContainsAny<T>(this ICollection<T> @this, params T[] values)
+        {
+            foreach (T value in values)
+            {
+                if (@this.Contains(value))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public static bool ContainsAny<T>(this ICollection<T> @this, IEnumerable<T> values)
         {
             foreach (T value in values)
             {
@@ -182,6 +205,13 @@ namespace Cult.Toolkit.ExtraICollection
             }
         }
         public static void RemoveRange<T>(this ICollection<T> @this, params T[] values)
+        {
+            foreach (T value in values)
+            {
+                @this.Remove(value);
+            }
+        }
+        public static void RemoveRange<T>(this ICollection<T> @this, IEnumerable<T> values)
         {
             foreach (T value in values)
             {

@@ -12,13 +12,59 @@ namespace Cult.Toolkit.ExtraArray
 {
     public static class ArrayExtensions
     {
-        public static List<List<T>> Split<T>(this T[] source, int chunkSize)
+        public static void BlockCopy(this Array src, int srcOffset, Array dst, int dstOffset, int count)
+        {
+            Buffer.BlockCopy(src, srcOffset, dst, dstOffset, count);
+        }
+        public static int ByteLength(this Array array)
+        {
+            return Buffer.ByteLength(array);
+        }
+        public static void ConstrainedCopy(this Array sourceArray, int sourceIndex, Array destinationArray, int destinationIndex, int length)
+        {
+            Array.ConstrainedCopy(sourceArray, sourceIndex, destinationArray, destinationIndex, length);
+        }
+
+        public static bool IsNullOrEmpty(this Array source)
+        {
+            return source == null || source.Length == 0;
+        }
+        public static void SetByte(this Array array, int index, byte value)
+        {
+            Buffer.SetByte(array, index, value);
+        }
+
+        public static List<T> ToList<T>(this Array items, Func<object, T> mapFunction)
+        {
+            if (items == null || mapFunction == null)
+                return new List<T>();
+            var col = new List<T>();
+            for (int i = 0; i < items.Length; i++)
+            {
+                T val = mapFunction(items.GetValue(i));
+                if (val != null)
+                    col.Add(val);
+            }
+            return col;
+        }
+        public static List<T> ToList<T>(this Array items)
+        {
+            var list = new List<T>();
+            for (int i = 0; i < items.Length; i++)
+            {
+                T val = (T)items.GetValue(i);
+                if (val != null)
+                    list.Add(val);
+            }
+            return list;
+        }
+
+        public static IEnumerable<IEnumerable<T>> Split<T>(this T[] source, int chunkSize)
         {
             return source
                 .Select((x, i) => new { Index = i, Value = x })
                 .GroupBy(x => x.Index / chunkSize)
-                .Select(x => x.Select(v => v.Value).ToList())
-                .ToList();
+                .Select(x => x.Select(v => v.Value));
         }
         public static bool All<T>(this T[] array, Func<T, bool> predicate)
         {
