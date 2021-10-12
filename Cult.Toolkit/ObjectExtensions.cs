@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Text.Json;
@@ -271,7 +272,7 @@ namespace Cult.Toolkit.ExtraObject
         {
             yield return obj;
         }
-        public static T DeepClone<T>(this T @this)
+        public static T DeepClone<T>(this T @this) where T : ISerializable
         {
             var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
@@ -640,12 +641,8 @@ namespace Cult.Toolkit.ExtraObject
             return JsonSerializer.Deserialize<dynamic>(jsonText);
         }
 
-        public static byte[] Serialize<T>(this T o) where T : class
+        public static byte[] Serialize<T>(this T o) where T : class, ISerializable
         {
-            Type type = o.GetType();
-            if ((type.Attributes & TypeAttributes.Serializable) == 0)
-                throw new Exception("The Specified object must have [Serializable] attribute");
-
             var formatter = new BinaryFormatter();
             using (var ms = new MemoryStream())
             {

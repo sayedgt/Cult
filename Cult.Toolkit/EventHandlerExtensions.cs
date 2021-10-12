@@ -9,6 +9,18 @@ namespace Cult.Toolkit.ExtraEventHandler
         {
             handler?.Invoke(sender, e);
         }
+        public static void Raise(this EventHandler handler, object sender)
+        {
+            handler.Raise(sender, EventArgs.Empty);
+        }
+        public static void Raise<TEventArgs>(this EventHandler<TEventArgs> handler, object sender) where TEventArgs : EventArgs
+        {
+            handler.Raise(sender, Activator.CreateInstance<TEventArgs>());
+        }
+        public static void Raise<TEventArgs>(this EventHandler<TEventArgs> handler, object sender, TEventArgs e) where TEventArgs : EventArgs
+        {
+            handler?.Invoke(sender, e);
+        }
         public static void RaiseEvent(this EventHandler @this, object sender)
         {
             @this?.Invoke(sender, null);

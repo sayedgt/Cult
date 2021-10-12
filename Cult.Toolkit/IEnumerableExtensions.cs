@@ -339,11 +339,11 @@ namespace Cult.Toolkit.ExtraIEnumerable
         {
             return !source.Any(query);
         }
-        public static bool OneOf<T>(this IEnumerable<T> source)
+        public static bool IsOneItem<T>(this IEnumerable<T> source)
         {
             return source.Count() == 1;
         }
-        public static bool OneOf<T>(this IEnumerable<T> source, Func<T, bool> query)
+        public static bool IsOneItem<T>(this IEnumerable<T> source, Func<T, bool> query)
         {
             return source.Count(query) == 1;
         }

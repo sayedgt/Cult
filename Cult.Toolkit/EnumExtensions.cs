@@ -72,5 +72,15 @@ namespace Cult.Toolkit.ExtraEnum
                 return false;
             }
         }
+
+        public static string GetName(this Enum value)
+        {
+            return value.ToString();
+        }
+
+        public static int GetValue(this Enum value)
+        {
+            return Convert.ToInt32(value);
+        }
     }
 }

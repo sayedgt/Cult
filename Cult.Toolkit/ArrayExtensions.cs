@@ -12,6 +12,11 @@ namespace Cult.Toolkit.ExtraArray
 {
     public static class ArrayExtensions
     {
+        public static T PickOneOf<T>(this T[] array)
+        {
+            var rng = new Random();
+            return array[rng.Next(array.Length)];
+        }
         public static void BlockCopy(this Array src, int srcOffset, Array dst, int dstOffset, int count)
         {
             Buffer.BlockCopy(src, srcOffset, dst, dstOffset, count);

@@ -5,7 +5,7 @@ namespace Cult.Toolkit.ExtraExpression
 {
     public static class ExpressionExtensions
     {
-        public static string GetMemberName<TSource, TProperty>(this Expression<Func<TSource, TProperty>> property)
+        public static string GetPropertyName<TSource, TProperty>(this Expression<Func<TSource, TProperty>> property)
         {
             if (Equals(property, null))
             {

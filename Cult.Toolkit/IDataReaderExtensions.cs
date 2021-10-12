@@ -404,7 +404,7 @@ namespace Cult.Toolkit.ExtraIDataReader
         public static TReturn SafeColumnReader<TClass, TReturn>(this IDataReader reader, Expression<Func<TClass, object>> columnName)
                     where TClass : class, new()
         {
-            return reader.SafeColumnReader<TReturn>(columnName.GetMemberName());
+            return reader.SafeColumnReader<TReturn>(columnName.GetPropertyName());
         }
         public static TReturn SafeColumnReader<TReturn>(this IDataReader reader, string columnName)
         {

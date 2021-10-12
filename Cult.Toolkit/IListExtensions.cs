@@ -167,16 +167,12 @@ namespace Cult.Toolkit.ExtraIList
         {
             return list.IndexOf(element) == list.Count - 1;
         }
-        public static T OneOf<T>(this IList<T> list)
+        public static T PickOneOf<T>(this IList<T> list)
         {
             var rng = new Random();
             return list[rng.Next(list.Count)];
         }
-        public static T OneOf<T>(this T[] list)
-        {
-            var rng = new Random();
-            return list[rng.Next(list.Length)];
-        }
+
         public static void Replace<T>(this IList<T> @this, T oldValue, T newValue)
         {
             var oldIndex = @this.IndexOf(oldValue);
