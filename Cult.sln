@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.Roslyn", "Cult.Roslyn\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DynamicProxy", "Cult.DynamicProxy\Cult.DynamicProxy.csproj", "{78D09E52-7CDA-4617-935A-C3C30920EE88}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.SimMetrics", "Cult.SimMetrics\Cult.SimMetrics.csproj", "{8A1BEB13-5CA8-49DE-8F65-03193E85CC7F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.DataStructure", "Cult.DataStructure\Cult.DataStructure.csproj", "{B439A482-B3EF-4566-A63E-723A2E328636}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cult.MustacheSharp", "Cult.MustacheSharp\Cult.MustacheSharp.csproj", "{D92428B2-7C5F-4A89-9FD9-A533E58156E3}"
@@ -95,10 +93,6 @@ Global
 		{78D09E52-7CDA-4617-935A-C3C30920EE88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78D09E52-7CDA-4617-935A-C3C30920EE88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78D09E52-7CDA-4617-935A-C3C30920EE88}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A1BEB13-5CA8-49DE-8F65-03193E85CC7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A1BEB13-5CA8-49DE-8F65-03193E85CC7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A1BEB13-5CA8-49DE-8F65-03193E85CC7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A1BEB13-5CA8-49DE-8F65-03193E85CC7F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B439A482-B3EF-4566-A63E-723A2E328636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B439A482-B3EF-4566-A63E-723A2E328636}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B439A482-B3EF-4566-A63E-723A2E328636}.Release|Any CPU.ActiveCfg = Release|Any CPU
