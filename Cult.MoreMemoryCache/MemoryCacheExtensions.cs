@@ -7,6 +7,38 @@ namespace Cult.MoreMemoryCache
 {
     public static class MemoryCacheExtensions
     {
+        public static TValue AddOrGet<TValue>(this MemoryCache cache, string key, TValue value)
+        {
+            object item = cache.AddOrGetExisting(key, value, new CacheItemPolicy()) ?? value;
+
+            return (TValue)item;
+        }
+        public static TValue AddOrGet<TValue>(this MemoryCache cache, string key, Func<string, TValue> valueFactory)
+        {
+            var lazy = new Lazy<TValue>(() => valueFactory(key));
+
+            Lazy<TValue> item = (Lazy<TValue>)cache.AddOrGetExisting(key, lazy, new CacheItemPolicy()) ?? lazy;
+
+            return item.Value;
+        }
+        public static TValue AddOrGet<TValue>(this MemoryCache cache, string key, Func<string, TValue> valueFactory, CacheItemPolicy policy, string regionName = null)
+        {
+            var lazy = new Lazy<TValue>(() => valueFactory(key));
+
+            Lazy<TValue> item = (Lazy<TValue>)cache.AddOrGetExisting(key, lazy, policy, regionName) ?? lazy;
+
+            return item.Value;
+        }
+
+        public static TValue AddOrGet<TValue>(this MemoryCache cache, string key, Func<string, TValue> valueFactory, DateTimeOffset absoluteExpiration, string regionName = null)
+        {
+            var lazy = new Lazy<TValue>(() => valueFactory(key));
+
+            Lazy<TValue> item = (Lazy<TValue>)cache.AddOrGetExisting(key, lazy, absoluteExpiration, regionName) ?? lazy;
+
+            return item.Value;
+        }
+
         public static TValue GetOrAdd<TKey, TValue>(this ObjectCache @this, TKey key, Func<TKey, TValue> valueFactory, CacheItemPolicy policy)
         {
             var lazy = new Lazy<TValue>(() => valueFactory(key), true);

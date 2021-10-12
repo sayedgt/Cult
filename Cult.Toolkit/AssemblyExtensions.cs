@@ -8,7 +8,7 @@ namespace Cult.Toolkit.ExtraAssembly
 {
     public static class AssemblyExtensions
     {
-        public static string GetManifestResourceText(this Assembly assembly, string resourceName)
+        public static string GetManifestResourceAsText(this Assembly assembly, string resourceName)
         {
             var result = "";
             var resourceFileName = assembly.GetManifestResourceNames().FirstOrDefault(x => x.EndsWith(resourceName, StringComparison.InvariantCultureIgnoreCase));
