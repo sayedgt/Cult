@@ -9,6 +9,26 @@ namespace Cult.Toolkit.ExtraStream
 {
     public static class StreamExtensions
     {
+        public static List<string> ReadLines(this Stream stream)
+        {
+            var lines = new List<string>();
+            using (var sr = new StreamReader(stream))
+            {
+                while (sr.Peek() >= 0)
+                {
+                    lines.Add(sr.ReadLine());
+                }
+            }
+            return lines;
+        }
+
+        public static string ReadAll(this Stream stream)
+        {
+            using (var sr = new StreamReader(stream))
+            {
+                return sr.ReadToEnd();
+            }
+        }
         public static void Clear(this Stream stream) => stream.SetLength(0);
 
         public static void CopyTo(this Stream fromStream, Stream toStream)

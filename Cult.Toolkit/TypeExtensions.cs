@@ -12,6 +12,25 @@ namespace Cult.Toolkit.ExtraType
 {
     public static class TypeExtensions
     {
+        public static Type GetCoreType(this Type input)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            if (input == null)
+            {
+                if (!input.GetTypeInfo().IsValueType)
+                {
+                    return input;
+                }
+
+                return Nullable.GetUnderlyingType(input);
+            }
+
+            return input;
+        }
         public static object CreateInstance(this Type type, params object[] constructorParameters)
         {
             return CreateInstance<object>(type, constructorParameters);

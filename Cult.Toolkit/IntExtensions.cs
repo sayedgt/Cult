@@ -317,5 +317,70 @@ namespace Cult.Toolkit.ExtraInt
         {
             return TimeSpan.FromDays(@this * 7);
         }
+
+        public static decimal PercentageOf(this int number, int percent)
+        {
+            return number * percent / 100;
+        }
+        public static decimal PercentOf(this int position, int total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = position / (decimal)total * 100;
+            return result;
+        }
+        public static decimal PercentOf(this int? position, int total)
+        {
+            if (position == null) return 0;
+
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = (decimal)position / total * 100;
+            return result;
+        }
+        public static decimal PercentageOf(this int number, float percent)
+        {
+            return (decimal)(number * percent / 100);
+        }
+        public static decimal PercentOf(this int position, float total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = position / (decimal)total * 100;
+            return result;
+        }
+        public static decimal PercentageOf(this int number, double percent)
+        {
+            return (decimal)(number * percent / 100);
+        }
+        public static decimal PercentOf(this int position, double total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = position / (decimal)total * 100;
+            return result;
+        }
+        public static decimal PercentageOf(this int number, decimal percent)
+        {
+            return number * percent / 100;
+        }
+        public static decimal PercentOf(this int position, decimal total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = position / total * 100;
+            return result;
+        }
+        public static decimal PercentageOf(this int number, long percent)
+        {
+            return number * percent / 100;
+        }
+        public static decimal PercentOf(this int position, long total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = position / (decimal)total * 100;
+            return result;
+        }
     }
 }

@@ -42,5 +42,35 @@ namespace Cult.Toolkit.ExtraEnum
         {
             return Array.IndexOf(values, @this) == -1;
         }
+        public static bool ContainsFlagValue(this Enum e, string flagValue)
+        {
+            var enumType = e.GetType();
+
+            if (Enum.IsDefined(enumType, flagValue))
+            {
+                var intEnumValue = Convert.ToInt32(e);
+                var intFlagValue = (int)Enum.Parse(enumType, flagValue);
+
+                return (intFlagValue & intEnumValue) == intFlagValue;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool ContainsFlagValue(this Enum e, Enum flagValue)
+        {
+            if (Enum.IsDefined(e.GetType(), flagValue))
+            {
+                var intFlagValue = Convert.ToInt32(flagValue);
+
+                return (intFlagValue & Convert.ToInt32(e)) == intFlagValue;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

@@ -8,6 +8,22 @@ namespace Cult.Toolkit.ExtraICollection
 {
     public static class ICollectionExtensions
     {
+        public static IEnumerable<T> Distinct<T>(this IEnumerable<T> source, Func<T, T, bool> equalityComparer)
+        {
+            int sourceCount = source.Count();
+            for (int i = 0; i < sourceCount; i++)
+            {
+                bool found = false;
+                for (int j = 0; j < i; j++)
+                    if (equalityComparer(source.ElementAt(i), source.ElementAt(j)))
+                    {
+                        found = true;
+                        break;
+                    }
+                if (!found)
+                    yield return source.ElementAt(i);
+            }
+        }
         public static List<List<T>> Split<T>(this ICollection<T> source, int chunkSize)
         {
             return source

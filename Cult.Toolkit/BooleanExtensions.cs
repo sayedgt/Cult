@@ -30,5 +30,35 @@ namespace Cult.Toolkit.ExtraBoolean
         {
             return @this ? trueValue : falseValue;
         }
+
+        public static TResult IfTrue<TResult>(this bool value, Func<TResult> expression)
+        {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
+            return value ? expression() : default;
+        }
+
+        public static TResult IfTrue<TResult>(this bool value, TResult content)
+        {
+            return value ? content : default;
+        }
+
+        public static TResult IfFalse<TResult>(this bool value, Func<TResult> expression)
+        {
+            if (expression == null)
+            {
+                throw new ArgumentNullException(nameof(expression));
+            }
+
+            return !value ? expression() : default;
+        }
+
+        public static TResult IfFalse<TResult>(this bool value, TResult content)
+        {
+            return !value ? content : default;
+        }
     }
 }

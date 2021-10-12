@@ -240,7 +240,7 @@ namespace Cult.Toolkit.ExtraArray
             }
             return result;
         }
-        public static T[] RemoveDuplicateItems<T>(this T[] @this)
+        public static T[] RemoveDuplicate<T>(this T[] @this)
         {
             var hashset = new HashSet<T>();
             foreach (var item in @this)

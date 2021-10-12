@@ -141,5 +141,43 @@ namespace Cult.Toolkit.ExtraDecimal
             var factor = (int)Math.Pow(10, digits);
             return Math.Truncate(n * factor) / factor;
         }
+
+        public static decimal PercentageOf(this decimal number, int percent)
+        {
+            return number * percent / 100;
+        }
+
+        public static decimal PercentOf(this decimal position, int total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = position / total * 100;
+            return result;
+        }
+
+        public static decimal PercentageOf(this decimal number, decimal percent)
+        {
+            return number * percent / 100;
+        }
+
+        public static decimal PercentOf(this decimal position, decimal total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = position / total * 100;
+            return result;
+        }
+        public static decimal PercentageOf(this decimal number, long percent)
+        {
+            return number * percent / 100;
+        }
+
+        public static decimal PercentOf(this decimal position, long total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = position / total * 100;
+            return result;
+        }
     }
 }

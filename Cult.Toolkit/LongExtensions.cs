@@ -187,5 +187,61 @@ namespace Cult.Toolkit.ExtraLong
         {
             return TimeSpan.FromDays(@this * 7);
         }
+
+        public static decimal PercentageOf(this long number, int percent)
+        {
+            return (decimal)(number * percent / 100);
+        }
+        public static decimal PercentageOf(this long number, float percent)
+        {
+            return (decimal)(number * percent / 100);
+        }
+        public static decimal PercentageOf(this long number, double percent)
+        {
+            return (decimal)(number * percent / 100);
+        }
+        public static decimal PercentageOf(this long number, decimal percent)
+        {
+            return (decimal)(number * percent / 100);
+        }
+        public static decimal PercentageOf(this long number, long percent)
+        {
+            return (decimal)(number * percent / 100);
+        }
+        public static decimal PercentOf(this long position, int total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = (decimal)position / (decimal)total * 100;
+            return result;
+        }
+        public static decimal PercentOf(this long position, float total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = (decimal)((decimal)position / (decimal)total * 100);
+            return result;
+        }
+        public static decimal PercentOf(this long position, double total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = (decimal)((decimal)position / (decimal)total * 100);
+            return result;
+        }
+        public static decimal PercentOf(this long position, decimal total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = (decimal)position / (decimal)total * 100;
+            return result;
+        }
+        public static decimal PercentOf(this long position, long total)
+        {
+            decimal result = 0;
+            if (position > 0 && total > 0)
+                result = (decimal)position / (decimal)total * 100;
+            return result;
+        }
     }
 }

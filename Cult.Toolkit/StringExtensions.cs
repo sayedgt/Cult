@@ -20,6 +20,53 @@ namespace Cult.Toolkit.ExtraString
 {
     public static class StringExtensions
     {
+        public static bool IsValidUrl(this string text)
+        {
+            Regex rx = new Regex(@"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?");
+            return rx.IsMatch(text);
+        }
+        public static bool IsValidEmailAddress(this string email)
+        {
+            Regex regex = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+            return regex.IsMatch(email);
+        }
+        public static int NthIndexOf(this string input, string match, int occurrence)
+        {
+            if (input == null)
+            {
+                throw new ArgumentNullException(nameof(input));
+            }
+
+            if (match == null)
+            {
+                throw new ArgumentNullException(nameof(match));
+            }
+
+            const int NotFoundValue = -1;
+
+            if (occurrence < 1)
+            {
+                throw new ArgumentException("occurrence equal to 1 or larger.", nameof(occurrence));
+            }
+
+            var i = 1;
+            var index = 0;
+
+            while (i <= occurrence &&
+                (index = input.IndexOf(match, index + 1, StringComparison.Ordinal)) != NotFoundValue)
+            {
+                if (i == occurrence)
+                {
+                    // Match found!
+                    return index;
+                }
+
+                i++;
+            }
+
+            // Match not found
+            return NotFoundValue;
+        }
         public static string Strip(this string s, char character)
         {
             s = s.Replace(character.ToString(), "");
