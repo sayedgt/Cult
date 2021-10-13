@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-// ReSharper disable All 
+
 namespace Cult.Toolkit
 {
     public static class PathUtility
@@ -12,10 +12,12 @@ namespace Cult.Toolkit
             var newPath = Path.GetDirectoryName(path);
             return Path.GetFullPath(newPath ?? string.Empty).Split(Path.DirectorySeparatorChar).LastOrDefault();
         }
+
         public static string GetFilePathWithoutExtension(string path)
         {
             return Path.ChangeExtension(path, null);
         }
+
         public static string GetFullPathWithoutExtension(string path)
         {
             return Path.Combine(Path.GetDirectoryName(path) ?? string.Empty, Path.GetFileNameWithoutExtension(path));

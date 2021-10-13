@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 using System.Net;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraShort
 {
     public static class ShortExtensions
@@ -10,50 +10,62 @@ namespace Cult.Toolkit.ExtraShort
         {
             return Math.Abs(value);
         }
+
         public static bool Between(this short @this, short minValue, short maxValue)
         {
             return minValue.CompareTo(@this) == -1 && @this.CompareTo(maxValue) == -1;
         }
+
         public static TimeSpan Days(this short @this)
         {
             return TimeSpan.FromDays(@this);
         }
+
         public static bool FactorOf(this short @this, short factorNumer)
         {
             return factorNumer % @this == 0;
         }
+
         public static byte[] GetBytes(this short value)
         {
             return BitConverter.GetBytes(value);
         }
+
         public static short HostToNetworkOrder(this short host)
         {
             return IPAddress.HostToNetworkOrder(host);
         }
+
         public static TimeSpan Hours(this short @this)
         {
             return TimeSpan.FromHours(@this);
         }
+
         public static bool In(this short @this, params short[] values)
         {
             return Array.IndexOf(values, @this) != -1;
         }
+
         public static bool InRange(this short @this, short minValue, short maxValue)
         {
             return @this.CompareTo(minValue) >= 0 && @this.CompareTo(maxValue) <= 0;
         }
+
         public static bool IsEven(this short @this)
         {
             return @this % 2 == 0;
         }
+
         public static bool IsMultipleOf(this short @this, short factor)
         {
             return @this % factor == 0;
         }
+
         public static bool IsOdd(this short @this)
         {
             return @this % 2 != 0;
         }
+
         public static bool IsPrime(this short @this)
         {
             if (@this == 1 || @this == 2)
@@ -77,38 +89,47 @@ namespace Cult.Toolkit.ExtraShort
 
             return true;
         }
+
         public static short Max(this short val1, short val2)
         {
             return Math.Max(val1, val2);
         }
+
         public static TimeSpan Milliseconds(this short @this)
         {
             return TimeSpan.FromMilliseconds(@this);
         }
+
         public static short Min(this short val1, short val2)
         {
             return Math.Min(val1, val2);
         }
+
         public static TimeSpan Minutes(this short @this)
         {
             return TimeSpan.FromMinutes(@this);
         }
+
         public static short NetworkToHostOrder(this short network)
         {
             return IPAddress.NetworkToHostOrder(network);
         }
+
         public static bool NotIn(this short @this, params short[] values)
         {
             return Array.IndexOf(values, @this) == -1;
         }
+
         public static TimeSpan Seconds(this short @this)
         {
             return TimeSpan.FromSeconds(@this);
         }
+
         public static int Sign(this short value)
         {
             return Math.Sign(value);
         }
+
         public static SqlDbType SqlSystemTypeToSqlDbType(this short @this)
         {
             switch (@this)
@@ -211,6 +232,7 @@ namespace Cult.Toolkit.ExtraShort
                         $"Unsupported Type: {@this}. Please let us know about this type and we will support it: sales@zzzprojects.com");
             }
         }
+
         public static TimeSpan Weeks(this short @this)
         {
             return TimeSpan.FromDays(@this * 7);

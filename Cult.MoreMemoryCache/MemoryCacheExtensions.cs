@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Runtime.Caching;
-using Microsoft.Extensions.Caching.Memory;
 
-// ReSharper disable All 
 namespace Cult.MoreMemoryCache
 {
     public static class MemoryCacheExtensions
@@ -13,6 +12,7 @@ namespace Cult.MoreMemoryCache
 
             return (TValue)item;
         }
+
         public static TValue AddOrGet<TValue>(this MemoryCache cache, string key, Func<string, TValue> valueFactory)
         {
             var lazy = new Lazy<TValue>(() => valueFactory(key));
@@ -21,6 +21,7 @@ namespace Cult.MoreMemoryCache
 
             return item.Value;
         }
+
         public static TValue AddOrGet<TValue>(this MemoryCache cache, string key, Func<string, TValue> valueFactory, CacheItemPolicy policy, string regionName = null)
         {
             var lazy = new Lazy<TValue>(() => valueFactory(key));
@@ -44,6 +45,7 @@ namespace Cult.MoreMemoryCache
             var lazy = new Lazy<TValue>(() => valueFactory(key), true);
             return ((Lazy<TValue>)@this.AddOrGetExisting(key.ToString(), lazy, policy) ?? lazy).Value;
         }
+
         public static TReturn SafeGet<TReturn>(this MemoryCache memoryCache, string key, Func<TReturn> objectToCache)
         {
             if (memoryCache.Contains(key))
@@ -51,6 +53,7 @@ namespace Cult.MoreMemoryCache
 
             return (TReturn)(memoryCache[key] = objectToCache());
         }
+
         public static TReturn SafeGet<TReturn>(this MemoryCache memoryCache, string key, TReturn objectToCache)
         {
             if (memoryCache.Contains(key))
@@ -58,6 +61,7 @@ namespace Cult.MoreMemoryCache
 
             return (TReturn)(memoryCache[key] = objectToCache);
         }
+
         public static object SafeGet(this MemoryCache memoryCache, string key, Func<object> objectToCache)
         {
             if (memoryCache.Contains(key))
@@ -65,6 +69,7 @@ namespace Cult.MoreMemoryCache
 
             return memoryCache[key] = objectToCache();
         }
+
         public static object SafeGet(this MemoryCache memoryCache, string key, object objectToCache)
         {
             if (memoryCache.Contains(key))
@@ -86,6 +91,7 @@ namespace Cult.MoreMemoryCache
                 return data;
             }
         }
+
         public static TReturn SafeGet<TReturn>(this IMemoryCache memoryCache, string key, TReturn objectToCache)
         {
             if (memoryCache.TryGetValue(key, out TReturn cached))
@@ -98,6 +104,7 @@ namespace Cult.MoreMemoryCache
                 return objectToCache;
             }
         }
+
         public static object SafeGet(this IMemoryCache memoryCache, string key, Func<object> objectToCache)
         {
 
@@ -113,6 +120,7 @@ namespace Cult.MoreMemoryCache
             }
 
         }
+
         public static object SafeGet(this IMemoryCache memoryCache, string key, object objectToCache)
         {
             if (memoryCache.TryGetValue(key, out var cached))

@@ -1,5 +1,5 @@
 using System;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraDelegate
 {
     public static class DelegateExtensions
@@ -8,10 +8,12 @@ namespace Cult.Toolkit.ExtraDelegate
         {
             return Delegate.Combine(a, b);
         }
+
         public static Delegate Remove(this Delegate source, Delegate value)
         {
             return Delegate.Remove(source, value);
         }
+
         public static Delegate RemoveAll(this Delegate source, Delegate value)
         {
             return Delegate.RemoveAll(source, value);

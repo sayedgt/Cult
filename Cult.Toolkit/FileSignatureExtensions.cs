@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-// ReSharper disable All 
-
 namespace Cult.Toolkit.FileSignature
 {
     public static class FileSignatureExtensions
@@ -35,7 +33,7 @@ namespace Cult.Toolkit.FileSignature
                 }
             },
         };
-        
+
         public static string GetMimeType(this byte[] byteArray)
         {
             return byteArray.IsJpeg() ? "image/jpeg" : string.Empty;
@@ -52,9 +50,8 @@ namespace Cult.Toolkit.FileSignature
                    || jpgSignatures.Any(signature =>
                        headerBytes.Take(signature.Length).SequenceEqual(signature));
         }
+
         public static bool IsJpeg(this Stream stream)
-         =>  stream.ToByteArray().IsJpeg();
-            
-        
+                 => stream.ToByteArray().IsJpeg();
     }
 }

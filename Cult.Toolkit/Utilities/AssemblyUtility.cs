@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-// ReSharper disable All
 
 namespace Cult.Toolkit
 {

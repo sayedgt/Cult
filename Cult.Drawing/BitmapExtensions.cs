@@ -2,7 +2,7 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-// ReSharper disable All 
+
 namespace Cult.Drawing
 {
     public static class BitmapExtensions
@@ -14,6 +14,7 @@ namespace Cult.Drawing
                 return new Bitmap(ms);
             }
         }
+
         public static byte[] GetBytes(this Bitmap value, ImageFormat imageFormat)
         {
             using (var ms = new MemoryStream())
@@ -22,10 +23,19 @@ namespace Cult.Drawing
                 return ms.GetBuffer();
             }
         }
+
+        public static bool IsNullOrEmpty(this Bitmap value)
+        {
+            if (value == null)
+                return true;
+            return value.Size.IsEmpty;
+        }
+
         public static Bitmap ScaleProportional(this Bitmap bitmap, Size size)
         {
             return bitmap.ScaleProportional(size.Width, size.Height);
         }
+
         public static Bitmap ScaleProportional(this Bitmap bitmap, int width, int height)
         {
             float proportionalWidth, proportionalHeight;
@@ -53,10 +63,12 @@ namespace Cult.Drawing
 
             return bitmap.ScaleToSize((int)proportionalWidth, (int)proportionalHeight);
         }
+
         public static Bitmap ScaleToSize(this Bitmap bitmap, Size size)
         {
             return bitmap.ScaleToSize(size.Width, size.Height);
         }
+
         public static Bitmap ScaleToSize(this Bitmap bitmap, int width, int height)
         {
             var scaledBitmap = new Bitmap(width, height);
@@ -67,18 +79,22 @@ namespace Cult.Drawing
             }
             return scaledBitmap;
         }
+
         public static Bitmap ScaleToSizeProportional(this Bitmap bitmap, Size size)
         {
             return bitmap.ScaleToSizeProportional(Color.White, size);
         }
+
         public static Bitmap ScaleToSizeProportional(this Bitmap bitmap, Color backgroundColor, Size size)
         {
             return bitmap.ScaleToSizeProportional(backgroundColor, size.Width, size.Height);
         }
+
         public static Bitmap ScaleToSizeProportional(this Bitmap bitmap, int width, int height)
         {
             return bitmap.ScaleToSizeProportional(Color.White, width, height);
         }
+
         public static Bitmap ScaleToSizeProportional(this Bitmap bitmap, Color backgroundColor, int width, int height)
         {
             var scaledBitmap = new Bitmap(width, height);
@@ -93,13 +109,6 @@ namespace Cult.Drawing
             }
 
             return scaledBitmap;
-        }
-
-        public static bool IsNullOrEmpty(this Bitmap value)
-        {
-            if (value == null)
-                return true;
-            return value.Size.IsEmpty;
         }
     }
 }

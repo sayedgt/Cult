@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraNameValueCollection
 {
     public static class NameValueCollectionExtensions

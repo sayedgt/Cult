@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraIDbConnection
 {
     public static class IDbConnectionExtensions
@@ -14,15 +14,18 @@ namespace Cult.Toolkit.ExtraIDbConnection
                 @this.Open();
             }
         }
+
         public static bool IsInState(this IDbConnection connection, ConnectionState state)
         {
             return connection != null &&
                    (connection.State & state) == state;
         }
+
         public static bool IsOpen(this DbConnection @this)
         {
             return @this.State == ConnectionState.Open;
         }
+
         public static bool IsServerAvailable(this IDbConnection connection)
         {
             bool status;
@@ -38,11 +41,13 @@ namespace Cult.Toolkit.ExtraIDbConnection
             }
             return status;
         }
+
         public static void OpenIfNot(this IDbConnection connection)
         {
             if (!connection.IsInState(ConnectionState.Open))
                 connection.Open();
         }
+
         public static void SafeClose(this DbConnection toClose, bool dispose)
         {
             if (toClose == null)
@@ -58,6 +63,7 @@ namespace Cult.Toolkit.ExtraIDbConnection
                 toClose.Dispose();
             }
         }
+
         public static bool StateIsWithin(this IDbConnection connection, params ConnectionState[] states)
         {
             return connection != null && states != null && states.Length > 0 &&

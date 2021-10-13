@@ -23,18 +23,149 @@ namespace Cult.Toolkit
     // var people = _dbContext.Users.DynamicWhere(dyn).ToList();
     public static class DynamicQueryExtensions
     {
+        private static bool DynamicQueryContains(object source, object value)
+        {
+            if (source is string && value is string)
+            {
+                return source.ToString().Contains(value.ToString());
+            }
+
+            if (source is Array array)
+            {
+                return Array.IndexOf(array, value) >= 0;
+            }
+
+            if (source is IEnumerable)
+            {
+                return ((IEnumerable<object>)source).Contains(value);
+            }
+            return false;
+        }
+
+        private static bool DynamicQueryDoesNotContain(object source, object value)
+        {
+            if (source is string && value is string)
+            {
+                return !source.ToString().Contains(value.ToString());
+            }
+
+            if (source is Array array)
+            {
+                return !(Array.IndexOf(array, value) >= 0);
+            }
+
+            if (source is IEnumerable)
+            {
+                return !((IEnumerable<object>)source).Contains(value);
+            }
+            return false;
+        }
+
+        private static bool DynamicQueryDoesNotEndWith(object source, object value)
+        {
+            if (source is string && value is string)
+            {
+                return !source.ToString().EndsWith(value.ToString());
+            }
+            return false;
+        }
+
+        private static bool DynamicQueryDoesNotStartWith(object source, object value)
+        {
+            if (source is string && value is string)
+            {
+                return !source.ToString().StartsWith(value.ToString());
+            }
+            return false;
+        }
+
+        private static bool DynamicQueryEndsWith(object source, object value)
+        {
+            if (source is string && value is string)
+            {
+                return source.ToString().EndsWith(value.ToString());
+            }
+            return false;
+        }
+
+        private static bool DynamicQueryIsNotNullOrEmpty(object source, object value)
+        {
+            if (source is string)
+            {
+                return !string.IsNullOrEmpty(source?.ToString());
+            }
+
+            if (source is Array)
+            {
+                return source != null && ((Array)source).Length > 0;
+            }
+
+            if (source is IEnumerable)
+            {
+                return source != null && ((IEnumerable<object>)source).Count() > 0;
+            }
+            return false;
+        }
+
+        private static bool DynamicQueryIsNullOrEmpty(object source, object value)
+        {
+            if (source is string)
+            {
+                return string.IsNullOrEmpty(source?.ToString());
+            }
+
+            if (source is Array)
+            {
+                return source == null || ((Array)source).Length == 0;
+            }
+
+            if (source is IEnumerable)
+            {
+                return source == null || ((IEnumerable<object>)source).Count() == 0;
+            }
+            return false;
+        }
+
+        private static bool DynamicQueryLike(object source, object value)
+        {
+            return
+                DynamicQueryStartsWith(source, value) ||
+                DynamicQueryContains(source, value) ||
+                DynamicQueryEndsWith(source, value);
+        }
+
+        private static bool DynamicQueryNotLike(object source, object value)
+        {
+            return
+                !DynamicQueryStartsWith(source, value) &&
+                !DynamicQueryContains(source, value) &&
+                !DynamicQueryEndsWith(source, value);
+        }
+
+        private static bool DynamicQueryStartsWith(object source, object value)
+        {
+            if (source is string && value is string)
+            {
+                return source.ToString().StartsWith(value.ToString());
+            }
+            return false;
+        }
+
         public static IQueryable<TModel> DynamicWhere<TModel>(this IQueryable<TModel> iqueryable, IEnumerable<DynamicFilter> dynamicFilters)
         {
             return iqueryable.Where(Filter<TModel>(dynamicFilters));
         }
+
         public static IQueryable<TModel> DynamicWhere<TModel>(this IEnumerable<TModel> ienumerable, IEnumerable<DynamicFilter> dynamicFilters)
         {
             return ienumerable.AsQueryable().DynamicWhere(dynamicFilters);
         }
+
         public static IQueryable<TModel> DynamicWhere<TModel>(this ICollection<TModel> icollection, IEnumerable<DynamicFilter> dynamicFilters)
         {
             return icollection.AsQueryable().DynamicWhere(dynamicFilters);
         }
+
         private static Expression<Func<TModel, bool>> Filter<TModel>(IEnumerable<DynamicFilter> dynamicModel)
         {
             Expression<Func<TModel, bool>> result = _ => true;
@@ -54,6 +185,7 @@ namespace Cult.Toolkit
             }
             return result;
         }
+
         private static BinaryExpression GetBinaryExpression(ComparisonFilter comparisonMethod, MemberExpression memberExpression, ConstantExpression constantExpression)
         {
             switch (comparisonMethod)
@@ -103,125 +235,6 @@ namespace Cult.Toolkit
                 default:
                     return null;
             }
-        }
-
-        private static bool DynamicQueryContains(object source, object value)
-        {
-            if (source is string && value is string)
-            {
-                return source.ToString().Contains(value.ToString());
-            }
-
-            if (source is Array array)
-            {
-                return Array.IndexOf(array, value) >= 0;
-            }
-
-            if (source is IEnumerable)
-            {
-                return ((IEnumerable<object>)source).Contains(value);
-            }
-            return false;
-        }
-        private static bool DynamicQueryDoesNotContain(object source, object value)
-        {
-            if (source is string && value is string)
-            {
-                return !source.ToString().Contains(value.ToString());
-            }
-
-            if (source is Array array)
-            {
-                return !(Array.IndexOf(array, value) >= 0);
-            }
-
-            if (source is IEnumerable)
-            {
-                return !((IEnumerable<object>)source).Contains(value);
-            }
-            return false;
-        }
-        private static bool DynamicQueryStartsWith(object source, object value)
-        {
-            if (source is string && value is string)
-            {
-                return source.ToString().StartsWith(value.ToString());
-            }
-            return false;
-        }
-        private static bool DynamicQueryDoesNotStartWith(object source, object value)
-        {
-            if (source is string && value is string)
-            {
-                return !source.ToString().StartsWith(value.ToString());
-            }
-            return false;
-        }
-        private static bool DynamicQueryEndsWith(object source, object value)
-        {
-            if (source is string && value is string)
-            {
-                return source.ToString().EndsWith(value.ToString());
-            }
-            return false;
-        }
-        private static bool DynamicQueryDoesNotEndWith(object source, object value)
-        {
-            if (source is string && value is string)
-            {
-                return !source.ToString().EndsWith(value.ToString());
-            }
-            return false;
-        }
-        private static bool DynamicQueryIsNotNullOrEmpty(object source, object value)
-        {
-            if (source is string)
-            {
-                return !string.IsNullOrEmpty(source?.ToString());
-            }
-
-            if (source is Array)
-            {
-                return source != null && ((Array)source).Length > 0;
-            }
-
-            if (source is IEnumerable)
-            {
-                return source != null && ((IEnumerable<object>)source).Count() > 0;
-            }
-            return false;
-        }
-        private static bool DynamicQueryIsNullOrEmpty(object source, object value)
-        {
-            if (source is string)
-            {
-                return string.IsNullOrEmpty(source?.ToString());
-            }
-
-            if (source is Array)
-            {
-                return source == null || ((Array)source).Length == 0;
-            }
-
-            if (source is IEnumerable)
-            {
-                return source == null || ((IEnumerable<object>)source).Count() == 0;
-            }
-            return false;
-        }
-        private static bool DynamicQueryLike(object source, object value)
-        {
-            return
-                DynamicQueryStartsWith(source, value) ||
-                DynamicQueryContains(source, value) ||
-                DynamicQueryEndsWith(source, value);
-        }
-        private static bool DynamicQueryNotLike(object source, object value)
-        {
-            return
-                !DynamicQueryStartsWith(source, value) &&
-                !DynamicQueryContains(source, value) &&
-                !DynamicQueryEndsWith(source, value);
         }
     }
 }

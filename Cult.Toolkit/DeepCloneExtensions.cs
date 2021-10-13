@@ -45,6 +45,7 @@ namespace Cult.Toolkit.ExtraObject
             {
                 return ReferenceEquals(x, y);
             }
+
             public override int GetHashCode(object obj)
             {
                 if (obj == null) return 0;
@@ -54,16 +55,36 @@ namespace Cult.Toolkit.ExtraObject
 
         private static readonly MethodInfo CloneMethod = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
 
-        private static bool IsPrimitive(this Type type)
-        {
-            if (type == typeof(string)) return true;
-            return (type.IsValueType & type.IsPrimitive);
-        }
-
         private static object Copy(this object originalObject)
         {
             return InternalCopy(originalObject, new Dictionary<object, object>(new ReferenceEqualityComparer()));
         }
+
+        private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool> filter = null)
+        {
+            foreach (FieldInfo fieldInfo in typeToReflect.GetFields(bindingFlags))
+            {
+                if (filter != null && filter(fieldInfo) == false) continue;
+                if (IsPrimitive(fieldInfo.FieldType)) continue;
+                var originalFieldValue = fieldInfo.GetValue(originalObject);
+                var clonedFieldValue = InternalCopy(originalFieldValue, visited);
+                fieldInfo.SetValue(cloneObject, clonedFieldValue);
+            }
+        }
+
+        public static T DeepClone<T>(this T original)
+        {
+            return (T)Copy((object)original);
+        }
+
+        private static void ForEach(this Array array, Action<Array, int[]> action)
+        {
+            if (array.LongLength == 0) return;
+            ArrayTraverse walker = new ArrayTraverse(array);
+            do action(array, walker.Position);
+            while (walker.Step());
+        }
+
         private static object InternalCopy(object originalObject, IDictionary<object, object> visited)
         {
             if (originalObject == null) return null;
@@ -88,6 +109,12 @@ namespace Cult.Toolkit.ExtraObject
             return cloneObject;
         }
 
+        private static bool IsPrimitive(this Type type)
+        {
+            if (type == typeof(string)) return true;
+            return (type.IsValueType & type.IsPrimitive);
+        }
+
         private static void RecursiveCopyBaseTypePrivateFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect)
         {
             if (typeToReflect.BaseType != null)
@@ -95,30 +122,6 @@ namespace Cult.Toolkit.ExtraObject
                 RecursiveCopyBaseTypePrivateFields(originalObject, visited, cloneObject, typeToReflect.BaseType);
                 CopyFields(originalObject, visited, cloneObject, typeToReflect.BaseType, BindingFlags.Instance | BindingFlags.NonPublic, info => info.IsPrivate);
             }
-        }
-
-        private static void CopyFields(object originalObject, IDictionary<object, object> visited, object cloneObject, Type typeToReflect, BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.FlattenHierarchy, Func<FieldInfo, bool> filter = null)
-        {
-            foreach (FieldInfo fieldInfo in typeToReflect.GetFields(bindingFlags))
-            {
-                if (filter != null && filter(fieldInfo) == false) continue;
-                if (IsPrimitive(fieldInfo.FieldType)) continue;
-                var originalFieldValue = fieldInfo.GetValue(originalObject);
-                var clonedFieldValue = InternalCopy(originalFieldValue, visited);
-                fieldInfo.SetValue(cloneObject, clonedFieldValue);
-            }
-        }
-        private static void ForEach(this Array array, Action<Array, int[]> action)
-        {
-            if (array.LongLength == 0) return;
-            ArrayTraverse walker = new ArrayTraverse(array);
-            do action(array, walker.Position);
-            while (walker.Step());
-        }
-
-        public static T DeepClone<T>(this T original)
-        {
-            return (T)Copy((object)original);
         }
     }
 }

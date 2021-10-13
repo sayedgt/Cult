@@ -1,5 +1,4 @@
 ﻿using System;
-// ReSharper disable All
 
 namespace Cult.Toolkit
 {
@@ -7,31 +6,23 @@ namespace Cult.Toolkit
     public class SnowflakeIdGenerator
     {
         public const long Twepoch = 1288834974000L;
-
         private const int WorkerIdBits = 5;
-
         private const int DatacenterIdBits = 5;
-
         private const int SequenceBits = 12;
-
         private const long MaxWorkerId = -1L ^ (-1L << WorkerIdBits);
-
         private const long MaxDatacenterId = -1L ^ (-1L << DatacenterIdBits);
-
         private const long SequenceMask = -1L ^ (-1L << SequenceBits);
-
         private const int WorkerIdShift = SequenceBits;
-
         private const int DatacenterIdShift = SequenceBits + WorkerIdBits;
-
         public const int TimestampLeftShift = SequenceBits + WorkerIdBits + DatacenterIdBits;
         private long _lastTimestamp = -1L;
-
-        public long WorkerId { get; protected set; }
+        private readonly object _lock = new object();
 
         public long DatacenterId { get; protected set; }
 
         public long Sequence { get; internal set; } = 0L;
+
+        public long WorkerId { get; protected set; }
 
         public SnowflakeIdGenerator(long workerId, long datacenterId, long sequence = 0L)
         {
@@ -49,8 +40,6 @@ namespace Cult.Toolkit
             DatacenterId = datacenterId;
             Sequence = sequence;
         }
-
-        private readonly object _lock = new object();
 
         public long NextId()
         {

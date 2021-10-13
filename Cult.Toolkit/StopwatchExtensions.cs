@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-// ReSharper disable All
 
 namespace Cult.Toolkit.ExtraStopwatch
 {

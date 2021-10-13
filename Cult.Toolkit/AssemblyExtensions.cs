@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraAssembly
 {
     public static class AssemblyExtensions
@@ -22,12 +22,14 @@ namespace Cult.Toolkit.ExtraAssembly
             }
             return result;
         }
+
         public static IEnumerable<Assembly> GetReferencedAssemblies(this Assembly assembly)
         {
             var listOfAssemblies = new List<Assembly>();
             listOfAssemblies.AddRange(assembly.GetReferencedAssemblies().Select(Assembly.Load));
             return listOfAssemblies;
         }
+
         public static IEnumerable<Assembly> WithReferencedAssemblies(this Assembly assembly)
         {
             var listOfAssemblies = new List<Assembly>

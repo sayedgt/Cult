@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraRandom
 {
     public static class RandomExtensions
@@ -10,11 +10,13 @@ namespace Cult.Toolkit.ExtraRandom
         {
             return @this.Next(2) == 0;
         }
+
         public static decimal NextDecimal(this Random @this)
         {
             var sign = @this.Next(2) == 1;
             return @this.NextDecimal(sign);
         }
+
         public static decimal NextDecimal(this Random @this, bool sign)
         {
             var scale = (byte)@this.Next(29);
@@ -24,11 +26,13 @@ namespace Cult.Toolkit.ExtraRandom
                 sign,
                 scale);
         }
+
         public static decimal NextDecimal(this Random @this, decimal maxValue)
         {
             return @this.NextNonNegativeDecimal() / decimal.MaxValue * maxValue;
             ;
         }
+
         public static decimal NextDecimal(this Random @this, decimal minValue, decimal maxValue)
         {
             if (minValue >= maxValue)
@@ -38,20 +42,24 @@ namespace Cult.Toolkit.ExtraRandom
             var range = maxValue - minValue;
             return @this.NextDecimal(range) + minValue;
         }
+
         public static double NextDouble(this Random @this, double min, double max)
         {
             return @this.NextDouble() * (max - min) + min;
         }
+
         public static int NextInt32(this Random @this)
         {
             var firstBits = @this.Next(0, 1 << 4) << 28;
             var lastBits = @this.Next(0, 1 << 28);
             return firstBits | lastBits;
         }
+
         public static long NextInt64(this Random @this, long maxValue)
         {
             return (long)(@this.NextNonNegativeLong() / (double)long.MaxValue * maxValue);
         }
+
         public static long NextInt64(this Random @this, long minValue, long maxValue)
         {
             if (minValue >= maxValue)
@@ -61,16 +69,19 @@ namespace Cult.Toolkit.ExtraRandom
             var range = maxValue - minValue;
             return @this.NextInt64(range) + minValue;
         }
+
         public static long NextInt64(this Random @this)
         {
             var buffer = new byte[sizeof(long)];
             @this.NextBytes(buffer);
             return BitConverter.ToInt64(buffer, 0);
         }
+
         public static decimal NextNonNegativeDecimal(this Random @this)
         {
             return @this.NextDecimal(false);
         }
+
         public static long NextNonNegativeLong(this Random @this)
         {
             var bytes = new byte[sizeof(long)];
@@ -79,10 +90,12 @@ namespace Cult.Toolkit.ExtraRandom
             bytes[7] = (byte)(bytes[7] & 0x7f);
             return BitConverter.ToInt64(bytes, 0);
         }
+
         public static T PickOneOf<T>(this Random @this, params T[] values)
         {
             return values[@this.Next(values.Length)];
         }
+
         public static T PickOneOf<T>(this Random @this, IEnumerable<T> values)
         {
             var arr = values.ToArray();

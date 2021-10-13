@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-// ReSharper disable All
 
 namespace Cult.Toolkit.ExtraValueTuple
 {
@@ -41,8 +40,7 @@ namespace Cult.Toolkit.ExtraValueTuple
             yield return tuple.Item5;
         }
 
-        public static IEnumerator<object> GetEnumerator<T1, T2, T3, T4, T5, T6>(
-            this ValueTuple<T1, T2, T3, T4, T5, T6> tuple)
+        public static IEnumerator<object> GetEnumerator<T1, T2, T3, T4, T5, T6>(this ValueTuple<T1, T2, T3, T4, T5, T6> tuple)
         {
             yield return tuple.Item1;
             yield return tuple.Item2;
@@ -52,8 +50,7 @@ namespace Cult.Toolkit.ExtraValueTuple
             yield return tuple.Item6;
         }
 
-        public static IEnumerator<object> GetEnumerator<T1, T2, T3, T4, T5, T6, T7>(
-            this ValueTuple<T1, T2, T3, T4, T5, T6, T7> tuple)
+        public static IEnumerator<object> GetEnumerator<T1, T2, T3, T4, T5, T6, T7>(this ValueTuple<T1, T2, T3, T4, T5, T6, T7> tuple)
         {
             yield return tuple.Item1;
             yield return tuple.Item2;

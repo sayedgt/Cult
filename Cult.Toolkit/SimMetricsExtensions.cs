@@ -1,5 +1,5 @@
 using Cult.Toolkit.SimMetrics.Metric;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.SimMetrics
 {
     public static class SimMetricsExtensions

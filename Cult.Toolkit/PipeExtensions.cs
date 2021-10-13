@@ -1,5 +1,5 @@
 ﻿using System;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.Piping
 {
     public static class PipeExtensions

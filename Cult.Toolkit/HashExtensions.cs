@@ -6,19 +6,18 @@ using System.Text;
 
 namespace Cult.Toolkit.Cryptography
 {
-    // Crc32
-    // Rijndael
-    // TripleDES
     public static class HashExtensions
     {
         public static string ComputeMD5Hash(this string data)
         {
             return ComputeMD5Hash(data.ToByteArray());
         }
+
         public static string ComputeMD5Hash(this Stream data)
         {
             return ComputeMD5Hash(data.ToByteArray());
         }
+
         public static string ComputeMD5Hash(this byte[] data)
         {
             using (MD5 md5Hash = MD5.Create())
@@ -32,14 +31,17 @@ namespace Cult.Toolkit.Cryptography
                 return builder.ToString();
             }
         }
+
         public static string ComputeSHA1Hash(this string data)
         {
             return ComputeSHA1Hash(data.ToByteArray());
         }
+
         public static string ComputeSHA1Hash(this Stream data)
         {
             return ComputeSHA1Hash(data.ToByteArray());
         }
+
         public static string ComputeSHA1Hash(this byte[] data)
         {
             using (SHA1 sha1Hash = SHA1.Create())
@@ -53,14 +55,17 @@ namespace Cult.Toolkit.Cryptography
                 return builder.ToString();
             }
         }
+
         public static string ComputeSHA256Hash(this string data)
         {
             return ComputeSHA256Hash(data.ToByteArray());
         }
+
         public static string ComputeSHA256Hash(this Stream data)
         {
             return ComputeSHA256Hash(data.ToByteArray());
         }
+
         public static string ComputeSHA256Hash(this byte[] data)
         {
             using (SHA256 sha256Hash = SHA256.Create())
@@ -74,14 +79,17 @@ namespace Cult.Toolkit.Cryptography
                 return builder.ToString();
             }
         }
+
         public static string ComputeSHA384Hash(this string data)
         {
             return ComputeMD5Hash(data.ToByteArray());
         }
+
         public static string ComputeSHA384Hash(this Stream data)
         {
             return ComputeMD5Hash(data.ToByteArray());
         }
+
         public static string ComputeSHA384Hash(this byte[] data)
         {
             using (SHA384 sha384Hash = SHA384.Create())
@@ -95,14 +103,17 @@ namespace Cult.Toolkit.Cryptography
                 return builder.ToString();
             }
         }
+
         public static string ComputeSHA512Hash(this string data)
         {
             return ComputeMD5Hash(data.ToByteArray());
         }
+
         public static string ComputeSHA512Hash(this Stream data)
         {
             return ComputeMD5Hash(data.ToByteArray());
         }
+
         public static string ComputeSHA512Hash(this byte[] data)
         {
             using (SHA512 sha512Hash = SHA512.Create())
@@ -116,6 +127,5 @@ namespace Cult.Toolkit.Cryptography
                 return builder.ToString();
             }
         }
-
     }
 }

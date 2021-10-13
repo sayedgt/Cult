@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-// ReSharper disable All 
+
 namespace Cult.Toolkit
 {
     public static class ThreadUtility
@@ -17,6 +17,7 @@ namespace Cult.Toolkit
                 Name = name
             };
         }
+
         public static Thread Repeat(TimeSpan interval, Action action, Func<bool> stopWhen, bool isBackground = false, string name = null)
         {
             return new Thread(() =>

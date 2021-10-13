@@ -1,5 +1,5 @@
 ﻿using System.Net.Sockets;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraSocket
 {
     public static class SocketExtensions

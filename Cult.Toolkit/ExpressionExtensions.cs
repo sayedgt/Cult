@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraExpression
 {
     public static class ExpressionExtensions

@@ -1,5 +1,5 @@
 ﻿using System;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraAction
 {
     public static class ActionExtensions

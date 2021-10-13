@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-// ReSharper disable All 
+
 namespace Cult.Drawing
 {
     public static class ImageExtensions
@@ -16,6 +16,7 @@ namespace Cult.Drawing
             ms.Write(imageBytes, 0, imageBytes.Length);
             return Image.FromStream(ms, true);
         }
+
         public static string ConvertImageToBase64(this Image image, ImageFormat imageFormat)
         {
             using (var ms = new MemoryStream())
@@ -25,6 +26,7 @@ namespace Cult.Drawing
                 return Convert.ToBase64String(imageBytes);
             }
         }
+
         public static Image ResizeAndFit(this Image @this, Size newSize)
         {
             var sourceIsLandscape = @this.Width > @this.Height;
@@ -56,6 +58,7 @@ namespace Cult.Drawing
 
             return bitmap;
         }
+
         public static Image ScaleImage(this Image @this, int height, int width)
         {
             if (@this == null || height <= 0 || width <= 0)
@@ -90,12 +93,14 @@ namespace Cult.Drawing
             //g.DrawRectangle(new Pen(Color.Red, 1), 0, 0, bmp.Width - 1, bmp.Height - 1);
             return bmp;
         }
+
         public static byte[] ToByteArray(this Image @this, ImageFormat imageFormat)
         {
             var ms = new MemoryStream();
             @this.Save(ms, imageFormat);
             return ms.ToArray();
         }
+
         public static Image ToImage(this byte[] byteArray)
         {
             var ms = new MemoryStream(byteArray);

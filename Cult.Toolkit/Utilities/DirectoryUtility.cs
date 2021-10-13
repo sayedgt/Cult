@@ -1,7 +1,7 @@
 ﻿using Cult.Toolkit.ExtraIEnumerable;
 using System;
 using System.IO;
-// ReSharper disable All 
+
 namespace Cult.Toolkit
 {
     public static class DirectoryUtility
@@ -16,6 +16,7 @@ namespace Cult.Toolkit
 
             return tempDirectory;
         }
+
         public static void CreateTempDirectory(Action<string> action, bool autoDelete = true)
         {
             var tempDirectory = GetTempDirectory();
@@ -29,6 +30,7 @@ namespace Cult.Toolkit
                 Directory.Delete(tempDirectory, true);
             }
         }
+
         public static void DeleteReadOnlyDirectory(string directoryPath)
         {
             foreach (var subdirectory in Directory.EnumerateDirectories(directoryPath))
@@ -43,6 +45,7 @@ namespace Cult.Toolkit
             }
             Directory.Delete(directoryPath);
         }
+
         public static string GetTempDirectory()
         {
             return Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -63,6 +66,7 @@ namespace Cult.Toolkit
                 return false;
             }
         }
+
         public static void SafeDeleteDirectory(string path, bool recursive = false)
         {
             if (Directory.Exists(path))

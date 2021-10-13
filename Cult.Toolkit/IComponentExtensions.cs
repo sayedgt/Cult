@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-// ReSharper disable All 
+
 namespace Cult.Toolkit.ExtraIComponent
 {
     public static class IComponentExtensions
@@ -9,6 +9,7 @@ namespace Cult.Toolkit.ExtraIComponent
             var site = target.Site;
             return site != null && site.DesignMode;
         }
+
         public static bool IsInRuntimeMode(this IComponent target)
         {
             return !IsInDesignMode(target);

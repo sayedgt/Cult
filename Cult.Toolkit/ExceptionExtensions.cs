@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-// ReSharper disable All
 
 namespace Cult.Toolkit.ExtraException
 {
     public static class ExceptionExtensions
     {
-        public static string ToFormattedString(this Exception exception)
-        {
-            IEnumerable<string> messages = exception
-                .GetAllExceptions()
-                .Where(e => !string.IsNullOrWhiteSpace(e.Message))
-                .Select(e => e.Message.Trim());
-            return string.Join(Environment.NewLine, messages);
-        }
-
         private static IEnumerable<Exception> GetAllExceptions(this Exception exception)
         {
             yield return exception;
@@ -34,6 +24,15 @@ namespace Cult.Toolkit.ExtraException
                     yield return innerEx;
                 }
             }
+        }
+
+        public static string ToFormattedString(this Exception exception)
+        {
+            IEnumerable<string> messages = exception
+                .GetAllExceptions()
+                .Where(e => !string.IsNullOrWhiteSpace(e.Message))
+                .Select(e => e.Message.Trim());
+            return string.Join(Environment.NewLine, messages);
         }
     }
 }
