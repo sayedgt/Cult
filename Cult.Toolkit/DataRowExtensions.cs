@@ -135,7 +135,7 @@ namespace Cult.Toolkit.ExtraDataRow
             var value = row[field];
             return value == DBNull.Value;
         }
-        public static TValue Value<TValue>(this DataRow row, string columnName)
+        public static TValue GetValue<TValue>(this DataRow row, string columnName)
         {
             var toReturn = default(TValue);
             if (

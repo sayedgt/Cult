@@ -13,7 +13,7 @@ using System.Text.Json;
 // ReSharper disable All
 namespace Cult.Toolkit.ExtraObject
 {
-    public static class ObjectExtensions
+    public static partial class ObjectExtensions
     {
         public static T IfNull<T>(this T obj, Action action)
         {
@@ -272,7 +272,7 @@ namespace Cult.Toolkit.ExtraObject
         {
             yield return obj;
         }
-        public static T DeepClone<T>(this T @this) where T : ISerializable
+        public static T Clone<T>(this T @this) where T : ISerializable
         {
             var formatter = new BinaryFormatter();
             using (var stream = new MemoryStream())
@@ -622,7 +622,10 @@ namespace Cult.Toolkit.ExtraObject
             disposable.Dispose();
             return true;
         }
-
+        public static Lazy<T> AsLazy<T>(this T obj)
+        {
+            return new Lazy<T>();
+        }
         public static string ToJson<T>(this T obj, JsonSerializerOptions options = null)
         {
             return JsonSerializer.Serialize<T>(obj, options);

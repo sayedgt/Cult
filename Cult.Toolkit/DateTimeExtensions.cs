@@ -6,6 +6,9 @@ namespace Cult.Toolkit.ExtraDateTime
 {
     public static class DateTimeExtensions
     {
+        private const int EveningEnds = 2;
+        private const int MorningEnds = 12;
+        private const int AfternoonEnds = 6;
         private static readonly string UtcDateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fff'Z'";
         private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
 
@@ -191,6 +194,36 @@ namespace Cult.Toolkit.ExtraDateTime
         {
             var nextMonth = date.AddMonths(1);
             return new DateTime(nextMonth.Year, nextMonth.Month, 1).AddDays(-1).Day;
+        }
+        public static string GetDateDayWithSuffix(this DateTime date)
+        {
+            int dayNumber = date.Day;
+            string suffix = "th";
+
+            if (dayNumber == 1 || dayNumber == 21 || dayNumber == 31)
+                suffix = "st";
+            else if (dayNumber == 2 || dayNumber == 22)
+                suffix = "nd";
+            else if (dayNumber == 3 || dayNumber == 23)
+                suffix = "rd";
+
+            return string.Concat(dayNumber, suffix);
+        }
+        public static int GetDays(this DateTime fromDate, DateTime toDate)
+        {
+            return Convert.ToInt32(toDate.Subtract(fromDate).TotalDays);
+        }
+
+        public static DateTime GetFirstDayOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1);
+        }
+        public static DateTime GetFirstDayOfMonth(this DateTime date, DayOfWeek dayOfWeek)
+        {
+            var dt = date.GetFirstDayOfMonth();
+            while (dt.DayOfWeek != dayOfWeek)
+                dt = dt.AddDays(1);
+            return dt;
         }
         public static bool In(this DateTime @this, params DateTime[] values)
         {
@@ -689,5 +722,147 @@ namespace Cult.Toolkit.ExtraDateTime
             return new DateTime(dt.Ticks / d.Ticks * d.Ticks);
         }
 
+        public static int CalculateAge(this DateTime dateTime)
+        {
+            var age = DateTime.Now.Year - dateTime.Year;
+            if (DateTime.Now < dateTime.AddYears(age))
+                age--;
+            return age;
+        }
+        public static int CalculateAge(this DateTime dateOfBirth, DateTime referenceDate)
+        {
+            var years = referenceDate.Year - dateOfBirth.Year;
+            if (referenceDate.Month < dateOfBirth.Month ||
+                (referenceDate.Month == dateOfBirth.Month && referenceDate.Day < dateOfBirth.Day))
+                --years;
+            return years;
+        }
+       
+        public static DateTime GetFirstDayOfWeek(this DateTime date, CultureInfo cultureInfo)
+        {
+            cultureInfo = cultureInfo ?? CultureInfo.CurrentCulture;
+            var firstDayOfWeek = cultureInfo.DateTimeFormat.FirstDayOfWeek;
+            while (date.DayOfWeek != firstDayOfWeek)
+                date = date.AddDays(-1);
+            return date;
+        }
+        public static DateTime GetLastDayOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, GetCountDaysOfMonth(date));
+        }
+        public static DateTime GetLastDayOfMonth(this DateTime date, DayOfWeek dayOfWeek)
+        {
+            var dt = date.GetLastDayOfMonth();
+            while (dt.DayOfWeek != dayOfWeek)
+                dt = dt.AddDays(-1);
+            return dt;
+        }
+        public static DateTime GetLastDayOfWeek(this DateTime date, CultureInfo cultureInfo)
+        {
+            return date.GetFirstDayOfWeek(cultureInfo).AddDays(6);
+        }
+        public static long GetMillisecondsSince1970(this DateTime datetime)
+        {
+            var ts = datetime.Subtract(new DateTime(1970, 1, 1));
+            return (long)ts.TotalMilliseconds;
+        }
+        public static DateTime GetNextWeekday(this DateTime date, DayOfWeek weekday)
+        {
+            while (date.DayOfWeek != weekday)
+                date = date.AddDays(1);
+            return date;
+        }
+        public static string GetPeriodOfDay(this DateTime date)
+        {
+            var hour = date.Hour;
+            if (hour < EveningEnds)
+                return "evening";
+            if (hour < MorningEnds)
+                return "morning";
+            return hour < AfternoonEnds ? "afternoon" : "evening";
+        }
+        public static DateTime GetPreviousWeekday(this DateTime date, DayOfWeek weekday)
+        {
+            while (date.DayOfWeek != weekday)
+                date = date.AddDays(-1);
+            return date;
+        }
+        public static string GetTimeStamp(this DateTime datetime)
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmssfffffff");
+        }
+        public static string GetUtcTimeStamp(this DateTime datetime)
+        {
+            return DateTime.UtcNow.ToString("yyyyMMddHHmmssfffffff");
+        }
+        public static int GetWeekOfYear(this DateTime dateTime, CultureInfo culture)
+        {
+            var calendar = culture.Calendar;
+            var dateTimeFormat = culture.DateTimeFormat;
+            return calendar.GetWeekOfYear(dateTime, dateTimeFormat.CalendarWeekRule, dateTimeFormat.FirstDayOfWeek);
+        }
+        public static DateTime GetWeeksWeekday(this DateTime date, DayOfWeek weekday, CultureInfo cultureInfo)
+        {
+            var firstDayOfWeek = date.GetFirstDayOfWeek(cultureInfo);
+            return firstDayOfWeek.GetNextWeekday(weekday);
+        }
+        public static bool IsAfternoon(this DateTime @this)
+        {
+            return @this.TimeOfDay >= new DateTime(2000, 1, 1, 12, 0, 0).TimeOfDay;
+        }
+        public static bool IsEaster(this DateTime date)
+        {
+            var Y = date.Year;
+            var a = Y % 19;
+            var b = Y / 100;
+            var c = Y % 100;
+            var d = b / 4;
+            var e = b % 4;
+            var f = (b + 8) / 25;
+            var g = (b - f + 1) / 3;
+            var h = (19 * a + b - d - g + 15) % 30;
+            var i = c / 4;
+            var k = c % 4;
+            var L = (32 + 2 * e + 2 * i - h - k) % 7;
+            var m = (a + 11 * h + 22 * L) / 451;
+            var Month = (h + L - 7 * m + 114) / 31;
+            var Day = (h + L - 7 * m + 114) % 31 + 1;
+            var dtEasterSunday = new DateTime(Y, Month, Day);
+            return date == dtEasterSunday;
+        }
+        public static bool IsFuture(this DateTime date, DateTime from)
+        {
+            return date.Date > from.Date;
+        }
+        public static bool IsPast(this DateTime date, DateTime from)
+        {
+            return date.Date < from.Date;
+        }
+       
+        public static bool IsWeekendDay(this DateTime @this)
+        {
+            return (@this.DayOfWeek == DayOfWeek.Saturday || @this.DayOfWeek == DayOfWeek.Sunday);
+        }
+        public static bool IsWorkDay(this DateTime date)
+        {
+            return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday;
+        }
+        public static DateTime NextWorkday(this DateTime date)
+        {
+            var nextDay = date;
+            while (!nextDay.WorkingDay())
+            {
+                nextDay = nextDay.AddDays(1);
+            }
+            return nextDay;
+        }
+        public static DateTime SetTime(this DateTime date, TimeSpan time)
+        {
+            return date.Date.Add(time);
+        }
+        public static bool WorkingDay(this DateTime date)
+        {
+            return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday;
+        }
     }
 }

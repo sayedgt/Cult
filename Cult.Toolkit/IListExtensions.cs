@@ -1,13 +1,19 @@
+using Cult.Toolkit.ExtraIEnumerable;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Text.RegularExpressions;
 
 // ReSharper disable All 
 namespace Cult.Toolkit.ExtraIList
 {
     public static class IListExtensions
     {
+        private static readonly Random Rnd = RandomUtility.GetUniqueRandom();
+
         public static IList<K> Map<T, K>(this IList<T> list, Func<T, K> function)
         {
             var newList = new List<K>(list.Count);
@@ -133,7 +139,7 @@ namespace Cult.Toolkit.ExtraIList
                 }
             }
         }
-       
+
         public static int IndexOf<T>(this IList<T> list, Func<T, bool> comparison)
         {
             for (var i = 0; i < list.Count; i++)
@@ -288,5 +294,228 @@ namespace Cult.Toolkit.ExtraIList
                 list.RemoveAt(0);
             }
         }
+
+        public static void AddRangeUnique<T>(this List<T> list, T[] items) where T : class
+        {
+            foreach (var item in items)
+            {
+                if (!list.Contains(item))
+                {
+                    list.Add(item);
+                }
+            }
+        }
+        public static void AddRangeUnique<T>(this List<T> list, IEnumerable<T> items) where T : class
+        {
+            foreach (var item in items)
+            {
+                if (!list.Contains(item))
+                {
+                    list.Add(item);
+                }
+            }
+        }
+        public static void AddUnique<T>(this List<T> list, T item) where T : class
+        {
+            if (!list.Contains(item))
+            {
+                list.Add(item);
+            }
+        }
+        public static bool AnyOrNotNull(this List<string> source)
+        {
+            var hasData = source.Aggregate((a, b) => a + b).Any();
+            if (source != null && source.Any() && hasData)
+                return true;
+            else
+                return false;
+        }
+
+        public static List<T> Cast<T>(this IList source)
+        {
+            var list = new List<T>();
+            list.AddRange(source.OfType<T>());
+            return list;
+        }
+        public static T GetRandomItem<T>(this List<T> list)
+        {
+            var count = list.Count;
+            var i = Rnd.Next(0, count);
+            return list[i];
+        }
+        public static IEnumerable<T> GetRandomItems<T>(this List<T> list, int count, bool uniqueItems = true)
+        {
+            var c = list.Count;
+            var l = new List<T>();
+            while (true)
+            {
+                var i = Rnd.Next(0, c);
+                if (!l.Contains(list[i]) && uniqueItems)
+                {
+                    l.Add(list[i]);
+                }
+                if (!uniqueItems)
+                {
+                    l.Add(list[i]);
+                }
+                if (l.Count == count)
+                    break;
+            }
+            return l;
+        }
+        public static bool HasDuplicates<T>(this IList<T> list)
+        {
+            var hs = new HashSet<T>();
+            for (var i = 0; i < list.Count(); ++i)
+            {
+                if (!hs.Add(list[i])) return true;
+            }
+            return false;
+        }
+        public static int InsertRangeUnique<T>(this IList<T> list, int startIndex, IEnumerable<T> items)
+        {
+            var index = startIndex + items.Reverse().Count(item => list.InsertUnique(startIndex, item));
+            return (index - startIndex);
+        }
+        public static bool InsertUnique<T>(this IList<T> list, int index, T item)
+        {
+            if (!list.Contains(item))
+            {
+                list.Insert(index, item);
+                return true;
+            }
+            return false;
+        }
+        public static string Join<T>(this IList<T> list, string joinString)
+        {
+            if (list == null || !list.Any())
+                return string.Empty;
+            StringBuilder result = new StringBuilder();
+            int listCount = list.Count;
+            int listCountMinusOne = listCount - 1;
+            if (listCount > 1)
+            {
+                for (var i = 0; i < listCount; i++)
+                {
+                    if (i != listCountMinusOne)
+                    {
+                        result.Append(list[i]);
+                        result.Append(joinString);
+                    }
+                    else
+                        result.Append(list[i]);
+                }
+            }
+            else
+                result.Append(list[0]);
+            return result.ToString();
+        }
+
+        public static List<T> Match<T>(this IList<T> list, string searchString, int top, params Expression<Func<T, object>>[] args)
+        {
+            // Create a new list of results and matches;
+            var results = new List<T>();
+            var matches = new Dictionary<T, int>();
+            var maxMatch = 0;
+            list.ForEach(s =>
+            {
+                // Generate the expression string from the argument.
+                var regExp = string.Empty;
+                if (args != null)
+                {
+                    foreach (var arg in args)
+                    {
+                        var property = arg.Compile();
+                        // Attach the new property to the expression string
+                        regExp += (string.IsNullOrEmpty(regExp) ? "(?:" : "|(?:") + property(s) + ")+?";
+                    }
+                }
+                // Get the matches
+                var match = Regex.Matches(searchString, regExp, RegexOptions.IgnoreCase);
+                // If there are more than one match
+                if (match.Count > 0)
+                {
+                    // Add it to the match dictionary, including the match count.
+                    matches.Add(s, match.Count);
+                }
+                // Get the highest max matching
+                maxMatch = match.Count > maxMatch ? match.Count : maxMatch;
+            });
+            // Convert the match dictionary into a list
+            var matchList = matches.ToList();
+            // Sort the list by decending match counts
+            // matchList.Sort((s1, s2) => s2.Value.CompareTo(s1.Value));
+            // Remove all matches that is less than the best match.
+            matchList.RemoveAll(s => s.Value < maxMatch);
+            // If the top value is set and is less than the number of matches
+            var getTop = top > 0 && top < matchList.Count ? top : matchList.Count;
+            // Add the maches into the result list.
+            for (var i = 0; i < getTop; i++)
+                results.Add(matchList[i].Key);
+            return results;
+        }
+        public static List<T> Merge<T>(params List<T>[] lists)
+        {
+            var merged = new List<T>();
+            foreach (var list in lists) merged.Merge(list);
+            return merged;
+        }
+        public static List<T> Merge<T>(Expression<Func<T, object>> match, params List<T>[] lists)
+        {
+            var merged = new List<T>();
+            foreach (var list in lists) merged.Merge(list, match);
+            return merged;
+        }
+        public static List<T> Merge<T>(this List<T> list1, List<T> list2, Expression<Func<T, object>> match)
+        {
+            if (list1 != null && list2 != null && match != null)
+            {
+                var matchFunc = match.Compile();
+                foreach (var item in list2)
+                {
+                    var key = matchFunc(item);
+                    if (!list1.Exists(i => matchFunc(i).Equals(key))) list1.Add(item);
+                }
+            }
+            return list1;
+        }
+        public static List<T> Merge<T>(this List<T> list1, List<T> list2)
+        {
+            if (list1 != null && list2 != null) foreach (var item in list2.Where(item => !list1.Contains(item))) list1.Add(item);
+            return list1;
+        }
+        public static T Next<T>(this IList<T> list, ref int Index)
+        {
+            Index = ++Index >= 0 && Index < list.Count ? Index : 0;
+            return list[Index];
+        }
+        public static T Previous<T>(this IList<T> list, ref int Index)
+        {
+            Index = --Index >= 0 && Index < list.Count ? Index : list.Count - 1;
+            return list[Index];
+        }
+        public static void RemoveLast<T>(this IList<T> list)
+        {
+            if (list.Count > 0)
+            {
+                list.RemoveAt(list.Count - 1);
+            }
+        }
+        public static bool Replace<T>(this IList<T> thisList, int position, T item)
+        {
+            if (position > thisList.Count - 1)
+                return false;
+            thisList.RemoveAt(position);
+            thisList.Insert(position, item);
+            return true;
+        }
+        public static IEnumerable<T> Replace<T>(this IEnumerable<T> source, T oldValue, T newValue)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+            return source.Select(x => EqualityComparer<T>.Default.Equals(x, oldValue) ? newValue : x);
+        }
+
+
     }
 }

@@ -451,5 +451,65 @@ namespace Cult.Toolkit.ExtraArray
             foreach (var item in array.Where(predicate))
                 action(item);
         }
+
+        public static string JoinNotNullOrEmpty(this string[] objs, string separator)
+        {
+            var items = new List<string>();
+            foreach (var s in objs)
+            {
+                if (!string.IsNullOrEmpty(s))
+                    items.Add(s);
+            }
+            return string.Join(separator, items.ToArray());
+        }
+
+        public static string[] RemoveEmptyElements(this string[] array)
+        {
+            if (array == null)
+                return null;
+            var arr = array.Where(str => !string.IsNullOrEmpty(str)).ToArray();
+            if (arr.Length == 0)
+                return null;
+            return arr;
+        }
+
+        public static T[] BlockCopy<T>(this T[] array, int index, int length)
+        {
+            return BlockCopy(array, index, length, false);
+        }
+        public static T[] BlockCopy<T>(this T[] array, int index, int length, bool padToLength)
+        {
+            if (array == null) throw new NullReferenceException();
+            int n = length;
+            T[] b = null;
+            if (array.Length < index + length)
+            {
+                n = array.Length - index;
+                if (padToLength)
+                {
+                    b = new T[length];
+                }
+            }
+            if (b == null) b = new T[n];
+            Array.Copy(array, index, b, 0, n);
+            return b;
+        }
+        public static IEnumerable<T[]> BlockCopy<T>(this T[] array, int count, bool padToLength = false)
+        {
+            for (int i = 0; i < array.Length; i += count)
+                yield return array.BlockCopy(i, count, padToLength);
+        }
+        public static T[] Remove<T>(this T[] array, Func<T, bool> condition)
+        {
+            var list = new List<T>();
+            foreach (var item in array)
+            {
+                if (!condition(item))
+                {
+                    list.Add(item);
+                }
+            }
+            return list.ToArray();
+        }
     }
 }

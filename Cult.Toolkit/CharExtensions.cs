@@ -129,5 +129,12 @@ namespace Cult.Toolkit.ExtraChar
         {
             return regex.Match(c.ToString()).Success;
         }
+
+        public static int ToUtf32(this char highSurrogate, char lowSurrogate)
+        {
+            return char.ConvertToUtf32(highSurrogate, lowSurrogate);
+        }
+
+
     }
 }
