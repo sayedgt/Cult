@@ -20,7 +20,7 @@ namespace Cult.Toolkit.ExtraEnumerator
             private readonly int _end;
             public bool MoveNext() => ++Current < _end;
         }
-#if NETSTANDARD2_1
+        #if NETSTANDARD2_1
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RangeEnumerator GetEnumerator(this System.Range range)
         {
@@ -35,6 +35,6 @@ namespace Cult.Toolkit.ExtraEnumerator
             static void ThrowIsFromEnd() => throw new ArgumentException("range start and end must not be from end");
             static void ThrowStartIsGreaterThanEnd() => throw new ArgumentException("start is greater than end");
         }
-#endif
+        #endif
     }
 }
