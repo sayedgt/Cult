@@ -80,13 +80,13 @@ namespace Cult.Toolkit.ExtraIEnumerable
             return true;
         }
 
-        public static bool AreDistinct<T>(this IEnumerable<T> items)
+        public static bool AreItemsUnique<T>(this IEnumerable<T> items)
         {
             return items.Count() == items.Distinct().Count();
         }
 
         public static IEnumerable<T?> AsNullable<T>(this IEnumerable<T> enumeration)
-                                                                            where T : struct
+                                                                                    where T : struct
         {
             return from item in enumeration
                    select new T?(item);
@@ -435,8 +435,8 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static T FirstOr<T>(this IEnumerable<T> @this,
-                                                                            Func<T, bool> predicate,
-                                                                            Func<T> onOr)
+                                                                                    Func<T, bool> predicate,
+                                                                                    Func<T> onOr)
         {
             T found = @this.FirstOrDefault(predicate);
             if (found.Equals(default(T)))
@@ -716,7 +716,7 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static bool IsEqual<T>(this IEnumerable<T> source, IEnumerable<T> toCompareWith,
-                                                IEqualityComparer<T> comparer)
+                                                        IEqualityComparer<T> comparer)
         {
             if ((source == null) || (toCompareWith == null))
             {
@@ -792,9 +792,9 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static TItem MaxItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector,
-                                                                            out TValue maxValue)
-                                                                            where TItem : class
-                                                                            where TValue : IComparable
+                                                                                    out TValue maxValue)
+                                                                                    where TItem : class
+                                                                                    where TValue : IComparable
         {
             TItem maxItem = null;
             maxValue = default(TValue);
@@ -812,8 +812,8 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static TItem MaxItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector)
-                                                                            where TItem : class
-                                                                            where TValue : IComparable
+                                                                                    where TItem : class
+                                                                                    where TValue : IComparable
         {
             TValue maxValue;
             return items.MaxItem(selector, out maxValue);
@@ -848,9 +848,9 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static TItem MinItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector,
-                                                                            out TValue minValue)
-                                                                            where TItem : class
-                                                                            where TValue : IComparable
+                                                                                    out TValue minValue)
+                                                                                    where TItem : class
+                                                                                    where TValue : IComparable
         {
             TItem minItem = null;
             minValue = default(TValue);
@@ -868,8 +868,8 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static TItem MinItem<TItem, TValue>(this IEnumerable<TItem> items, Func<TItem, TValue> selector)
-                                                                            where TItem : class
-                                                                            where TValue : IComparable
+                                                                                    where TItem : class
+                                                                                    where TValue : IComparable
         {
             TValue minValue;
             return items.MinItem(selector, out minValue);
@@ -1054,7 +1054,7 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static IEnumerable<TResult> Select<TSource, TResult>(this IEnumerable<TSource> source,
-                                                                            Func<TSource, TResult> selector, bool allowNull = true)
+                                                                                    Func<TSource, TResult> selector, bool allowNull = true)
         {
             foreach (var item in source)
             {
@@ -1093,13 +1093,13 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static IEnumerable<T> SelectManyAllInclusive<T>
-                                                                               (this IEnumerable<T> source, Func<T, IEnumerable<T>> selector)
+                                                                                       (this IEnumerable<T> source, Func<T, IEnumerable<T>> selector)
         {
             return source.Concat(source.SelectManyRecursive(selector));
         }
 
         public static IEnumerable<T> SelectManyRecursive<T>
-                                                                        (this IEnumerable<T> source, Func<T, IEnumerable<T>> selector)
+                                                                                (this IEnumerable<T> source, Func<T, IEnumerable<T>> selector)
         {
             var result = source.SelectMany(selector).ToList();
             if (result.Count == 0)
@@ -1142,8 +1142,8 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static bool SequenceSuperset<T>(this IEnumerable<T> enumeration,
-                                                                                                                    IEnumerable<T> subset,
-                                                                                                                    Func<T, T, bool> equalityComparer)
+                                                                                                                            IEnumerable<T> subset,
+                                                                                                                            Func<T, T, bool> equalityComparer)
         {
             // Check to see that enumeration is not null
             if (enumeration == null)
@@ -1190,7 +1190,7 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static bool SetEqual<T>(this IEnumerable<T> source, IEnumerable<T> toCompareWith,
-                                                                            IEqualityComparer<T> comparer)
+                                                                                    IEqualityComparer<T> comparer)
         {
             if ((source == null) || (toCompareWith == null))
             {
@@ -1440,7 +1440,7 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static Dictionary<TKey, IEnumerable<TElement>>
-                    ToGroupedDictionary<TKey, TElement>(this IEnumerable<IGrouping<TKey, TElement>> items)
+                            ToGroupedDictionary<TKey, TElement>(this IEnumerable<IGrouping<TKey, TElement>> items)
         {
             return items.ToDictionary<IGrouping<TKey, TElement>, TKey, IEnumerable<TElement>>(
                 item => item.Key,
@@ -1453,7 +1453,7 @@ namespace Cult.Toolkit.ExtraIEnumerable
         }
 
         public static List<TResult> ToList<TSource, TResult>(this IEnumerable<TSource> source,
-                                                                            Func<TSource, TResult> selector)
+                                                                                    Func<TSource, TResult> selector)
         {
             return source.Select(selector).ToList();
         }

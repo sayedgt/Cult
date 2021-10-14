@@ -92,6 +92,8 @@ namespace Cult.Toolkit.DataShaping
             return result;
         }
 
+        // T, string, object, object
+        // CurrentTypeInstance , CurrentPropertyName, CurrentPropertyValue, ConvertedValue
         public static string ToShapedData<T>(this T dataToShape, string fields, bool ignoreCase = true, Func<T, string, object, object> converter = null)
         {
             return JsonSerializer.Serialize(ShapeData(dataToShape, fields, ignoreCase, converter));

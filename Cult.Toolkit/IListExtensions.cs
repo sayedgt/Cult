@@ -13,14 +13,6 @@ namespace Cult.Toolkit.ExtraIList
     {
         private static readonly Random Rnd = RandomUtility.GetUniqueRandom();
 
-        public static void AddDistinct<T>(this IList<T> list, T item) where T : class
-        {
-            if (!list.Contains(item))
-            {
-                list.Add(item);
-            }
-        }
-
         public static void AddRange<T>(this IList<T> container, IEnumerable<T> rangeToAdd)
         {
             if ((container == null) || (rangeToAdd == null))
@@ -80,6 +72,14 @@ namespace Cult.Toolkit.ExtraIList
         public static void AddToFront<T>(this IList<T> list, T item)
         {
             list.Insert(0, item);
+        }
+
+        public static void AddUnique<T>(this IList<T> list, T item) where T : class
+        {
+            if (!list.Contains(item))
+            {
+                list.Add(item);
+            }
         }
 
         public static void AddUnique<T>(this List<T> list, T item) where T : class
